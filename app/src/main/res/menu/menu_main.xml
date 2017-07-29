@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/importScreen"
+        android:icon="@drawable/ic_file_download_black_24px"
+        android:title="@string/importScreen" />
+    <item android:id="@+id/exportScreen"
+        android:icon="@drawable/ic_open_in_browser_black_24px"
+        android:title="@string/exportScreen" />
+    <item android:id="@+id/visitScreen"
+        android:icon="@drawable/ic_schedule_black_24px"
+        android:title="@string/visitScreen" />
+    <item android:id="@+id/produkScreen"
+        android:icon="@drawable/ic_assignment_black_24px"
+        android:title="@string/produkScreen" />
+    <item android:id="@+id/orderScreen"
+        android:icon="@drawable/ic_shopping_basket_black_24px"
+        android:title="@string/orderScreen" />
+    <item android:id="@+id/ARScreen"
+        android:icon="@drawable/ic_assessment_black_24px"
+        android:title="@string/arScreen" />
+
+    <item android:id="@+id/reportScreen"
+        android:icon="@drawable/ic_assignment_turned_in_black_24px"
+        android:title="@string/reportScreen" />
+
+    <item android:id="@+id/logout"
+        android:icon="@drawable/ic_exit_to_app_black_24px"
+        android:title="@string/logout"/>
+
+</menu>

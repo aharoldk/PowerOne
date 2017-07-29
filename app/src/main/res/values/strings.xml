@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Angelos</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+    <string name="title_activity_register">Register</string>
+    <string name="defaultId">ID</string>
+    <string name="newPassword">New Password</string>
+    <string name="renewPassword">Retype Password</string>
+    <string name="submit">Submit</string>
+
+    <string name="registerName">Full Name</string>
+    <string name="registerPassword">New Password</string>
+    <string name="registerPhoto">Take Photo</string>
+    <string name="registerLogin">Login</string>
+    <string name="registerSave">Save</string>
+
+    <string name="title_activity_login">Login</string>
+    <string name="loginPassword">Password</string>
+    <string name="loginLogin">Login</string>
+    <string name="loginCancel">Cancel</string>
+
+    <string name="userID">UserID</string>
+    <string name="siteID">SiteID</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+
+    <string name="importScreen">Import Screen</string>
+    <string name="exportScreen">Export Screen</string>
+    <string name="visitScreen">Visit Screen</string>
+    <string name="produkScreen">Product List</string>
+    <string name="orderScreen">Order List</string>
+    <string name="arScreen">AR Collection</string>
+    <string name="reportScreen">Daily Report</string>
+    <string name="passwordScreen">Change Password</string>
+    <string name="photoScreen">Change Photo</string>
+    <string name="logout">Logout</string>
+
+    <string name="copyRight">Copyright by </string>
+</resources>
