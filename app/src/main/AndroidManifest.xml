@@ -23,23 +23,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_version" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/reloTheme" />
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/reloTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ImportActivity" />
-        <activity android:name=".ExportActivity" />
-        <activity android:name=".VisitActivity" />
-        <activity android:name=".ProductActivity" />
-        <activity android:name=".SalesActivity" />
-        <activity android:name=".ARActivity" />
+        <activity android:name=".ImportActivity"
+            android:label="@string/app_version" />
+        <activity android:name=".ExportActivity"
+            android:label="@string/app_version" />
+        <activity android:name=".VisitActivity"
+            android:label="@string/app_version" />
+        <activity android:name=".ProductActivity"
+            android:label="@string/app_version" />
+        <activity android:name=".SalesActivity"
+            android:label="@string/app_version" />
+        <activity android:name=".ARActivity"
+            android:label="@string/app_version" />
+        <activity android:name=".PasswordActivity"
+            android:label="@string/app_version" />
+        <activity android:name=".ReportActivity"
+            android:label="@string/app_version" />
+        <activity android:name=".PhotoActivity"
+            android:label="@string/app_version" />
+        <activity android:name=".SignatureActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -50,8 +67,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-        <activity android:name=".SignatureActivity" />
     </application>
 
 </manifest>

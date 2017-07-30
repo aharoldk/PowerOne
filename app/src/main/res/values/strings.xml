@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Angelos</string>
+    <string name="app_version">Angelos Ver.1.0</string>
 
     <string name="open">Open</string>
     <string name="close">Close</string>
@@ -26,9 +27,9 @@
     <string name="date">Date</string>
     <string name="time">Time</string>
 
-    <string name="importScreen">Import Screen</string>
-    <string name="exportScreen">Export Screen</string>
-    <string name="visitScreen">Visit Screen</string>
+    <string name="importScreen">Import Data</string>
+    <string name="exportScreen">Export Data</string>
+    <string name="visitScreen">Visit List</string>
     <string name="produkScreen">Product List</string>
     <string name="orderScreen">Order List</string>
     <string name="arScreen">AR Collection</string>
@@ -37,5 +38,9 @@
     <string name="photoScreen">Change Photo</string>
     <string name="logout">Logout</string>
 
-    <string name="copyRight">Copyright by </string>
+
+    <string name="importButton">Import</string>
+    <string name="importAllButton">Import All</string>
+
+    <string name="copyRight">Copyright by \u0040 2017 - PowerGEN </string>
 </resources>

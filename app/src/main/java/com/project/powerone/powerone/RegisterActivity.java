@@ -1,5 +1,6 @@
 package com.project.powerone.powerone;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -59,15 +60,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private static final String DATABASE_NAME = "dbo.db";
 
-    private static final Integer POSITION = 0;
+    private static final int POSITION = 0;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        /*this.deleteDatabase(DATABASE_NAME);*/
+        progressDialog = new ProgressDialog(this);
 
+        /*this.deleteDatabase(DATABASE_NAME);*/
         if(checkDatabase(this, DATABASE_NAME)){
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -125,6 +129,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 if(defaultnewPassword.equals(defaultretypePassword)){
 
+                    progressDialog.setMessage("Wait . . .");
+                    progressDialog.show();
+
                     String URL = "http://202.43.162.180:8082/poweronemobilewebservice/ws_retrieve_salesman?arg_salesman="+defaultID+"&arg_password=default";
 
                     RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
@@ -168,14 +175,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                                 boolean isInserted = databaseHelper.insertSalesman(defaultID, nameIDServer, siteIDServer, defaultnewPassword, dateNow+" "+timeNow);
 
                                                                 if(isInserted == true){
+                                                                    progressDialog.dismiss();
+
                                                                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                                                                     finish();
 
                                                                 } else {
+                                                                    progressDialog.dismiss();
                                                                     Toast.makeText(RegisterActivity.this, "Data Not Inserted", Toast.LENGTH_SHORT).show();
                                                                 }
 
                                                             } else {
+                                                                progressDialog.dismiss();
                                                                 Toast.makeText(RegisterActivity.this, "Request xStatus Login Error", Toast.LENGTH_SHORT).show();
                                                             }
                                                         } catch (Exception e) {

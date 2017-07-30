@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.project.powerone.powerone.RegisterActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/reloTheme">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:id="@+id/takePhoto"
-            android:text="@string/registerPhoto"/>
+            android:text="@string/registerPhoto"
+            android:textColor="@color/buttonTextColor"
+            android:background="@color/buttonColor"
+            android:padding="10dp"
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -68,20 +73,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/submitButton"
-            android:text="@string/submit"/>
+            android:background="@color/buttonColor"
+            android:textColor="@color/buttonTextColor"
+            android:text="@string/submit" />
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
         android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"
-        android:paddingLeft="10dp">
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Copyright by."
+            android:text="@string/copyRight"
             android:textColor="#FFF"/>
 
     </RelativeLayout>

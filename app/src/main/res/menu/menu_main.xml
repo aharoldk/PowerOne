@@ -23,8 +23,29 @@
         android:icon="@drawable/ic_assignment_turned_in_black_24px"
         android:title="@string/reportScreen" />
 
-    <item android:id="@+id/logout"
-        android:icon="@drawable/ic_exit_to_app_black_24px"
-        android:title="@string/logout"/>
+    <group android:checkableBehavior="single" android:id="@+id/group">
+
+        <item android:title="Setting" android:id="@+id/you_parent_item">
+            <menu android:id="@+id/you_menu">
+                <group android:checkableBehavior="single" android:id="@+id/you_group">
+                    <item
+                        android:id="@+id/photoScreen"
+                        android:icon="@drawable/ic_wallpaper_black_24px"
+                        android:title="Change Photo" />
+                    <item
+                        android:id="@+id/passwordScreen"
+                        android:icon="@drawable/ic_text_fields_black_24px"
+                        android:title="Change Password" />
+
+                </group>
+            </menu >
+        </item>
+
+        <item android:id="@+id/logout"
+            android:icon="@drawable/ic_exit_to_app_black_24px"
+            android:title="@string/logout"/>
+    </group>
+
+
 
 </menu>

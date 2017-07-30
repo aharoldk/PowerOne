@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.project.powerone.powerone.LoginActivity">
+    tools:context="com.project.powerone.powerone.LoginActivity"
+    android:theme="@style/reloTheme">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,19 +41,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/loginLogin"
-            android:id="@+id/loginLogin"/>
+            android:id="@+id/loginLogin"
+            android:background="@color/buttonColor"
+            android:textColor="@color/buttonTextColor"/>
 
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"
-        android:paddingLeft="10dp">
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/copyRight"
             android:textColor="#FFF"/>

@@ -1,5 +1,6 @@
 package com.project.powerone.powerone;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,17 +13,29 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.project.powerone.powerone.pojo.Status;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * A login screen that offers login via email/password.
@@ -31,24 +44,72 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private ImageView loginImage;
     private EditText loginPassword;
+    private Button loginLogin;
+
+    private String dateNow, timeNow, dbUserid, dbPassword;
+
+    private Calendar calendar = Calendar.getInstance();
+
     private DatabaseHelper databaseHelper;
 
-    private TextView loginLogin;
+    private Status[] statuses;
 
+    private Gson gson = new Gson();
+
+    private static final int USERID = 0;
     private static final int PASSWORD = 3;
+    private static final int POSITION = 0;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        progressDialog = new ProgressDialog(this);
+
         loginImage = (ImageView) findViewById(R.id.loginImage);
         loginPassword = (EditText) findViewById(R.id.loginPassword);
-        loginLogin = (TextView) findViewById(R.id.loginLogin);
+        loginLogin = (Button) findViewById(R.id.loginLogin);
 
         loginLogin.setOnClickListener(this);
 
-        loginImage.setImageResource(R.drawable.angelos);
+        showImages();
+    }
+
+
+
+    static final String[] EXTENSIONS = new String[]{
+            "jpg" // and other formats you need
+    };
+    // filter to identify images based on their extensions
+    static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
+
+        @Override
+        public boolean accept(final File dir, final String name) {
+            for (final String ext : EXTENSIONS) {
+                if (name.endsWith("." + ext)) {
+                    return (true);
+                }
+            }
+            return (false);
+        }
+    };
+    private void showImages() {
+        File dir = new File(String.valueOf(getExternalFilesDir(Environment.DIRECTORY_PICTURES)));
+
+        File[] filelist = dir.listFiles(IMAGE_FILTER );
+        for (File f : filelist) {
+
+            String mCurrentPhotoPath = f.getAbsolutePath();
+
+            Log.i("current", mCurrentPhotoPath);
+
+            Bitmap photoReducedSizeBitmp = BitmapFactory.decodeFile(mCurrentPhotoPath);
+
+            loginImage.setImageBitmap(photoReducedSizeBitmp);
+        }
     }
 
     @Override
@@ -67,10 +128,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(!TextUtils.isEmpty(lPassword)){
 
                     cursor.moveToFirst();
-                    String dbPassword = cursor.getString(PASSWORD);
+                    dbUserid = cursor.getString(USERID);
+                    dbPassword = cursor.getString(PASSWORD);
                     if(lPassword.equals(dbPassword)){
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
+
+                        parseDatabase();
+
                     } else {
                         Toast.makeText(LoginActivity.this, "Your Password Wrong", Toast.LENGTH_SHORT).show();
                     }
@@ -84,6 +147,63 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    private void parseDatabase() {
+        getDate();
 
+        progressDialog.setMessage("Wait . . .");
+        progressDialog.show();
+
+        String URLlogin = "http://202.43.162.180:8082/poweronemobilewebservice/ws_update_salesman?arg_salesman="+dbUserid+"&arg_password="+dbPassword+"&arg_lastlogin="+dateNow+"%"+timeNow;
+
+        RequestQueue sQueueLogin = Volley.newRequestQueue(LoginActivity.this);
+
+        StringRequest sRequestLogin = new StringRequest(
+                Request.Method.GET,
+                URLlogin,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String responseLogin) {
+                        Log.i("responseLogin", responseLogin);
+
+                        try {
+                            statuses = gson.fromJson(responseLogin, Status[].class);
+
+                            int xStatus = statuses[POSITION].getxStatus();
+
+                            if(xStatus == 1){
+                                progressDialog.dismiss();
+
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
+
+                            } else {
+                                progressDialog.dismiss();
+
+                                Toast.makeText(LoginActivity.this, "Request xStatus Login Error", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }
+        );
+
+        sQueueLogin.add(sRequestLogin);
+    }
+
+
+    private void getDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy:HH:mm");
+
+        dateNow = dateFormat.format(calendar.getTime());
+        timeNow = timeFormat.format(calendar.getTime());
+    }
 }
 
