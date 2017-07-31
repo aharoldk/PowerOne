@@ -43,4 +43,10 @@
     <string name="importAllButton">Import All</string>
 
     <string name="copyRight">Copyright by \u0040 2017 - PowerGEN </string>
+    <string name="title_activity_product2">Product2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

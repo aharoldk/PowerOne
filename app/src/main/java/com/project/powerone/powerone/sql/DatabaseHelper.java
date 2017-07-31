@@ -6,7 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.Date;
+import com.project.powerone.powerone.adapter.ProductAdapter;
+import com.project.powerone.powerone.pojo.Product;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by aharoldk on 21/07/17.
@@ -92,7 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String QUERY_TABLE1 = "CREATE TABLE "+TABLE_NAME1+"("+ID+" INTEGER PRIMARY KEY NOT NULL,"+SITE_ID+" CHARACTER(10) NULL,"+SALESMAN_ID+" CHARACTER(20) NULL,"+CUST_ID+" CHARACTER(10) NULL,"+CUST_NAME+" VARCHAR(100) NULL, "+CUST_ADDRESS+" VARCHAR(250) NULL, "+PRICE_TYPE+" CHARACTER(10) NULL, "+GEO_MAPLONG+" DOUBLE NULL, "+GEO_MAPLAT+" DOUBLE NULL, "+GPS_MAPLONG+" DOUBLE NULL, "+GPS_MAPLAT+" DOUBLE NULL)";
 
-    private static final String QUERY_TABLE2 = "CREATE TABLE "+TABLE_NAME2+"("+ID+" INTEGER PRIMARY KEY NOT NULL,"+SITE_ID+" CHARACTER(10) NULL,"+PRODUCT_ID+" CHARACTER(20) NULL, "+PRODUCT_NAME+" VARCHAR(100) NULL, "+BIG_PACK+" CHARACTER(10) NULL, "+SMALL_PACK+" CHARACTER(10) NULL, "+NO_OF_PACK+" INT  NULL, "+PRINSIPAL_NAME+" VARCHAR(50) NULL, "+GROUP_PRODUCT_NAME+" VARCHAR(50) NULL, "+SUB_GROUP_PRODUCT_NAME+" VARCHAR(50) NULL, "+QTY_ON_HAND+" NUMERIC(10,0) NULL)";
+    private static final String QUERY_TABLE2 = "CREATE TABLE "+TABLE_NAME2+"("+ID+" INTEGER PRIMARY KEY NOT NULL,"+SITE_ID+" CHARACTER(10) NULL,"+PRODUCT_ID+" CHARACTER(20) NULL, "+PRODUCT_NAME+" VARCHAR(100) NULL, "+BIG_PACK+" CHARACTER(10) NULL, "+SMALL_PACK+" CHARACTER(10) NULL, "+NO_OF_PACK+" INT  NULL, "+PRINSIPAL_NAME+" VARCHAR(50) NULL, "+GROUP_PRODUCT_NAME+" VARCHAR(50) NULL, "+SUB_GROUP_PRODUCT_NAME+" VARCHAR(50) NULL, "+QTY_ON_HAND+" INT NULL)";
 
     private static final String QUERY_TABLE3 = "CREATE TABLE "+TABLE_NAME3+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20) NULL, "+PRODUCT_TYPE+" CHARACTER(10) NULL, "+SALES_PRICE+" NUMERIC(18,2) NULL)";
 
@@ -172,35 +176,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Boolean insertProduct(int urutID, String siteID, String productID, String productName, String bigPack, String smallPack, String prinsipalName, String groupProductName, String subGroupProductName, int noOfPack, double qtyOnHand){
-
-        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(ID, urutID);
-        contentValues.put(SITE_ID, siteID);
-        contentValues.put(PRODUCT_ID, productID);
-        contentValues.put(PRODUCT_NAME, productName);
-        contentValues.put(BIG_PACK, bigPack);
-        contentValues.put(SMALL_PACK, smallPack);
-        contentValues.put(PRINSIPAL_NAME, prinsipalName);
-        contentValues.put(GROUP_PRODUCT_NAME, groupProductName);
-        contentValues.put(SUB_GROUP_PRODUCT_NAME, subGroupProductName);
-        contentValues.put(NO_OF_PACK, noOfPack);
-        contentValues.put(QTY_ON_HAND, qtyOnHand);
-
-        long result = sqLiteDatabase.insert(TABLE_NAME2, null, contentValues);
-
-        if(result == -1){
-            return false;
-
-        } else {
-            return true;
-
-        }
-    }
-
     public boolean insertCustomer(int urutID, String siteID, String salesmanID, String custID, String custName, String custAddress, String priceType, double geoMapLong, double geoMapLat, double gpsMapLong, double gpsMapLat) {
 
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
@@ -220,6 +195,64 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(GPS_MAPLAT, gpsMapLat);
 
         long result = sqLiteDatabase.insert(TABLE_NAME1, null, contentValues);
+
+        if(result == -1){
+            return false;
+
+        } else {
+            return true;
+
+        }
+    }
+
+    public List<Product> getAllProduct(){
+        List<Product> list = new ArrayList<>();
+
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME2, null);
+
+        while (cursor.moveToNext()) {
+
+            int id = cursor.getInt(0);
+            String siteID = cursor.getString(1);
+            String productID = cursor.getString(2);
+            String productName = cursor.getString(3);
+            String bigPack = cursor.getString(4);
+            String smallPack = cursor.getString(5);
+            int noOfPack = cursor.getInt(6);
+            String prinsipalName = cursor.getString(7);
+            String groupProductName = cursor.getString(8);
+            String subgroupProductName = cursor.getString(9);
+            int qtyOnHand = cursor.getInt(10);
+
+            Product product = new Product(siteID, productID, productName, bigPack, smallPack, prinsipalName, groupProductName, subgroupProductName, noOfPack, id, qtyOnHand);
+
+            list.add(product);
+        }
+
+        return list;
+
+    }
+
+    public boolean insertProduct(int urutID, String siteID, String productID, String productName, String bigPack, String smallPack, String prinsipalName, String groupProductName, String subGroupProductName, int noOfPack, int qtyOnHand) {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(ID, urutID);
+        contentValues.put(SITE_ID, siteID);
+        contentValues.put(PRODUCT_ID, productID);
+        contentValues.put(PRODUCT_NAME, productName);
+        contentValues.put(BIG_PACK, bigPack);
+        contentValues.put(SMALL_PACK, smallPack);
+        contentValues.put(PRINSIPAL_NAME, prinsipalName);
+        contentValues.put(GROUP_PRODUCT_NAME, groupProductName);
+        contentValues.put(SUB_GROUP_PRODUCT_NAME, subGroupProductName);
+        contentValues.put(NO_OF_PACK, noOfPack);
+        contentValues.put(QTY_ON_HAND, qtyOnHand);
+
+        long result = sqLiteDatabase.insert(TABLE_NAME2, null, contentValues);
 
         if(result == -1){
             return false;

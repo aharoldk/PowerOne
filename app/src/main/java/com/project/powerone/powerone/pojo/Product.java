@@ -7,13 +7,12 @@ package com.project.powerone.powerone.pojo;
 public class Product {
 
     private String SiteID, ProductID, ProductName, BigPack, SmallPack, PrinsipalName, GroupProductName, SubGroupProductName;
-    private int NoOfPack, UrutID;
-    private double QtyOnHand;
+    private int NoOfPack, UrutID, QtyOnHand;
 
     public Product() {
     }
 
-    public Product(String siteID, String productID, String productName, String bigPack, String smallPack, String prinsipalName, String groupProductName, String subGroupProductName, int noOfPack, int urutID, double qtyOnHand) {
+    public Product(String siteID, String productID, String productName, String bigPack, String smallPack, String prinsipalName, String groupProductName, String subGroupProductName, int noOfPack, int urutID, int qtyOnHand) {
         SiteID = siteID;
         ProductID = productID;
         ProductName = productName;
@@ -107,11 +106,11 @@ public class Product {
         UrutID = urutID;
     }
 
-    public double getQtyOnHand() {
+    public int getQtyOnHand() {
         return QtyOnHand;
     }
 
-    public void setQtyOnHand(double qtyOnHand) {
+    public void setQtyOnHand(int qtyOnHand) {
         QtyOnHand = qtyOnHand;
     }
 }

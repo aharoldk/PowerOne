@@ -13,8 +13,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.project.powerone.powerone.sql.DatabaseHelper;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,20 +20,12 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
 
-
-    private DatabaseHelper databaseHelper;
-
-    private static final int NAMEUSER = 1;
-    private static final int SITEID = 2;
-
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        databaseHelper = new DatabaseHelper(this);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 

@@ -38,23 +38,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ImportActivity"
+        <activity
+            android:name=".ImportActivity"
             android:label="@string/app_version" />
-        <activity android:name=".ExportActivity"
+        <activity
+            android:name=".ExportActivity"
             android:label="@string/app_version" />
-        <activity android:name=".VisitActivity"
+        <activity
+            android:name=".VisitActivity"
             android:label="@string/app_version" />
-        <activity android:name=".ProductActivity"
+        <activity
+            android:name=".ProductActivity"
             android:label="@string/app_version" />
-        <activity android:name=".SalesActivity"
+        <activity
+            android:name=".SalesActivity"
             android:label="@string/app_version" />
-        <activity android:name=".ARActivity"
+        <activity
+            android:name=".ARActivity"
             android:label="@string/app_version" />
-        <activity android:name=".PasswordActivity"
+        <activity
+            android:name=".PasswordActivity"
             android:label="@string/app_version" />
-        <activity android:name=".ReportActivity"
+        <activity
+            android:name=".ReportActivity"
             android:label="@string/app_version" />
-        <activity android:name=".PhotoActivity"
+        <activity
+            android:name=".PhotoActivity"
             android:label="@string/app_version" />
         <activity android:name=".SignatureActivity" />
 
@@ -67,6 +76,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
     </application>
 
 </manifest>
