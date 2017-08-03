@@ -70,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
 
         progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
 
         /*this.deleteDatabase(DATABASE_NAME);*/
         if(checkDatabase(this, DATABASE_NAME)){

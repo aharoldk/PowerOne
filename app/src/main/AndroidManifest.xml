@@ -77,6 +77,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".PopActivity"
+            android:theme="@style/AppTheme.Custom"></activity>
     </application>
 
 </manifest>

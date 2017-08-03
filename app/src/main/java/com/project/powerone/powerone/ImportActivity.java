@@ -26,7 +26,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.project.powerone.powerone.pojo.ARBalance;
 import com.project.powerone.powerone.pojo.Customer;
+import com.project.powerone.powerone.pojo.Price;
 import com.project.powerone.powerone.pojo.Product;
 import com.project.powerone.powerone.pojo.Status;
 import com.project.powerone.powerone.sql.DatabaseHelper;
@@ -39,22 +41,32 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
     private Product[] products;
     private Customer[] customers;
+    private Price[] prices;
+    private ARBalance[] arBalances;
 
     private Gson gson = new Gson();
 
     private String  siteID, productID, productName, bigPack, smallPack, prinsipalName, groupProductName, subGroupProductName;
-    private int noOfPack, urutID, qtyOnHand, countProduct = 0, counFailProduct = 0, countCustomer = 0, countFailCustomer = 0;
+    private int noOfPack, urutID, qtyOnHand;
+
+    private String invoiceID, dDueDate;
+    private long balanceAR;
 
     private String salesmanID, custID, custName, custAddress, priceType;
     private double geoMapLong, geoMapLat, gpsMapLong, gpsMapLat;
 
+    private int salesPrice;
+    private String productType;
 
     private DatabaseHelper databaseHelper;
-    private String dbUserID, dbSiteID;
+
+    private String dbUserID, dbSiteID, statusVisit = "Not Active", dateTime = "";
     private static final int USERID = 0;
     private static final int SITEID = 2;
 
-    private boolean insertedProduct, insertedCustomer;
+    private boolean insertedProduct = false, insertedCustomer = false, insertedPrice = false, insertedAR = false;
+
+    private int countProduct = 0, countFailProduct = 0, countPrice = 0, countFailPrice = 0, countCustomer = 0, countFailCustomer = 0, countAR = 0, countFailAR = 0;
 
     private ProgressDialog progressDialog;
 
@@ -70,6 +82,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
         databaseHelper = new DatabaseHelper(ImportActivity.this);
 
         progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
 
         Cursor cursor = databaseHelper.loginSalesman();
         cursor.moveToNext();
@@ -104,7 +117,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                     finish();
 
                 } else if(id == R.id.visitScreen){
-                    startActivity(new Intent(ImportActivity.this, VisitActivity.class));
+                    startActivity(new Intent(ImportActivity.this, SalesActivity.class));
                     finish();
 
                 } else if(id == R.id.produkScreen){
@@ -173,7 +186,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
             productData();
 
         } else if(view == buttonPrice) {
-            priceData();
+            productPrice();
 
         } else if(view == buttonAr){
             arData();
@@ -181,21 +194,153 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
         } else if(view == importButton){
             customerData();
             productData();
-            priceData();
+            productPrice();
             arData();
 
         }
     }
 
-    private void arData() {
+    private void productPrice() {
+        progressDialog.setMessage("Wait Import Price Product . . . ");
+        progressDialog.show();
+
+        String URLPrice = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_productprice?arg_site="+dbSiteID;
+
+        RequestQueue requestQueuePrice = Volley.newRequestQueue(ImportActivity.this);
+
+        StringRequest stringRequestPrice = new StringRequest(
+                Request.Method.GET,
+                URLPrice,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String responsePrice) {
+                        Log.i("responsePrice", responsePrice);
+                        databaseHelper.emptyDatabase("MobProductPrice");
+
+                        try {
+                            prices = gson.fromJson(responsePrice, Price[].class);
+
+                            for(int i = 0; i < responsePrice.length(); i++) {
+
+                                urutID = prices[i].getUrutID();
+                                siteID = prices[i].getSiteID();
+                                productID = prices[i].getProductID();
+                                productType = prices[i].getProductType();
+                                salesPrice = prices[i].getSalesPrice();
+
+                                insertedPrice = databaseHelper.insertPrice(urutID, siteID, productID, productType, salesPrice);
+
+                                if(insertedPrice != true){
+                                    countFailPrice++;
+                                }
+
+                                countPrice++;
+                                insertedPrice = false;
+
+                                progressDialog.setProgress((int)(i * 100/ responsePrice.length() ));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        progressDialog.dismiss();
+
+                        if(countFailPrice == 0){
+                            totalPrice.setText(""+ countPrice);
+
+                        } else {
+                            Toast.makeText(ImportActivity.this, "Please Import Product Again", Toast.LENGTH_SHORT).show();
+                        }
+
+                        countPrice = 0;
+                        countFailPrice = 0;
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }
+        );
+
+        requestQueuePrice.add(stringRequestPrice);
     }
 
-    private void priceData() {
+    private void arData() {
+        progressDialog.setMessage("Wait Import AR Balance . . . ");
+        progressDialog.show();
 
+        String URLar = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_arbalance?arg_site="+dbSiteID+"&arg_salesman="+dbUserID;
+
+        RequestQueue requestQueueAR = Volley.newRequestQueue(ImportActivity.this);
+
+        StringRequest stringRequestAR = new StringRequest(
+                Request.Method.GET,
+                URLar,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String responseAR) {
+                        Log.i("responseAR", responseAR);
+
+                        databaseHelper.emptyDatabase("MobARBalance");
+
+                        try {
+                            arBalances = gson.fromJson(responseAR, ARBalance[].class);
+
+
+                            for(int i = 0; i < responseAR.length(); i++) {
+
+                                siteID = arBalances[i].getSiteID();
+                                custID = arBalances[i].getCustID();
+                                salesmanID = arBalances[i].getSalesmanID();
+                                invoiceID = arBalances[i].getInvoiceID();
+                                dDueDate = arBalances[i].getdDueDate();
+                                balanceAR = arBalances[i].getBalanceAR();
+                                urutID = arBalances[i].getUrutID();
+
+                                insertedAR = databaseHelper.insertAR(siteID, salesmanID, custID, invoiceID, dDueDate, balanceAR, urutID);
+
+                                if(insertedAR != true){
+                                    countFailAR++;
+                                }
+
+                                countAR++;
+                                insertedAR = false;
+
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        progressDialog.dismiss();
+
+                        if(countFailAR == 0){
+                            totalAr.setText(""+ countAR);
+
+                        } else {
+                            Toast.makeText(ImportActivity.this, "Please Import AR Balance Again", Toast.LENGTH_SHORT).show();
+                        }
+
+                        countAR = 0;
+                        countFailAR = 0;
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }
+        );
+
+        requestQueueAR.add(stringRequestAR);
     }
 
     private void productData() {
-        progressDialog.setMessage("Wait Import Product Data . . . ");
+        progressDialog.setMessage("Wait Import Product . . . ");
         progressDialog.show();
 
         String URLProduct = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_product?arg_site="+dbSiteID;
@@ -214,8 +359,8 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                         try {
                             products = gson.fromJson(responseProduct, Product[].class);
 
-                            for(int i = 0; i < responseProduct.length(); i++) {
 
+                            for(int i = 0; i < responseProduct.length(); i++) {
                                 urutID = products[i].getUrutID();
                                 siteID = products[i].getSiteID();
                                 productID = products[i].getProductID();
@@ -231,28 +376,30 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                                 insertedProduct = databaseHelper.insertProduct(urutID, siteID, productID, productName, bigPack, smallPack, prinsipalName, groupProductName, subGroupProductName, noOfPack, qtyOnHand);
 
                                 if(insertedProduct != true){
-                                    counFailProduct++;
+                                    countFailProduct++;
                                 }
 
                                 countProduct++;
                                 insertedProduct = false;
+
+
                             }
 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
 
-                        if(counFailProduct == 0){
-                            progressDialog.dismiss();
+                        progressDialog.dismiss();
 
+                        if(countFailProduct == 0){
                             totalProduct.setText(""+ countProduct);
-                            countProduct = 0;
 
                         } else {
-                            progressDialog.dismiss();
-
                             Toast.makeText(ImportActivity.this, "Please Import Product Again", Toast.LENGTH_SHORT).show();
                         }
+
+                        countProduct = 0;
+                        countFailProduct = 0;
 
                     }
                 }, new Response.ErrorListener() {
@@ -287,8 +434,9 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                         try {
                             customers = gson.fromJson(responseCustomer, Customer[].class);
-                            for(int i = 0; i < responseCustomer.length(); i++) {
 
+
+                            for(int i = 0; i < responseCustomer.length(); i++) {
                                 urutID = customers[i].getUrutID();
                                 siteID = customers[i].getSiteID();
                                 salesmanID = customers[i].getSalesmanID();
@@ -301,7 +449,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                                 gpsMapLong = customers[i].getGPSMapLong();
                                 gpsMapLat = customers[i].getGPSMapLat();
 
-                                insertedCustomer = databaseHelper.insertCustomer(urutID, siteID, salesmanID, custID, custName, custAddress, priceType, geoMapLong, geoMapLat, gpsMapLong, gpsMapLat);
+                                insertedCustomer = databaseHelper.insertCustomer(urutID, siteID, salesmanID, custID, custName, custAddress, priceType, geoMapLong, geoMapLat, gpsMapLong, gpsMapLat, statusVisit, dateTime);
 
                                 if(insertedCustomer != true){
                                     countFailCustomer++;
@@ -314,25 +462,26 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                             e.printStackTrace();
                         }
 
-                        if(countFailCustomer == 0){
-                            progressDialog.dismiss();
+                        progressDialog.dismiss();
 
+                        if(countFailCustomer == 0){
                             totalCustomer.setText(""+ countCustomer);
-                            countCustomer = 0;
 
                         } else {
-                            progressDialog.dismiss();
-
-                            Toast.makeText(ImportActivity.this, "Please Import Customer Again", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ImportActivity.this, "Please Import Product Again", Toast.LENGTH_SHORT).show();
                         }
+
+                        countCustomer = 0;
+                        countFailCustomer = 0;
+
 
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        }
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                }
         );
 
         requestQueueCustomer.add(stringRequestCustomer);

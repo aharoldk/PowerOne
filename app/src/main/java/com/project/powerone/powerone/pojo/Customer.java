@@ -6,25 +6,26 @@ package com.project.powerone.powerone.pojo;
 
 public class Customer {
 
-    private String SiteID, SalesmanID, CustID, CustName, CustAddress, PriceType;
+    private String SiteID, SalesmanID, CustID, CustName, CustAddress, PriceType, StatusCustomer, DateTime;
     private int UrutID;
     private double GeoMapLong, GeoMapLat, GPSMapLong, GPSMapLat;
 
     public Customer() {
     }
-
-    public Customer(String siteID, String salesmanID, String custID, String custName, String custAddress, String priceType, int urutID, double geoMapLong, double geoMapLat, double GPSMapLong, double GPSMapLat) {
+    public Customer(String siteID, String salesmanID, String custID, String custName, String custAddress, String priceType, String statusCustomer, String dateTime, int urutID, double geoMapLong, double geoMapLat, double gpsMapLong, double gpsMapLat) {
         SiteID = siteID;
         SalesmanID = salesmanID;
         CustID = custID;
         CustName = custName;
         CustAddress = custAddress;
         PriceType = priceType;
+        StatusCustomer = statusCustomer;
+        DateTime = dateTime;
         UrutID = urutID;
         GeoMapLong = geoMapLong;
         GeoMapLat = geoMapLat;
-        this.GPSMapLong = GPSMapLong;
-        this.GPSMapLat = GPSMapLat;
+        GPSMapLong = gpsMapLong;
+        GPSMapLat = gpsMapLat;
     }
 
     public String getSiteID() {
@@ -73,6 +74,22 @@ public class Customer {
 
     public void setPriceType(String priceType) {
         PriceType = priceType;
+    }
+
+    public String getStatusCustomer() {
+        return StatusCustomer;
+    }
+
+    public void setStatusCustomer(String statusCustomer) {
+        StatusCustomer = statusCustomer;
+    }
+
+    public String getDateTime() {
+        return DateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        DateTime = dateTime;
     }
 
     public int getUrutID() {

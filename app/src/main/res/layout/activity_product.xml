@@ -4,36 +4,33 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.project.powerone.powerone.Product2Activity">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <android.support.design.widget.AppBarLayout
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:hint="Search"
+            android:id="@+id/searchEditText" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <android.support.v7.widget.RecyclerView
 
-        </android.support.design.widget.AppBarLayout>
+            android:id="@+id/rvmain"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+        </android.support.v7.widget.RecyclerView>
 
-    </android.support.design.widget.CoordinatorLayout>
-
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
@@ -44,16 +41,5 @@
         android:layout_gravity="start"
         android:id="@+id/navigation">
     </android.support.design.widget.NavigationView>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvmain"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/searchView">
-
-    </android.support.v7.widget.RecyclerView>
-
-
 
 </android.support.v4.widget.DrawerLayout>

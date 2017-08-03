@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
 
         loginImage = (ImageView) findViewById(R.id.loginImage);
         loginPassword = (EditText) findViewById(R.id.loginPassword);

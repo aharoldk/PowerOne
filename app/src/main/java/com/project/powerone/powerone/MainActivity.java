@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
 
             } else if(id == R.id.visitScreen){
-                startActivity(new Intent(MainActivity.this, VisitActivity.class));
+                startActivity(new Intent(MainActivity.this, SalesActivity.class));
                 finish();
 
             } else if(id == R.id.produkScreen){

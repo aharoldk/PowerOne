@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.project.powerone.powerone.adapter.ProductAdapter;
+import com.project.powerone.powerone.pojo.ARBalance;
+import com.project.powerone.powerone.pojo.Customer;
 import com.project.powerone.powerone.pojo.Product;
 
 import java.util.ArrayList;
@@ -49,6 +51,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String GEO_MAPLAT = "GeoMapLat";
     private static final String GPS_MAPLONG = "GPSMapLong";
     private static final String GPS_MAPLAT = "GPSMapLat";
+    private static final String STATUS_CUSTOMER = "StatusCustomer";
+    private static final String DATE_TIME = "DateTime";
 
 //    table 2 menggunakan ID dan SITE_ID
     private static final String PRODUCT_ID = "ProductID";
@@ -94,15 +98,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String PASSWORD = "Password";
     private static final String DLAST_LOGIN = "dLastLogin";
 
-    private static final String QUERY_TABLE1 = "CREATE TABLE "+TABLE_NAME1+"("+ID+" INTEGER PRIMARY KEY NOT NULL,"+SITE_ID+" CHARACTER(10) NULL,"+SALESMAN_ID+" CHARACTER(20) NULL,"+CUST_ID+" CHARACTER(10) NULL,"+CUST_NAME+" VARCHAR(100) NULL, "+CUST_ADDRESS+" VARCHAR(250) NULL, "+PRICE_TYPE+" CHARACTER(10) NULL, "+GEO_MAPLONG+" DOUBLE NULL, "+GEO_MAPLAT+" DOUBLE NULL, "+GPS_MAPLONG+" DOUBLE NULL, "+GPS_MAPLAT+" DOUBLE NULL)";
+    private static final String QUERY_TABLE1 = "CREATE TABLE "+TABLE_NAME1+"("+ID+" INTEGER PRIMARY KEY NOT NULL,"+SITE_ID+" CHARACTER(10) NULL,"+SALESMAN_ID+" CHARACTER(20) NULL,"+CUST_ID+" CHARACTER(10) NULL,"+CUST_NAME+" VARCHAR(100) NULL, "+CUST_ADDRESS+" VARCHAR(250) NULL, "+PRICE_TYPE+" CHARACTER(10) NULL, "+GEO_MAPLONG+" DOUBLE NULL, "+GEO_MAPLAT+" DOUBLE NULL, "+GPS_MAPLONG+" DOUBLE NULL, "+GPS_MAPLAT+" DOUBLE NULL, "+STATUS_CUSTOMER+" CHARACTER(12) NULL , "+DATE_TIME+" VARCHAR(20) NULL)";
 
     private static final String QUERY_TABLE2 = "CREATE TABLE "+TABLE_NAME2+"("+ID+" INTEGER PRIMARY KEY NOT NULL,"+SITE_ID+" CHARACTER(10) NULL,"+PRODUCT_ID+" CHARACTER(20) NULL, "+PRODUCT_NAME+" VARCHAR(100) NULL, "+BIG_PACK+" CHARACTER(10) NULL, "+SMALL_PACK+" CHARACTER(10) NULL, "+NO_OF_PACK+" INT  NULL, "+PRINSIPAL_NAME+" VARCHAR(50) NULL, "+GROUP_PRODUCT_NAME+" VARCHAR(50) NULL, "+SUB_GROUP_PRODUCT_NAME+" VARCHAR(50) NULL, "+QTY_ON_HAND+" INT NULL)";
 
-    private static final String QUERY_TABLE3 = "CREATE TABLE "+TABLE_NAME3+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20) NULL, "+PRODUCT_TYPE+" CHARACTER(10) NULL, "+SALES_PRICE+" NUMERIC(18,2) NULL)";
+    private static final String QUERY_TABLE3 = "CREATE TABLE "+TABLE_NAME3+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20) NULL, "+PRODUCT_TYPE+" CHARACTER(10) NULL, "+SALES_PRICE+" INT NULL)";
 
-    private static final String QUERY_TABLE4 = "CREATE TABLE "+TABLE_NAME4+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+INVOICE_ID+" VARCHAR(20) NULL, "+DDUE_DATE+" DATETIME NULL, "+BALANCE_AR+" NUMERIC(18,2) NOT NULL)";
+    private static final String QUERY_TABLE4 = "CREATE TABLE "+TABLE_NAME4+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+INVOICE_ID+" VARCHAR(20) NULL, "+DDUE_DATE+" DATETIME NULL, "+BALANCE_AR+" INTEGER NOT NULL)";
 
-    private static final String QUERY_TABLE5 = "CREATE TABLE "+TABLE_NAME5+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20), "+QTY_BIG+" INT NULL DEFAULT 0, "+QTY_SMALL+" INT NULL DEFAULT 0, "+SALES_PRICE+" NUMERIC(18, 2) NULL DEFAULT 0.00, "+PCT_DISC1+" NUMERIC(10, 2) NULL DEFAULT 0.00, "+PCT_DISC2+" NUMERIC(10, 2) NULL DEFAULT 0.00, "+PCT_DISC3+" NUMERIC(10, 2) NULL DEFAULT 0.00, "+BCONFIRM+" INT NULL DEFAULT 0, "+BTRANSFER+" INT NULL DEFAULT 0)";
+    private static final String QUERY_TABLE5 = "CREATE TABLE "+TABLE_NAME5+"("+ID+" INTEGER AUTOINCREMENT PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20), "+QTY_BIG+" INT NULL DEFAULT 0, "+QTY_SMALL+" INT NULL DEFAULT 0, "+SALES_PRICE+" NUMERIC(18, 2) NULL DEFAULT 0.00, "+PCT_DISC1+" NUMERIC(10, 2) NULL DEFAULT 0.00, "+PCT_DISC2+" NUMERIC(10, 2) NULL DEFAULT 0.00, "+PCT_DISC3+" NUMERIC(10, 2) NULL DEFAULT 0.00, "+BCONFIRM+" INT NULL DEFAULT 0, "+BTRANSFER+" INT NULL DEFAULT 0)";
 
     private static final String QUERY_TABLE6 = "CREATE TABLE "+TABLE_NAME6+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+INVOICE_ID+" CHARACTER(20) NULL, "+NOMINAL_PAYMENT+" NUMERIC(18, 2) NULL, "+PAYMENT_TYPE+" CHARACTER(1) NULL, "+BILL_YET_NO+" VARCHAR(20) NULL, "+BILL_YET_DUE_DATE+" DATETIME NULL )";
 
@@ -176,7 +180,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public boolean insertCustomer(int urutID, String siteID, String salesmanID, String custID, String custName, String custAddress, String priceType, double geoMapLong, double geoMapLat, double gpsMapLong, double gpsMapLat) {
+    public boolean insertCustomer(int urutID, String siteID, String salesmanID, String custID, String custName, String custAddress, String priceType, double geoMapLong, double geoMapLat, double gpsMapLong, double gpsMapLat, String statusCustomer, String dateTime) {
 
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
 
@@ -193,6 +197,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(GEO_MAPLAT, geoMapLat);
         contentValues.put(GPS_MAPLONG, gpsMapLong);
         contentValues.put(GPS_MAPLAT, gpsMapLat);
+        contentValues.put(STATUS_CUSTOMER, statusCustomer);
+        contentValues.put(DATE_TIME, dateTime);
 
         long result = sqLiteDatabase.insert(TABLE_NAME1, null, contentValues);
 
@@ -204,6 +210,62 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         }
     }
+
+    public List<ARBalance> getAllArBalance(){
+        List<ARBalance> arBalances = new ArrayList<>();
+
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME4, null);
+
+        while (cursor.moveToNext()){
+
+            int urutID = cursor.getInt(0);
+            String siteID = cursor.getString(1);
+            String salesmanID = cursor.getString(2);
+            String custID = cursor.getString(3);
+            String invoiceID = cursor.getString(4);
+            String dDueDate = cursor.getString(5);
+            long balanceAR = cursor.getLong(6);
+
+            ARBalance arBalance = new ARBalance(siteID, salesmanID, custID, invoiceID, dDueDate, balanceAR, urutID);
+            arBalances.add(arBalance);
+        }
+
+        return arBalances;
+    }
+
+    public List<Customer> getAllCustomer(){
+        List<Customer> listCustomer = new ArrayList<>();
+
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME1, null);
+
+        while (cursor.moveToNext()){
+
+            int urutID = cursor.getInt(0);
+            String siteID = cursor.getString(1);
+            String salesmanID = cursor.getString(2);
+            String custID = cursor.getString(3);
+            String custName = cursor.getString(4);
+            String custAddress = cursor.getString(5);
+            String priceType = cursor.getString(6);
+            double geoMapLong = cursor.getDouble(7);
+            double geoMapLat = cursor.getDouble(8);
+            double gpsMapLong = cursor.getDouble(9);
+            double gpsMapLat = cursor.getDouble(10);
+            String statusCustomer = cursor.getString(11);
+            String dateTime = cursor.getString(12);
+
+            Customer customer = new Customer(siteID, salesmanID, custID, custName, custAddress, priceType, statusCustomer, dateTime, urutID, geoMapLong, geoMapLat, gpsMapLong, gpsMapLat);
+
+            listCustomer.add(customer);
+        }
+
+        return listCustomer;
+    }
+
 
     public List<Product> getAllProduct(){
         List<Product> list = new ArrayList<>();
@@ -261,5 +323,89 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
 
         }
+    }
+
+    public boolean insertPrice(int urutID, String siteID, String productID, String productType, int salesPrice) {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(ID, urutID);
+        contentValues.put(SITE_ID, siteID);
+        contentValues.put(PRODUCT_ID, productID);
+        contentValues.put(PRODUCT_TYPE, productType);
+        contentValues.put(SALES_PRICE, salesPrice);
+
+        long result = sqLiteDatabase.insert(TABLE_NAME3, null, contentValues);
+
+        if(result == -1){
+            return false;
+
+        } else {
+            return true;
+
+        }
+
+    }
+
+    public Cursor getPrice(String condition){
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME3+" WHERE "+PRODUCT_ID+" = ?", new String[] {condition});
+
+        return cursor;
+
+    }
+
+    public boolean insertAR(String siteID, String salesmanID,String custID, String invoiceID, String dDueDate, long balanceAR, int urutID) {
+
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(ID, urutID);
+        contentValues.put(SITE_ID, siteID);
+        contentValues.put(SALESMAN_ID, salesmanID);
+        contentValues.put(CUST_ID, custID);
+        contentValues.put(INVOICE_ID, invoiceID);
+        contentValues.put(DDUE_DATE, dDueDate);
+        contentValues.put(BALANCE_AR, balanceAR);
+
+        long result = sqLiteDatabase.insert(TABLE_NAME4, null, contentValues);
+
+        if(result == -1){
+            return false;
+
+        } else {
+            return true;
+
+        }
+    }
+
+    public boolean updateCustomerVisit(String custID, double gpsMapLong, double gpsMapLat, String statusCustomer, String dateTime){
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(GPS_MAPLONG, gpsMapLong);
+        contentValues.put(GPS_MAPLAT, gpsMapLat);
+        contentValues.put(STATUS_CUSTOMER, statusCustomer);
+        contentValues.put(DATE_TIME, dateTime);
+
+        long result = sqLiteDatabase.update(TABLE_NAME1, contentValues, CUST_ID+" = ?", new String[] { custID});
+
+        if(result == -1){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public Cursor getArCustomer(String condition) {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME4+" WHERE "+CUST_ID+" = ?", new String[] {condition});
+
+        return cursor;
     }
 }
