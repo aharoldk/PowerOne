@@ -184,6 +184,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
+                            progressDialog.dismiss();
+
+                            Toast.makeText(LoginActivity.this, "Please Check Your Connection and Relogin", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -191,6 +194,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+
+                progressDialog.dismiss();
+
+                Toast.makeText(LoginActivity.this, "Please Check Your Connection and Relogin", Toast.LENGTH_SHORT).show();
             }
         }
         );

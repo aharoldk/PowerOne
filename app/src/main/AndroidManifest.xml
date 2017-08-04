@@ -45,7 +45,7 @@
             android:name=".ExportActivity"
             android:label="@string/app_version" />
         <activity
-            android:name=".VisitActivity"
+            android:name=".OrderActivity"
             android:label="@string/app_version" />
         <activity
             android:name=".ProductActivity"
@@ -77,8 +77,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".PopActivity"
-            android:theme="@style/AppTheme.Custom"></activity>
+        <activity android:name=".OrderProductActivity"></activity>
     </application>
 
 </manifest>

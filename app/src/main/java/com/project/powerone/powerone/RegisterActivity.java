@@ -183,22 +183,29 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                                                                 } else {
                                                                     progressDialog.dismiss();
+
                                                                     Toast.makeText(RegisterActivity.this, "Data Not Inserted", Toast.LENGTH_SHORT).show();
                                                                 }
 
                                                             } else {
                                                                 progressDialog.dismiss();
-                                                                Toast.makeText(RegisterActivity.this, "Request xStatus Login Error", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(RegisterActivity.this, "Request xStatus Login Error, Please Call Admin", Toast.LENGTH_SHORT).show();
                                                             }
                                                         } catch (Exception e) {
+                                                            progressDialog.dismiss();
                                                             e.printStackTrace();
+
+                                                            Toast.makeText(RegisterActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
                                                         }
 
                                                     }
                                                 }, new Response.ErrorListener() {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
+                                                progressDialog.dismiss();
                                                 error.printStackTrace();
+
+                                                Toast.makeText(RegisterActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                         );

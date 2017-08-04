@@ -126,7 +126,7 @@ public class ProductActivity extends AppCompatActivity {
                     finish();
 
                 } else if(id == R.id.orderScreen){
-                    startActivity(new Intent(ProductActivity.this, SalesActivity.class));
+                    startActivity(new Intent(ProductActivity.this, OrderActivity.class));
                     finish();
 
                 } else if(id == R.id.ARScreen){

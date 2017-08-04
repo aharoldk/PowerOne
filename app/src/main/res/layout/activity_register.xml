@@ -29,11 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:id="@+id/takePhoto"
+            android:layout_marginTop="10dp"
             android:text="@string/registerPhoto"
             android:textColor="@color/buttonTextColor"
             android:background="@color/buttonColor"
-            android:padding="10dp"
-            />
+            android:padding="10dp"/>
 
         <TextView
             android:layout_width="match_parent"

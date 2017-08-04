@@ -10,6 +10,7 @@
         android:text="INVOICE CUSTOMER"
         android:gravity="center_horizontal"
         android:id="@+id/arHeader"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

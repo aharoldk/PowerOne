@@ -72,7 +72,7 @@ public class ARActivity extends AppCompatActivity {
                     finish();
 
                 } else if(id == R.id.orderScreen){
-                    startActivity(new Intent(ARActivity.this, SalesActivity.class));
+                    startActivity(new Intent(ARActivity.this, OrderActivity.class));
                     finish();
 
                 } else if(id == R.id.ARScreen){

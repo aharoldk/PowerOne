@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     android:padding="10dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:text="PRICE LIST"
+        android:gravity="center_horizontal"
+        android:id="@+id/arHeader"/>
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="250dp">
@@ -15,5 +23,4 @@
             android:textSize="20sp"
             android:id="@+id/listPrice"/>
     </ScrollView>
-
 </LinearLayout>

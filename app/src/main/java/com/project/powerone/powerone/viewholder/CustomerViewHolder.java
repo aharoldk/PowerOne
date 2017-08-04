@@ -17,15 +17,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.project.powerone.powerone.PopActivity;
 import com.project.powerone.powerone.R;
-import com.project.powerone.powerone.SalesActivity;
 import com.project.powerone.powerone.pojo.Customer;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
@@ -160,13 +157,6 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
                 builder.setCancelable(true);
                 builder.setView(mView);
                 builder.show();
-
-                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialogInterface) {
-                        Toast.makeText(activity, "aaa", Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
         });
     }
@@ -201,7 +191,7 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
         if(updateCustomer != true){
             Toast.makeText(activity, "Please Press Done Again and Check Your Connection", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(activity, "Update Complete", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Update Complete" +dateTimeNow, Toast.LENGTH_SHORT).show();
 
             Intent intent = activity.getIntent();
 
@@ -229,7 +219,7 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
     }
 
     private void getDate() {
-        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-M-d yyyy:HH:mm");
+        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         dateTimeNow = dateTimeFormat.format(calendar.getTime());
     }

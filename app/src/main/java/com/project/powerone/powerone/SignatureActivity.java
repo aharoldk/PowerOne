@@ -2,7 +2,6 @@ package com.project.powerone.powerone;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -87,7 +86,7 @@ public class SignatureActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        startActivity(new Intent(SignatureActivity.this, VisitActivity.class));
+        startActivity(new Intent(SignatureActivity.this, OrderActivity.class));
         finish();
     }
 }

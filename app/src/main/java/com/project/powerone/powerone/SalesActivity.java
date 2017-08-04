@@ -82,7 +82,7 @@ public class SalesActivity extends AppCompatActivity {
                     finish();
 
                 } else if(id == R.id.orderScreen){
-                    startActivity(new Intent(SalesActivity.this, SalesActivity.class));
+                    startActivity(new Intent(SalesActivity.this, OrderActivity.class));
                     finish();
 
                 } else if(id == R.id.ARScreen){

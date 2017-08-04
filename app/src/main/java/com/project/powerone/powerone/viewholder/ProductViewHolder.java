@@ -6,16 +6,15 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.project.powerone.powerone.ImportActivity;
-import com.project.powerone.powerone.ProductActivity;
 import com.project.powerone.powerone.R;
 import com.project.powerone.powerone.pojo.Product;
 import com.project.powerone.powerone.sql.DatabaseHelper;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * Created by aharoldk on 31/07/17.
@@ -26,6 +25,8 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
     private TextView productName, groupName, subgroupName, bigPack, smallPack, prinsipalName, stockTotal;
 
     private DatabaseHelper databaseHelper;
+
+    private Cursor cursor;
 
     private int i = 0;
 
@@ -51,7 +52,6 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         prinsipalName.setText(product.getPrinsipalName());
         stockTotal.setText(""+ product.getQtyOnHand());
 
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,7 +65,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
                         if(i == 2) {
                             databaseHelper = new DatabaseHelper(activity);
 
-                            Cursor cursor = databaseHelper.getPrice(product.getProductID());
+                            cursor = databaseHelper.getPrice(product.getProductID());
 
                             if (cursor.getCount() == 0) {
                                 Toast.makeText(activity, "Please Import Price First", Toast.LENGTH_SHORT).show();
@@ -80,15 +80,13 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
 
                                 while(cursor.moveToNext()){
                                     stringBuffer.append("Product Type : "+ cursor.getString(3)+ "\n");
-                                    stringBuffer.append("Sales Price : "+ cursor.getString(4)+ "\n");
+                                    stringBuffer.append("Price : Rp. "+ NumberFormat.getNumberInstance(Locale.US).format(cursor.getInt(4)) + "\n\n");
                                 }
-
 
                                 priceList.setText(stringBuffer);
 
                                 builder.setCancelable(true);
                                 builder.setView(mView);
-                                builder.setTitle("Product Price");
                                 builder.show();
                             }
 
@@ -99,6 +97,11 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
 
             }
         });
+
+
+
+
+
     }
 
 }

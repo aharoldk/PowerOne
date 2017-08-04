@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
 
             } else if(id == R.id.orderScreen){
-                startActivity(new Intent(MainActivity.this, SalesActivity.class));
+                startActivity(new Intent(MainActivity.this, OrderActivity.class));
                 finish();
 
             } else if(id == R.id.ARScreen){

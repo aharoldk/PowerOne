@@ -6,9 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.project.powerone.powerone.adapter.ProductAdapter;
+import com.project.powerone.powerone.OrderProductActivity;
 import com.project.powerone.powerone.pojo.ARBalance;
 import com.project.powerone.powerone.pojo.Customer;
+import com.project.powerone.powerone.pojo.Order;
+import com.project.powerone.powerone.pojo.OrderProduct;
 import com.project.powerone.powerone.pojo.Product;
 
 import java.util.ArrayList;
@@ -20,7 +22,9 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    SQLiteDatabase sqLiteDatabase;
+    private SQLiteDatabase sqLiteDatabase;
+
+    private String status = "Active";
 
     // Database Name
     private static final String DATABASE_NAME = "dbo.db";
@@ -106,7 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String QUERY_TABLE4 = "CREATE TABLE "+TABLE_NAME4+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+INVOICE_ID+" VARCHAR(20) NULL, "+DDUE_DATE+" DATETIME NULL, "+BALANCE_AR+" INTEGER NOT NULL)";
 
-    private static final String QUERY_TABLE5 = "CREATE TABLE "+TABLE_NAME5+"("+ID+" INTEGER AUTOINCREMENT PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20), "+QTY_BIG+" INT NULL DEFAULT 0, "+QTY_SMALL+" INT NULL DEFAULT 0, "+SALES_PRICE+" NUMERIC(18, 2) NULL DEFAULT 0.00, "+PCT_DISC1+" NUMERIC(10, 2) NULL DEFAULT 0.00, "+PCT_DISC2+" NUMERIC(10, 2) NULL DEFAULT 0.00, "+PCT_DISC3+" NUMERIC(10, 2) NULL DEFAULT 0.00, "+BCONFIRM+" INT NULL DEFAULT 0, "+BTRANSFER+" INT NULL DEFAULT 0)";
+    private static final String QUERY_TABLE5 = "CREATE TABLE "+TABLE_NAME5+"("+ID+" INTEGER  PRIMARY KEY AUTOINCREMENT, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20), "+QTY_BIG+" INT NULL, "+QTY_SMALL+" INT NULL, "+SALES_PRICE+" INT NULL , "+PCT_DISC1+" INT NULL, "+PCT_DISC2+" INT NULL, "+PCT_DISC3+" INT NULL, "+BCONFIRM+" INT NULL, "+BTRANSFER+" INT NULL)";
 
     private static final String QUERY_TABLE6 = "CREATE TABLE "+TABLE_NAME6+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+INVOICE_ID+" CHARACTER(20) NULL, "+NOMINAL_PAYMENT+" NUMERIC(18, 2) NULL, "+PAYMENT_TYPE+" CHARACTER(1) NULL, "+BILL_YET_NO+" VARCHAR(20) NULL, "+BILL_YET_DUE_DATE+" DATETIME NULL )";
 
@@ -173,6 +177,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public Boolean insertSalesOrder(String siteID, String salesmanID, String custID, String productID, int sBig, int sSmall, int salesPrice, int sDisc1, int sDisc2, int sDisc3, int bConfirm, int bTransfer){
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(SITE_ID, siteID);
+        contentValues.put(SALESMAN_ID, salesmanID);
+        contentValues.put(CUST_ID, custID);
+        contentValues.put(PRODUCT_ID, productID);
+        contentValues.put(QTY_BIG, sBig);
+        contentValues.put(QTY_SMALL, sSmall);
+        contentValues.put(SALES_PRICE, salesPrice);
+        contentValues.put(PCT_DISC1, sDisc1);
+        contentValues.put(PCT_DISC2, sDisc2);
+        contentValues.put(PCT_DISC3, sDisc3);
+        contentValues.put(BCONFIRM, bConfirm);
+        contentValues.put(BTRANSFER, bTransfer);
+
+        long result = sqLiteDatabase.insert(TABLE_NAME5, null, contentValues);
+
+        if(result == -1){
+            return false;
+
+        } else {
+            return true;
+
+        }
+    }
+
     public Cursor loginSalesman(){
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+ TABLE_NAME8, null);
@@ -211,6 +244,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public List<Order> getAllOrder(String condition){
+        List<Order> orders = new ArrayList<>();
+
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME5+" WHERE "+CUST_ID+" = ?", new String[] {condition});
+
+        while (cursor.moveToNext()) {
+
+            int urutID = cursor.getInt(0);
+            String siteID = cursor.getString(1);
+            String salesmanID = cursor.getString(2);
+            String custID = cursor.getString(3);
+            String productID = cursor.getString(4);
+            int qtyBig = cursor.getInt(5);
+            int qtySmall = cursor.getInt(6);
+            int salesPrice = cursor.getInt(7);
+            int disc1 = cursor.getInt(8);
+            int disc2 = cursor.getInt(9);
+            int disc3 = cursor.getInt(10);
+            int bConfirm = cursor.getInt(11);
+            int bTransfer = cursor.getInt(12);
+
+            Order order = new Order(siteID, salesmanID, custID, productID, urutID, qtyBig, qtySmall, salesPrice, disc1, disc2, disc3, bConfirm, bTransfer);
+
+            orders.add(order);
+        }
+
+        return orders;
+    }
+
     public List<ARBalance> getAllArBalance(){
         List<ARBalance> arBalances = new ArrayList<>();
 
@@ -233,6 +297,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return arBalances;
+    }
+
+    public Cursor getCustomer(){
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+ TABLE_NAME1+" WHERE "+STATUS_CUSTOMER+" = ? ORDER BY datetime("+DATE_TIME+") DESC Limit 1", new String[] {status});
+
+        return cursor;
     }
 
     public List<Customer> getAllCustomer(){
@@ -264,6 +335,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return listCustomer;
+    }
+
+    public List<OrderProduct> getAllProductPrice(String condition) {
+        List<OrderProduct> list = new ArrayList<>();
+
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT a.*, c.SiteID, c.ProductID, c.ProductType, c.SalesPrice FROM "+TABLE_NAME2+" as a, "+TABLE_NAME3+" as c WHERE a.SiteID = c.SiteID AND a.ProductID = c.ProductID AND c.ProductType = ?", new String[]{condition});
+
+        while (cursor.moveToNext()) {
+
+            int id = cursor.getInt(0);
+            String siteID = cursor.getString(1);
+            String productID = cursor.getString(2);
+            String productName = cursor.getString(3);
+            String bigPack = cursor.getString(4);
+            String smallPack = cursor.getString(5);
+            int noOfPack = cursor.getInt(6);
+            String prinsipalName = cursor.getString(7);
+            String groupProductName = cursor.getString(8);
+            String subgroupProductName = cursor.getString(9);
+            int qtyOnHand = cursor.getInt(10);
+            String productType = cursor.getString(13);
+            int salesPrice = cursor.getInt(14);
+
+
+            OrderProduct orderProduct = new OrderProduct(siteID, productID, productName, bigPack, smallPack, prinsipalName, groupProductName, subgroupProductName, noOfPack, id, qtyOnHand, productType, salesPrice);
+
+            list.add(orderProduct);
+        }
+
+
+        return list;
     }
 
 
@@ -407,5 +511,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME4+" WHERE "+CUST_ID+" = ?", new String[] {condition});
 
         return cursor;
+    }
+
+    public Cursor getProduct(String condition) {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME2+" WHERE "+PRODUCT_ID+" = ?", new String[] {condition});
+
+        return cursor;
+    }
+
+    public int deleteOrder(String urutID) {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+        return sqLiteDatabase.delete(TABLE_NAME5, ID+" = ?", new String[] {urutID});
     }
 }

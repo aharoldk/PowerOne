@@ -125,7 +125,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                     finish();
 
                 } else if(id == R.id.orderScreen){
-                    startActivity(new Intent(ImportActivity.this, SalesActivity.class));
+                    startActivity(new Intent(ImportActivity.this, OrderActivity.class));
                     finish();
 
                 } else if(id == R.id.ARScreen){
@@ -250,7 +250,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                             totalPrice.setText(""+ countPrice);
 
                         } else {
-                            Toast.makeText(ImportActivity.this, "Please Import Product Again", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ImportActivity.this, "Please Import Price Again", Toast.LENGTH_SHORT).show();
                         }
 
                         countPrice = 0;
@@ -261,6 +261,9 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+
+                progressDialog.dismiss();
+                Toast.makeText(ImportActivity.this, "Please Import Price Again", Toast.LENGTH_SHORT).show();
             }
         }
         );
@@ -332,6 +335,9 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+
+                progressDialog.dismiss();
+                Toast.makeText(ImportActivity.this, "Please Import AR Balance Again", Toast.LENGTH_SHORT).show();
             }
         }
         );
@@ -406,6 +412,9 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+
+                progressDialog.dismiss();
+                Toast.makeText(ImportActivity.this, "Please Import Product Again", Toast.LENGTH_SHORT).show();
             }
         }
         );
@@ -468,7 +477,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                             totalCustomer.setText(""+ countCustomer);
 
                         } else {
-                            Toast.makeText(ImportActivity.this, "Please Import Product Again", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ImportActivity.this, "Please Import Customer Again", Toast.LENGTH_SHORT).show();
                         }
 
                         countCustomer = 0;
@@ -480,6 +489,9 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+
+                        progressDialog.dismiss();
+                        Toast.makeText(ImportActivity.this, "Please Import Customer Again", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
