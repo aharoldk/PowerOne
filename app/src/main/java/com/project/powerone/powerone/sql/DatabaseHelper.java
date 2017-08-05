@@ -311,7 +311,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
 
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME1, null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME1+ " ORDER BY "+STATUS_CUSTOMER+" DESC, "+CUST_NAME+" ASC", null);
 
         while (cursor.moveToNext()){
 

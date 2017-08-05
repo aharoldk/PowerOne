@@ -2,7 +2,9 @@ package com.project.powerone.powerone.viewholder;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,7 +27,6 @@ import java.util.Locale;
 public class OrderViewHolder extends RecyclerView.ViewHolder {
 
     private TextView orderName, orderExtra, orderPrice, orderQty, orderDisc;
-    private TextView orderPriceTotal;
     private ImageView orderDelete;
 
     private DatabaseHelper databaseHelper;
@@ -43,14 +44,11 @@ public class OrderViewHolder extends RecyclerView.ViewHolder {
         orderQty = itemView.findViewById(R.id.orderQty);
         orderPrice = itemView.findViewById(R.id.orderPrice);
         orderDisc = itemView.findViewById(R.id.orderDisc);
-        orderPriceTotal = itemView.findViewById(R.id.orderPriceTotal);
 
         orderDelete = itemView.findViewById(R.id.orderDelete);
-
-        orderPriceTotal.setText(" asd");
     }
 
-    public void bind(Order order, final Activity activity) {
+    public void bind(Order order, final Activity activity, TextView orderTotal) {
         databaseHelper = new DatabaseHelper(activity);
 
         cursor = databaseHelper.getProduct(order.getProductID());
@@ -67,15 +65,15 @@ public class OrderViewHolder extends RecyclerView.ViewHolder {
         orderQty.setText("Q. "+order.getQtyBig()+"/"+order.getQtySmall());
         orderDisc.setText("%. "+order.getPctDisc1()+"/"+order.getPctDisc2()+"/"+order.getPctDisc3());
 
-        /*hargaProduct = ((double) order.getQtySmall() / (double) noOfPack  * (double) order.getSalesPrice() ) + ((double) order.getQtyBig() * (double) order.getSalesPrice()) ;
+        hargaProduct = ((double) order.getQtySmall() / (double) noOfPack  * (double) order.getSalesPrice() ) + ((double) order.getQtyBig() * (double) order.getSalesPrice()) ;
 
         totalHarga += hargaProduct;
 
         StringBuilder sb = new StringBuilder();
         Formatter formatter = new Formatter(sb, Locale.US);
-        formatter.format("Price Total : Rp. %(,.2f", totalHarga);*/
+        formatter.format("Price Total : Rp. %(,.2f", totalHarga);
 
-
+        orderTotal.setText(sb);
 
         orderDelete.setOnClickListener(new View.OnClickListener() {
             @Override

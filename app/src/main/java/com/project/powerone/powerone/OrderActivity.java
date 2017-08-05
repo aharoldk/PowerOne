@@ -3,6 +3,7 @@ package com.project.powerone.powerone;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Criteria;
@@ -10,6 +11,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -39,6 +41,7 @@ import com.project.powerone.powerone.pojo.Customer;
 import com.project.powerone.powerone.pojo.OrderProduct;
 import com.project.powerone.powerone.pojo.Product;
 import com.project.powerone.powerone.sql.DatabaseHelper;
+import com.project.powerone.powerone.viewholder.OrderViewHolder;
 
 import java.nio.file.Files;
 import java.text.NumberFormat;
@@ -58,7 +61,7 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
 
     private RecyclerView rvmain, rvmainProduct;
 
-    private TextView orderName, orderAddress, orderPriceType;
+    private TextView orderName, orderAddress, orderPriceType, orderTotal;
     private LinearLayout orderButtonAdd;
     private EditText searchEditText;
 
@@ -86,6 +89,7 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
         orderAddress = (TextView) findViewById(R.id.orderAddress);
         orderPriceType = (TextView) findViewById(R.id.orderPriceType);
         orderButtonAdd = (LinearLayout) findViewById(R.id.orderButtonAdd);
+        orderTotal = (TextView) findViewById(R.id.orderTotal);
 
         orderButtonAdd.setOnClickListener(this);
 
@@ -100,12 +104,14 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
 
         if(custID == null){
             custID = "";
+
+            Toast.makeText(this, "Please Visit Customer First", Toast.LENGTH_SHORT).show();
         }
 
         rvmain = (RecyclerView) findViewById(R.id.rvmain);
         rvmain.setLayoutManager(new LinearLayoutManager(this));
         rvmain.setHasFixedSize(true);
-        rvmain.setAdapter(new OrderAdapter(databaseHelper.getAllOrder(custID), OrderActivity.this));
+        rvmain.setAdapter(new OrderAdapter(databaseHelper.getAllOrder(custID), OrderActivity.this, orderTotal));
 
         navigation();
 

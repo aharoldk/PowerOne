@@ -23,4 +23,19 @@
             android:textSize="20sp"
             android:id="@+id/listPrice"/>
     </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/copyRight"
+            android:textColor="#FFF"/>
+
+    </RelativeLayout>
 </LinearLayout>
