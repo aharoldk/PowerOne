@@ -38,51 +38,51 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            int id = item.getItemId();
+                int id = item.getItemId();
 
-            if(id == R.id.importScreen){
-                startActivity(new Intent(MainActivity.this, ImportActivity.class));
-                finish();
+                if(id == R.id.importScreen){
+                    startActivity(new Intent(MainActivity.this, ImportActivity.class));
+                    finish();
 
-            } else if(id == R.id.exportScreen){
-                startActivity(new Intent(MainActivity.this, ExportActivity.class));
-                finish();
+                } else if(id == R.id.exportScreen){
+                    startActivity(new Intent(MainActivity.this, ExportActivity.class));
+                    finish();
 
-            } else if(id == R.id.visitScreen){
-                startActivity(new Intent(MainActivity.this, SalesActivity.class));
-                finish();
+                } else if(id == R.id.visitScreen){
+                    startActivity(new Intent(MainActivity.this, SalesActivity.class));
+                    finish();
 
-            } else if(id == R.id.produkScreen){
-                startActivity(new Intent(MainActivity.this, ProductActivity.class));
-                finish();
+                } else if(id == R.id.produkScreen){
+                    startActivity(new Intent(MainActivity.this, ProductActivity.class));
+                    finish();
 
-            } else if(id == R.id.orderScreen){
-                startActivity(new Intent(MainActivity.this, OrderActivity.class));
-                finish();
+                } else if(id == R.id.orderScreen){
+                    startActivity(new Intent(MainActivity.this, OrderActivity.class));
+                    finish();
 
-            } else if(id == R.id.ARScreen){
-                startActivity(new Intent(MainActivity.this, ARActivity.class));
-                finish();
+                } else if(id == R.id.ARScreen){
+                    startActivity(new Intent(MainActivity.this, ARActivity.class));
+                    finish();
 
-            } else if(id == R.id.reportScreen){
-                startActivity(new Intent(MainActivity.this, ReportActivity.class));
-                finish();
+                } else if(id == R.id.reportScreen){
+                    startActivity(new Intent(MainActivity.this, ReportActivity.class));
+                    finish();
 
-            } else if (id == R.id.photoScreen){
-                startActivity(new Intent(MainActivity.this, PhotoActivity.class));
-                finish();
+                } else if (id == R.id.photoScreen){
+                    startActivity(new Intent(MainActivity.this, PhotoActivity.class));
+                    finish();
 
-            } else if(id == R.id.passwordScreen){
-                startActivity(new Intent(MainActivity.this, PasswordActivity.class));
-                finish();
+                } else if(id == R.id.passwordScreen){
+                    startActivity(new Intent(MainActivity.this, PasswordActivity.class));
+                    finish();
 
-            } else if(id == R.id.logout){
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                finish();
+                } else if(id == R.id.logout){
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
 
-            }
+                }
 
-            return true;
+                return true;
             }
         });
 

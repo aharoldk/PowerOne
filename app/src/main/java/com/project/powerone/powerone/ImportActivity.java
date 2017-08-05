@@ -521,5 +521,4 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-
 }

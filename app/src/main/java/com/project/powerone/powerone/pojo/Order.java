@@ -7,12 +7,14 @@ package com.project.powerone.powerone.pojo;
 public class Order {
 
     private String SiteID, SalesmanID, CustID, ProductID;
-    private int UrutID, QtyBig, QtySmall, SalesPrice, PctDisc1, PctDisc2, PctDisc3, bConfirm , bTransfer;
+    private int UrutID, QtyBig, QtySmall, SalesPrice;
+    private double PctDisc1, PctDisc2, PctDisc3;
+    private int bConfirm , bTransfer;
 
     public Order() {
     }
 
-    public Order(String siteID, String salesmanID, String custID, String productID, int urutID, int qtyBig, int qtySmall, int salesPrice, int pctDisc1, int pctDisc2, int pctDisc3, int bConfirm, int bTransfer) {
+    public Order(String siteID, String salesmanID, String custID, String productID, int urutID, int qtyBig, int qtySmall, int salesPrice, double pctDisc1, double pctDisc2, double pctDisc3, int bConfirm, int bTransfer) {
         SiteID = siteID;
         SalesmanID = salesmanID;
         CustID = custID;
@@ -92,27 +94,27 @@ public class Order {
         SalesPrice = salesPrice;
     }
 
-    public int getPctDisc1() {
+    public double getPctDisc1() {
         return PctDisc1;
     }
 
-    public void setPctDisc1(int pctDisc1) {
+    public void setPctDisc1(double pctDisc1) {
         PctDisc1 = pctDisc1;
     }
 
-    public int getPctDisc2() {
+    public double getPctDisc2() {
         return PctDisc2;
     }
 
-    public void setPctDisc2(int pctDisc2) {
+    public void setPctDisc2(double pctDisc2) {
         PctDisc2 = pctDisc2;
     }
 
-    public int getPctDisc3() {
+    public double getPctDisc3() {
         return PctDisc3;
     }
 
-    public void setPctDisc3(int pctDisc3) {
+    public void setPctDisc3(double pctDisc3) {
         PctDisc3 = pctDisc3;
     }
 

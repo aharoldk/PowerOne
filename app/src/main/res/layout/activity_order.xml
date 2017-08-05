@@ -86,14 +86,29 @@
 
         </LinearLayout>
 
-        <Button
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Price Type"
+            android:id="@+id/orderPriceTotal"
+            android:textSize="20sp"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="Order Confirm"
-            android:id="@+id/orderConfirm"
-            android:background="@color/buttonColor"
-            android:textColor="@color/buttonTextColor"/>
+            android:orientation="vertical">
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Order Confirm"
+                android:id="@+id/orderConfirm"
+                android:background="@color/buttonColor"
+                android:textColor="@color/buttonTextColor"/>
+        </LinearLayout>
+
     </RelativeLayout>
 
 

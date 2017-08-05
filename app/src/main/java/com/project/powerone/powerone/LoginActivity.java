@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button loginLogin;
 
     private String dateNow, timeNow, dbUserid, dbPassword;
+    private boolean result;
 
     private Calendar calendar = Calendar.getInstance();
 
@@ -171,8 +172,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             int xStatus = statuses[POSITION].getxStatus();
 
-                            if(xStatus == 1){
-                                progressDialog.dismiss();
+                            if(xStatus == 1) {
+
+                                result =databaseHelper.updateLogin(dbUserid, dateNow+" "+timeNow);
+
+                                if(result != true){
+                                    progressDialog.dismiss();
+                                    Toast.makeText(LoginActivity.this, "Cannot Update Date Time", Toast.LENGTH_SHORT).show();
+
+                                }
 
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();

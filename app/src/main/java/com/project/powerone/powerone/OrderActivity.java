@@ -91,11 +91,15 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
 
         cursor = databaseHelper.getCustomer();
 
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             custID = cursor.getString(3);
             custName = cursor.getString(4);
             custAddress = cursor.getString(5);
             custPriceType = cursor.getString(6);
+        }
+
+        if(custID == null){
+            custID = "";
         }
 
         rvmain = (RecyclerView) findViewById(R.id.rvmain);

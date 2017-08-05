@@ -20,11 +20,24 @@
             android:layout_weight="0.9"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Product Name"
-                android:id="@+id/orderName"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:text="Product Name"
+                    android:id="@+id/orderName"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:text="/ 144 pcs"
+                    android:id="@+id/orderExtra"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,60 +47,24 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="Price Salse"
+                    android:layout_weight="0.3"
+                    android:text="H. 75.000"
                     android:id="@+id/orderPrice"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="% Disc-1"
-                    android:id="@+id/orderDisc1"/>
+                    android:layout_weight="0.3"
+                    android:text="Q. 2/0"
+                    android:id="@+id/orderQty"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:text="%. 2/2.5/0"
+                    android:id="@+id/orderDisc"/>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="Big Qty"
-                    android:id="@+id/orderBig"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="% Disc-2"
-                    android:id="@+id/orderDisc2"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="Small Qty"
-                    android:id="@+id/orderSmall"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="% Disc-3"
-                    android:id="@+id/orderDisc3"/>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="3dp"
-                android:text="Total Price"
-                android:gravity="center_horizontal"
-                android:id="@+id/orderTotalPrice"/>
-
 
         </LinearLayout>
 

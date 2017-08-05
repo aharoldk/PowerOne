@@ -80,7 +80,7 @@ public class OrderProductActivity extends AppCompatActivity implements View.OnCl
             sDisc2 = pctDisc2.getText().toString();
             sDisc3 = pctDisc3.getText().toString();
 
-            if(!TextUtils.isEmpty(sBig) || !TextUtils.isEmpty(sSmall) || !TextUtils.isEmpty(sDisc1) || !TextUtils.isEmpty(sDisc2) || !TextUtils.isEmpty(sDisc3)){
+            if(!TextUtils.isEmpty(sBig) || !TextUtils.isEmpty(sSmall)){
 
                 set0();
 
@@ -97,7 +97,7 @@ public class OrderProductActivity extends AppCompatActivity implements View.OnCl
                 }
 
             } else {
-                Toast.makeText(this, "Please Fill the Textbox", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please Fill Quanty", Toast.LENGTH_SHORT).show();
             }
         }
     }

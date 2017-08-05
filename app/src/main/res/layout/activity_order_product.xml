@@ -51,13 +51,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:id="@+id/qtyBig"/>
+                android:id="@+id/qtyBig"
+                android:inputType="number"/>
 
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:id="@+id/qtySmall"/>
+                android:id="@+id/qtySmall"
+                android:inputType="number"/>
         </LinearLayout>
 
         <LinearLayout
@@ -117,18 +119,21 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
-                android:id="@+id/pctDisc1"/>
+                android:id="@+id/pctDisc1"
+                android:inputType="numberDecimal"/>
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
-                android:id="@+id/pctDisc2"/>
+                android:id="@+id/pctDisc2"
+                android:inputType="numberDecimal"/>
 
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
-                android:id="@+id/pctDisc3"/>
+                android:id="@+id/pctDisc3"
+                android:inputType="numberDecimal"/>
         </LinearLayout>
 
 

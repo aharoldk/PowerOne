@@ -15,6 +15,7 @@ import com.project.powerone.powerone.pojo.Order;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.text.NumberFormat;
+import java.util.Formatter;
 import java.util.Locale;
 
 /**
@@ -23,28 +24,30 @@ import java.util.Locale;
 
 public class OrderViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView orderName, orderPrice, orderBig, orderSmall, orderDisc1, orderDisc2, orderDisc3, orderTotalPrice;
+    private TextView orderName, orderExtra, orderPrice, orderQty, orderDisc;
+    private TextView orderPriceTotal;
     private ImageView orderDelete;
 
     private DatabaseHelper databaseHelper;
     private Cursor cursor;
 
-    private String bigPack, smallPack, productName;
-    private int delete, urutID;
+    private String productName;
+    private int delete, urutID, noOfPack;
+    private double totalHarga = 0, hargaProduct;
 
     public OrderViewHolder(View itemView) {
         super(itemView);
 
         orderName = itemView.findViewById(R.id.orderName);
+        orderExtra = itemView.findViewById(R.id.orderExtra);
+        orderQty = itemView.findViewById(R.id.orderQty);
         orderPrice = itemView.findViewById(R.id.orderPrice);
-        orderBig = itemView.findViewById(R.id.orderBig);
-        orderSmall = itemView.findViewById(R.id.orderSmall);
-        orderDisc1 = itemView.findViewById(R.id.orderDisc1);
-        orderDisc2 = itemView.findViewById(R.id.orderDisc2);
-        orderDisc3 = itemView.findViewById(R.id.orderDisc3);
-        orderTotalPrice = itemView.findViewById(R.id.orderTotalPrice);
+        orderDisc = itemView.findViewById(R.id.orderDisc);
+        orderPriceTotal = itemView.findViewById(R.id.orderPriceTotal);
 
         orderDelete = itemView.findViewById(R.id.orderDelete);
+
+        orderPriceTotal.setText(" asd");
     }
 
     public void bind(Order order, final Activity activity) {
@@ -55,34 +58,24 @@ public class OrderViewHolder extends RecyclerView.ViewHolder {
         while (cursor.moveToNext()){
             urutID = cursor.getInt(0);
             productName = cursor.getString(3);
-            bigPack = cursor.getString(4);
-            smallPack = cursor.getString(5);
+            noOfPack = cursor.getInt(6);
         }
 
         orderName.setText(productName);
-        orderPrice.setText("Rp. "+ NumberFormat.getNumberInstance(Locale.US).format(order.getSalesPrice()));
-        orderBig.setText(order.getQtyBig()+" /"+bigPack);
-        orderSmall.setText(order.getQtySmall()+" /"+smallPack);
+        orderPrice.setText("H. "+ NumberFormat.getNumberInstance(Locale.US).format(order.getSalesPrice()));
+        orderExtra.setText("/ "+noOfPack+" pcs");
+        orderQty.setText("Q. "+order.getQtyBig()+"/"+order.getQtySmall());
+        orderDisc.setText("%. "+order.getPctDisc1()+"/"+order.getPctDisc2()+"/"+order.getPctDisc3());
 
-        if(order.getPctDisc1() !=0){
-            orderDisc1.setText("Disc-1 : "+order.getPctDisc1()+"%");
-        } else {
-            orderDisc1.setText("");
-        }
+        /*hargaProduct = ((double) order.getQtySmall() / (double) noOfPack  * (double) order.getSalesPrice() ) + ((double) order.getQtyBig() * (double) order.getSalesPrice()) ;
 
-        if (order.getPctDisc2() != 0){
-            orderDisc2.setText("Disc-2 : "+order.getPctDisc2()+"%");
-        } else {
-            orderDisc2.setText("");
-        }
+        totalHarga += hargaProduct;
 
-        if (order.getPctDisc3() != 0){
-            orderDisc3.setText("Disc-3 : "+order.getPctDisc3()+"%");
-        } else {
-            orderDisc3.setText("");
-        }
+        StringBuilder sb = new StringBuilder();
+        Formatter formatter = new Formatter(sb, Locale.US);
+        formatter.format("Price Total : Rp. %(,.2f", totalHarga);*/
 
-//        orderTotalPrice.setText();
+
 
         orderDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +86,7 @@ public class OrderViewHolder extends RecyclerView.ViewHolder {
                 if(delete > 0) {
                     activity.startActivity(new Intent(activity, OrderActivity.class));
                     activity.finish();
+
                 } else {
                     Toast.makeText(activity, "Please Try Again", Toast.LENGTH_SHORT).show();
                 }

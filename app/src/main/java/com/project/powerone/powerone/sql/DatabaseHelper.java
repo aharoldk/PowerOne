@@ -110,7 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String QUERY_TABLE4 = "CREATE TABLE "+TABLE_NAME4+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+INVOICE_ID+" VARCHAR(20) NULL, "+DDUE_DATE+" DATETIME NULL, "+BALANCE_AR+" INTEGER NOT NULL)";
 
-    private static final String QUERY_TABLE5 = "CREATE TABLE "+TABLE_NAME5+"("+ID+" INTEGER  PRIMARY KEY AUTOINCREMENT, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20), "+QTY_BIG+" INT NULL, "+QTY_SMALL+" INT NULL, "+SALES_PRICE+" INT NULL , "+PCT_DISC1+" INT NULL, "+PCT_DISC2+" INT NULL, "+PCT_DISC3+" INT NULL, "+BCONFIRM+" INT NULL, "+BTRANSFER+" INT NULL)";
+    private static final String QUERY_TABLE5 = "CREATE TABLE "+TABLE_NAME5+"("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20), "+QTY_BIG+" INT NULL, "+QTY_SMALL+" INT NULL, "+SALES_PRICE+" INT NULL , "+PCT_DISC1+" DOUBLE NULL, "+PCT_DISC2+" DOUBLE NULL, "+PCT_DISC3+" DOUBLE NULL, "+BCONFIRM+" INT NULL, "+BTRANSFER+" INT NULL)";
 
     private static final String QUERY_TABLE6 = "CREATE TABLE "+TABLE_NAME6+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+INVOICE_ID+" CHARACTER(20) NULL, "+NOMINAL_PAYMENT+" NUMERIC(18, 2) NULL, "+PAYMENT_TYPE+" CHARACTER(1) NULL, "+BILL_YET_NO+" VARCHAR(20) NULL, "+BILL_YET_DUE_DATE+" DATETIME NULL )";
 
@@ -249,7 +249,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
 
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME5+" WHERE "+CUST_ID+" = ?", new String[] {condition});
+        Cursor cursor = sqLiteDatabase.query(TABLE_NAME5, null, " "+CUST_ID+" =?", new String[] {condition}, null, null, null);
 
         while (cursor.moveToNext()) {
 
@@ -261,9 +261,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             int qtyBig = cursor.getInt(5);
             int qtySmall = cursor.getInt(6);
             int salesPrice = cursor.getInt(7);
-            int disc1 = cursor.getInt(8);
-            int disc2 = cursor.getInt(9);
-            int disc3 = cursor.getInt(10);
+            double disc1 = cursor.getDouble(8);
+            double disc2 = cursor.getDouble(9);
+            double disc3 = cursor.getDouble(10);
             int bConfirm = cursor.getInt(11);
             int bTransfer = cursor.getInt(12);
 
@@ -524,5 +524,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int deleteOrder(String urutID) {
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
         return sqLiteDatabase.delete(TABLE_NAME5, ID+" = ?", new String[] {urutID});
+    }
+
+    public boolean updatePassword(String condition, String newPassword){
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(PASSWORD, newPassword);
+
+        long result = sqLiteDatabase.update(TABLE_NAME8, contentValues, SALESMAN_ID+" = ?", new String[] { condition});
+
+        if(result == -1){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean updateLogin(String dbUserid, String dateTime) {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DLAST_LOGIN, dateTime);
+
+        long result = sqLiteDatabase.update(TABLE_NAME8, contentValues, SALESMAN_ID+" = ?", new String[] { dbUserid});
+
+        if(result == -1){
+            return false;
+        } else {
+            return true;
+        }
     }
 }
