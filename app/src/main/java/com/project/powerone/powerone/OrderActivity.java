@@ -55,7 +55,9 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
 
-    private String custName, custAddress, custPriceType, custID;
+    private String custName, custAddress, custPriceType, custID, productID;
+    private int countFail = 0;
+    private boolean productUpdate;
 
     private List<OrderProduct> list = new ArrayList<>();
 
@@ -64,11 +66,12 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
     private TextView orderName, orderAddress, orderPriceType, orderTotal;
     private LinearLayout orderButtonAdd;
     private EditText searchEditText;
+    private Button orderConfirm;
 
     private DatabaseHelper databaseHelper;
     private OrderProductAdapter orderProductAdapter;
 
-    private Cursor cursor;
+    private Cursor cursor, cursorUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +93,10 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
         orderPriceType = (TextView) findViewById(R.id.orderPriceType);
         orderButtonAdd = (LinearLayout) findViewById(R.id.orderButtonAdd);
         orderTotal = (TextView) findViewById(R.id.orderTotal);
+        orderConfirm = (Button) findViewById(R.id.orderConfirm);
 
         orderButtonAdd.setOnClickListener(this);
+        orderConfirm.setOnClickListener(this);
 
         cursor = databaseHelper.getCustomer();
 
@@ -178,6 +183,28 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         if(view == orderButtonAdd){
             productActivity();
+        } else if (view == orderConfirm){
+
+            cursorUpdate = databaseHelper.getCustOrder(custID);
+
+            while (cursorUpdate.moveToNext()) {
+
+                productID = cursorUpdate.getString(4);
+                productUpdate =  databaseHelper.updateOrderProduct(productID);
+
+                if(productUpdate != true){
+                    countFail++;
+                }
+            }
+            if(countFail > 0){
+                Toast.makeText(this, "Please Order Confirm Again", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "All Order Confirm Success added", Toast.LENGTH_SHORT).show();
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(new Intent(this, OrderActivity.class));
+
+            }
         }
     }
 

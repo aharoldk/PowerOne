@@ -22,7 +22,8 @@ import static java.lang.Integer.parseInt;
 public class OrderProductActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String siteID, custID, productName, productID, bigpack, smallPack, sBig, sSmall, sDisc1, sDisc2, sDisc3, salesmanID;
-    private int salesPrice, bConfirm = 0, bTransfer = 0, iBig, iSmall, iDisc1, iDisc2, iDisc3;
+    private int salesPrice, bConfirm = 0, bTransfer = 0, iBig, iSmall;
+    private double iDisc1, iDisc2, iDisc3;
     private boolean insertOrder = false;
 
     private EditText qtyBig, qtySmall, pctDisc1, pctDisc2, pctDisc3;
@@ -120,23 +121,28 @@ public class OrderProductActivity extends AppCompatActivity implements View.OnCl
 
         if(TextUtils.isEmpty(sDisc1)){
             sDisc1 = "0";
-            iDisc1 = Integer.parseInt(sDisc1);
+            iDisc1 = Double.parseDouble(sDisc1);
         } else {
-            iDisc1 = Integer.parseInt(sDisc1);
+            iDisc1 = Double.parseDouble(sDisc1);
         }
 
         if(TextUtils.isEmpty(sDisc2)){
             sDisc2 = "0";
-            iDisc2 = Integer.parseInt(sDisc2);
+            iDisc2 = Double.parseDouble(sDisc2);
         } else {
-            iDisc2 = Integer.parseInt(sDisc2);
+            iDisc2 = Double.parseDouble(sDisc2);
         }
 
         if(TextUtils.isEmpty(sDisc3)){
             sDisc3 = "0";
-            iDisc3 = Integer.parseInt(sDisc3);
+            iDisc3 = Double.parseDouble(sDisc3);
         } else {
-            iDisc3 = Integer.parseInt(sDisc3);
+            iDisc3 = Double.parseDouble(sDisc3);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

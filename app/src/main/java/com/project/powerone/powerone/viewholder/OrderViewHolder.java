@@ -75,20 +75,28 @@ public class OrderViewHolder extends RecyclerView.ViewHolder {
 
         orderTotal.setText(sb);
 
-        orderDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String id = Integer.toString(urutID);
-                delete = databaseHelper.deleteOrder(id);
+        if(order.getbConfirm() == 1){
+            orderDelete.setVisibility(View.GONE);
 
-                if(delete > 0) {
-                    activity.startActivity(new Intent(activity, OrderActivity.class));
-                    activity.finish();
+        } else {
+            orderDelete.setVisibility(View.VISIBLE);
 
-                } else {
-                    Toast.makeText(activity, "Please Try Again", Toast.LENGTH_SHORT).show();
+            orderDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String id = Integer.toString(urutID);
+                    delete = databaseHelper.deleteOrder(id);
+
+                    if(delete > 0) {
+                        activity.startActivity(new Intent(activity, OrderActivity.class));
+                        activity.finish();
+
+                    } else {
+                        Toast.makeText(activity, "Please Try Again", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }
+
     }
 }

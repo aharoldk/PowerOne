@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.project.powerone.powerone.PaymentActivity"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Payment"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        android:id="@+id/productName"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvPaymentNuGiro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Number Giro"/>
+
+        <EditText
+            android:id="@+id/etPaymentNuGiro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvNominal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nominal"/>
+
+        <EditText
+            android:id="@+id/etPaymentNominal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"/>
+
+        <TextView
+            android:id="@+id/tvPaymentDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Due Date"/>
+
+        <EditText
+            android:id="@+id/etPaymentDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="datetime"/>
+
+        <Button
+            android:id="@+id/btnPayment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/buttonColor"
+            android:textColor="@color/buttonTextColor"
+            android:text="Save Payment"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+</LinearLayout>

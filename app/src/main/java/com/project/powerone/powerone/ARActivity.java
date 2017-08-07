@@ -1,22 +1,32 @@
 package com.project.powerone.powerone;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.powerone.powerone.adapter.ARBalanceAdapter;
-import com.project.powerone.powerone.adapter.ProductAdapter;
+import com.project.powerone.powerone.adapter.OrderAdapter;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ARActivity extends AppCompatActivity {
+
+    @BindView(R.id.arName) TextView arName;
+
+    @BindView(R.id.arAddress) TextView arAddress;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -25,11 +35,16 @@ public class ARActivity extends AppCompatActivity {
     private RecyclerView rvmain;
 
     private DatabaseHelper databaseHelper;
+    private Cursor cursor;
+
+    private String custID, custName, custAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ar);
+
+        ButterKnife.bind(this);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
@@ -41,10 +56,27 @@ public class ARActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(ARActivity.this);
 
+        cursor = databaseHelper.getCustomer();
+
+        while (cursor.moveToNext()) {
+            custID = cursor.getString(3);
+            custName = cursor.getString(4);
+            custAddress = cursor.getString(5);
+        }
+
+        if(custID == null){
+            custID = "";
+
+            Toast.makeText(this, "Please Visit Customer First", Toast.LENGTH_SHORT).show();
+        }
+
+        arName.setText(custName);
+        arAddress.setText(custAddress);
+
         rvmain = (RecyclerView) findViewById(R.id.rvmain);
         rvmain.setLayoutManager(new LinearLayoutManager(this));
         rvmain.setHasFixedSize(true);
-        rvmain.setAdapter(new ARBalanceAdapter(databaseHelper.getAllArBalance(), ARActivity.this));
+        rvmain.setAdapter(new ARBalanceAdapter(databaseHelper.getAllArBalance(custID), ARActivity.this));
 
         navigation();
     }

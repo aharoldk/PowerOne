@@ -1,13 +1,19 @@
 package com.project.powerone.powerone.viewholder;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.project.powerone.powerone.PaymentActivity;
 import com.project.powerone.powerone.R;
 import com.project.powerone.powerone.pojo.ARBalance;
+import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -27,6 +33,11 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
 
     private String s;
 
+    private LinearLayout linearGiro, linearTunai;
+
+    private DatabaseHelper databaseHelper;
+    private Cursor cursor;
+
     public ARBalanceViewHolder(View itemView) {
         super(itemView);
 
@@ -37,7 +48,7 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
         arButton = itemView.findViewById(R.id.arButton);
     }
 
-    public void bind(ARBalance arBalance, Activity activity) {
+    public void bind(final ARBalance arBalance, final Activity activity) {
 
         arInvoice.setText(arBalance.getInvoiceID());
         arBalances.setText("Balance : Rp. "+ NumberFormat.getNumberInstance(Locale.US).format(arBalance.getBalanceAR()));
@@ -52,6 +63,50 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        databaseHelper = new DatabaseHelper(activity);
+        cursor = databaseHelper.getPayment(arBalance.getInvoiceID());
+
+        if(cursor.getCount() == 1){
+            arButton.setVisibility(View.GONE);
+        }
+
+        arButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                View mView = activity.getLayoutInflater().inflate(R.layout.detail_arBalance, null);
+
+                linearTunai = mView.findViewById(R.id.linearTunai);
+                linearGiro = mView.findViewById(R.id.linearGiro);
+
+                final Intent intent = new Intent(activity, PaymentActivity.class);
+                intent.putExtra("custID", arBalance.getCustID());
+                intent.putExtra("invoiceID", arBalance.getInvoiceID());
+
+                linearTunai.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        intent.putExtra("extra", 0);
+                        activity.startActivity(intent);
+
+                    }
+                });
+
+                linearGiro.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        intent.putExtra("extra", 1);
+                        activity.startActivity(intent);
+                    }
+                });
+
+                builder.setCancelable(true);
+                builder.setView(mView);
+                builder.show();
+
+            }
+        });
 
     }
 }

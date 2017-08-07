@@ -3,7 +3,6 @@ package com.project.powerone.powerone.viewholder;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -126,7 +125,7 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
                     @Override
                     public void onClick(View view) {
                         AlertDialog.Builder builderAR = new AlertDialog.Builder(activity);
-                        View arView = activity.getLayoutInflater().inflate(R.layout.detail_ar, null);
+                        View arView = activity.getLayoutInflater().inflate(R.layout.detail_arCust, null);
 
                         arList = arView.findViewById(R.id.arList);
 
@@ -191,7 +190,7 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
         if(updateCustomer != true){
             Toast.makeText(activity, "Please Press Done Again and Check Your Connection", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(activity, "Update Complete" +dateTimeNow, Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Update Complete", Toast.LENGTH_SHORT).show();
 
             Intent intent = activity.getIntent();
 
