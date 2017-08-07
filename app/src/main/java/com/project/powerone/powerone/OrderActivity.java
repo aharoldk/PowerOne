@@ -109,7 +109,10 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
 
         if(custID == null){
             custID = "";
-
+            orderButtonAdd.setVisibility(View.GONE);
+            orderPriceType.setVisibility(View.GONE);
+            orderTotal.setVisibility(View.GONE);
+            orderConfirm.setVisibility(View.GONE);
             Toast.makeText(this, "Please Visit Customer First", Toast.LENGTH_SHORT).show();
         }
 

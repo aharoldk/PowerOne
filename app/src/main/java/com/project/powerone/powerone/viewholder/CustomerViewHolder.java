@@ -88,6 +88,11 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
                 linearDone = mView.findViewById(R.id.linearDone);
                 linearAR = mView.findViewById(R.id.linearAR);
 
+                Toast.makeText(activity, ""+customer.getStatusCustomer(), Toast.LENGTH_SHORT).show();
+                if(customer.getStatusCustomer().equals("Active")){
+                    linearDone.setVisibility(View.GONE);
+                }
+
                 linearDone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -125,7 +130,7 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
                     @Override
                     public void onClick(View view) {
                         AlertDialog.Builder builderAR = new AlertDialog.Builder(activity);
-                        View arView = activity.getLayoutInflater().inflate(R.layout.detail_arCust, null);
+                        View arView = activity.getLayoutInflater().inflate(R.layout.detail_arcust, null);
 
                         arList = arView.findViewById(R.id.arList);
 

@@ -28,15 +28,18 @@ import java.util.Locale;
 
 public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
 
-    private TextView arInvoice, arBalances, arDueDate;
+    private TextView arInvoice, arBalances, arDueDate, tvListPayment;
     private Button arButton;
 
-    private String s;
+    private String s, paymentType;
+    private int totalPayment = 0, payment, costPayment;
 
-    private LinearLayout linearGiro, linearTunai;
+    private LinearLayout linearGiro, linearTunai, linearEntry;
 
     private DatabaseHelper databaseHelper;
     private Cursor cursor;
+
+    private StringBuffer stringBuffer;
 
     public ARBalanceViewHolder(View itemView) {
         super(itemView);
@@ -65,24 +68,53 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
         }
 
         databaseHelper = new DatabaseHelper(activity);
-        cursor = databaseHelper.getPayment(arBalance.getInvoiceID());
 
-        if(cursor.getCount() == 1){
-            arButton.setVisibility(View.GONE);
+        cursor = databaseHelper.getPayment(arBalance.getInvoiceID());
+        stringBuffer = new StringBuffer();
+
+        while(cursor.moveToNext()){
+            payment = cursor.getInt(5);
+
+            if(cursor.getString(6).equals("G")){
+                paymentType = "Giro";
+
+                stringBuffer.append("Tipe Pembayaran : "+paymentType+"\n" +
+                        "No. Giro : "+cursor.getString(7)+"\n"+
+                        "Nominal Pembayaran : "+payment+"\n" +
+                        "Tgl Jatuh Tempo Giro : "+cursor.getString(8)+" \n \n");
+
+            } else if(cursor.getString(6).equals("T")) {
+                paymentType = "Tunai";
+
+                stringBuffer.append("Tipe Pembayaran : "+paymentType+"\n" +
+                        "Nominal Pembayaran : "+payment+"\n \n");
+            }
+
+
+            totalPayment = totalPayment + payment;
         }
 
         arButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                View mView = activity.getLayoutInflater().inflate(R.layout.detail_arBalance, null);
+                View mView = activity.getLayoutInflater().inflate(R.layout.detail_arbalance, null);
 
+                linearEntry = mView.findViewById(R.id.linearEntry);
                 linearTunai = mView.findViewById(R.id.linearTunai);
                 linearGiro = mView.findViewById(R.id.linearGiro);
+
+                if(totalPayment >= arBalance.getBalanceAR()){
+                    linearGiro.setVisibility(View.GONE);
+                    linearTunai.setVisibility(View.GONE);
+                }
+
+                costPayment = (int) (arBalance.getBalanceAR() - totalPayment);
 
                 final Intent intent = new Intent(activity, PaymentActivity.class);
                 intent.putExtra("custID", arBalance.getCustID());
                 intent.putExtra("invoiceID", arBalance.getInvoiceID());
+                intent.putExtra("costPayment", costPayment);
 
                 linearTunai.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -98,6 +130,22 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
                     public void onClick(View view) {
                         intent.putExtra("extra", 1);
                         activity.startActivity(intent);
+                    }
+                });
+
+                linearEntry.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final AlertDialog.Builder entryBuilder = new AlertDialog.Builder(activity);
+                        View entryView = activity.getLayoutInflater().inflate(R.layout.detail_invoice, null);
+
+                        tvListPayment = entryView.findViewById(R.id.tvListPayment);
+
+                        tvListPayment.setText(stringBuffer);
+
+                        entryBuilder.setCancelable(true);
+                        entryBuilder.setView(entryView);
+                        entryBuilder.show();
                     }
                 });
 

@@ -583,14 +583,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public boolean insertPayment(String siteID, String salesmanID, String custID, String invoiceID, String mNominal, String paymentType, String mNuGiro, String mDate) {
+    public boolean insertPayment(String siteID, String salesmanID, String custID, String invoiceID, long mNominal, String paymentType, String mNuGiro, String mDate) {
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(SITE_ID, siteID);
         contentValues.put(SALESMAN_ID, salesmanID);
-        contentValues.put(custID, custID);
+        contentValues.put(CUST_ID, custID);
         contentValues.put(INVOICE_ID, invoiceID);
         contentValues.put(NOMINAL_PAYMENT, mNominal);
         contentValues.put(PAYMENT_TYPE, paymentType);
@@ -611,7 +611,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getPayment(String condition) {
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
 
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME6+" WHERE "+CUST_ID+" = ?", new String[] {condition});
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME6+" WHERE "+INVOICE_ID+" = ?", new String[] {condition});
 
         return cursor;
     }

@@ -193,9 +193,9 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
         } else if(view == importButton){
             customerData();
-            productData();
             productPrice();
             arData();
+            productData();
 
         }
     }
