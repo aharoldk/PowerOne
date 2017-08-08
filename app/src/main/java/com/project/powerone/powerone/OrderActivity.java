@@ -127,6 +127,16 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
         orderAddress.setText(custAddress);
         orderPriceType.setText("Price Type : "+ custPriceType);
 
+        Cursor cursorOrder = databaseHelper.getCurrentOrder(custID);
+
+        int totalOrder = 0;
+
+        while (cursorOrder.moveToNext()) {
+            totalOrder += ((cursorOrder.getInt(1) * cursorOrder.getInt(3))+(cursorOrder.getInt(2) * cursorOrder.getInt(3) / cursorOrder.getInt(4)));
+        }
+
+        orderTotal.setText("Total Rp. "+NumberFormat.getNumberInstance(Locale.US).format(totalOrder));
+
     }
 
     private void navigation() {

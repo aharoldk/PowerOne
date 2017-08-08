@@ -30,11 +30,9 @@ public class OrderViewHolder extends RecyclerView.ViewHolder {
     private ImageView orderDelete;
 
     private DatabaseHelper databaseHelper;
-    private Cursor cursor;
 
     private String productName;
     private int delete, urutID, noOfPack;
-    private double totalHarga = 0, hargaProduct;
 
     public OrderViewHolder(View itemView) {
         super(itemView);
@@ -51,12 +49,11 @@ public class OrderViewHolder extends RecyclerView.ViewHolder {
     public void bind(Order order, final Activity activity, TextView orderTotal) {
         databaseHelper = new DatabaseHelper(activity);
 
-        cursor = databaseHelper.getProduct(order.getProductID());
+        Cursor cursor = databaseHelper.getProduct(order.getProductID());
 
         while (cursor.moveToNext()){
             urutID = cursor.getInt(0);
             productName = cursor.getString(3);
-            noOfPack = cursor.getInt(6);
         }
 
         orderName.setText(productName);
@@ -64,16 +61,6 @@ public class OrderViewHolder extends RecyclerView.ViewHolder {
         orderExtra.setText("/ "+noOfPack+" pcs");
         orderQty.setText("Q. "+order.getQtyBig()+"/"+order.getQtySmall());
         orderDisc.setText("%. "+order.getPctDisc1()+"/"+order.getPctDisc2()+"/"+order.getPctDisc3());
-
-        hargaProduct = ((double) order.getQtySmall() / (double) noOfPack  * (double) order.getSalesPrice() ) + ((double) order.getQtyBig() * (double) order.getSalesPrice()) ;
-
-        totalHarga += hargaProduct;
-
-        StringBuilder sb = new StringBuilder();
-        Formatter formatter = new Formatter(sb, Locale.US);
-        formatter.format("Price Total : Rp. %(,.2f", totalHarga);
-
-        orderTotal.setText(sb);
 
         if(order.getbConfirm() == 1){
             orderDelete.setVisibility(View.GONE);

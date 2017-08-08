@@ -78,6 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String INVOICE_ID = "InvoiceID";
     private static final String DDUE_DATE = "dDueDate";
     private static final String BALANCE_AR = "BalanceAR";
+    private static final String STATUS_AR = "StatusAR";
 
 //    table5, menggunakan ID, SITE_ID, SALESMAN_ID, CUST_ID, PRODUCT_ID after QTY_SMALL -> SALES_PRICE
     private static final String QTY_BIG = "QtyBig";
@@ -108,7 +109,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String QUERY_TABLE3 = "CREATE TABLE "+TABLE_NAME3+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20) NULL, "+PRODUCT_TYPE+" CHARACTER(10) NULL, "+SALES_PRICE+" INT NULL)";
 
-    private static final String QUERY_TABLE4 = "CREATE TABLE "+TABLE_NAME4+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+INVOICE_ID+" VARCHAR(20) NULL, "+DDUE_DATE+" DATETIME NULL, "+BALANCE_AR+" INTEGER NOT NULL)";
+    private static final String QUERY_TABLE4 = "CREATE TABLE "+TABLE_NAME4+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+INVOICE_ID+" VARCHAR(20) NULL, "+DDUE_DATE+" DATETIME NULL, "+BALANCE_AR+" INTEGER NOT NULL, "+STATUS_AR+" INTEGER NOT NULL)";
 
     private static final String QUERY_TABLE5 = "CREATE TABLE "+TABLE_NAME5+"("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20), "+QTY_BIG+" INTEGER NULL, "+QTY_SMALL+" INTEGER NULL, "+SALES_PRICE+" INTEGER NULL , "+PCT_DISC1+" DOUBLE NULL, "+PCT_DISC2+" DOUBLE NULL, "+PCT_DISC3+" DOUBLE NULL, "+BCONFIRM+" INT NULL, "+BTRANSFER+" INT NULL)";
 
@@ -461,7 +462,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean insertAR(String siteID, String salesmanID,String custID, String invoiceID, String dDueDate, long balanceAR, int urutID) {
+    public boolean insertAR(String siteID, String salesmanID, String custID, String invoiceID, String dDueDate, long balanceAR, int urutID, int i) {
 
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
 
@@ -474,6 +475,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(INVOICE_ID, invoiceID);
         contentValues.put(DDUE_DATE, dDueDate);
         contentValues.put(BALANCE_AR, balanceAR);
+        contentValues.put(STATUS_AR, i);
 
         long result = sqLiteDatabase.insert(TABLE_NAME4, null, contentValues);
 
@@ -612,6 +614,72 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
 
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME6+" WHERE "+INVOICE_ID+" = ?", new String[] {condition});
+
+        return cursor;
+    }
+
+
+    public Cursor getOrder() {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT "+CUST_ID+" , COUNT( * ) AS total FROM "+TABLE_NAME5+" GROUP BY "+CUST_ID, null);
+
+        return cursor;
+    }
+
+    public Cursor getCurrentOrder(String condition) {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT a.CustID, a.QtyBig, a.QtySmall, a.SalesPrice, b.NoOfPack FROM MobSalesOrder as a, MobProduct as b WHERE a.SiteID = b.SiteID AND a.ProductID = b.ProductID AND a.CustId = ?", new String[]{condition});
+
+        return cursor;
+    }
+
+    public Cursor getOmzet() {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT a.PrinsipalName, SUM((b.QtySmall*b.SalesPrice/a.NoOfPack)+(b.QtyBig * b.SalesPrice) ) FROM MobProduct as a, MobSalesOrder as b WHERE a.SiteID = b.SiteID AND a.ProductID = b.ProductID GROUP BY a.PrinsipalName", null);
+
+        return cursor;
+    }
+
+    public Cursor getAllCustomerR() {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME1, null);
+
+        return cursor;
+    }
+
+    public Cursor getTagihan() {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME4, null);
+
+        return cursor;
+
+    }
+
+    public boolean updateAR(String custID) {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(STATUS_AR, 1);
+
+        long result = sqLiteDatabase.update(TABLE_NAME4, contentValues, CUST_ID+" = ?", new String[] {custID});
+
+        if(result == -1){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public Cursor getRpTagihan() {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME6, null);
 
         return cursor;
     }

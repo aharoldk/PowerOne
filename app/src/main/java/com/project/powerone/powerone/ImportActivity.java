@@ -192,10 +192,11 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
             arData();
 
         } else if(view == importButton){
+            productData();
             customerData();
             productPrice();
             arData();
-            productData();
+
 
         }
     }
@@ -303,7 +304,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                                 balanceAR = arBalances[i].getBalanceAR();
                                 urutID = arBalances[i].getUrutID();
 
-                                insertedAR = databaseHelper.insertAR(siteID, salesmanID, custID, invoiceID, dDueDate, balanceAR, urutID);
+                                insertedAR = databaseHelper.insertAR(siteID, salesmanID, custID, invoiceID, dDueDate, balanceAR, urutID, 0);
 
                                 if(insertedAR != true){
                                     countFailAR++;

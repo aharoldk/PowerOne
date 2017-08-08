@@ -80,14 +80,14 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
 
                 stringBuffer.append("Tipe Pembayaran : "+paymentType+"\n" +
                         "No. Giro : "+cursor.getString(7)+"\n"+
-                        "Nominal Pembayaran : "+payment+"\n" +
+                        "Nominal Pembayaran : "+NumberFormat.getNumberInstance(Locale.US).format(payment)+"\n" +
                         "Tgl Jatuh Tempo Giro : "+cursor.getString(8)+" \n \n");
 
             } else if(cursor.getString(6).equals("T")) {
                 paymentType = "Tunai";
 
                 stringBuffer.append("Tipe Pembayaran : "+paymentType+"\n" +
-                        "Nominal Pembayaran : "+payment+"\n \n");
+                        "Nominal Pembayaran : "+NumberFormat.getNumberInstance(Locale.US).format(payment)+"\n \n");
             }
 
 

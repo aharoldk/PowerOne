@@ -4,8 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.project.powerone.powerone.pojo.ARBalance;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.text.NumberFormat;
@@ -111,10 +110,11 @@ public class PaymentActivity extends AppCompatActivity {
                         } else {
                             result = databaseHelper.insertPayment(siteID, salesmanID, custID, invoiceID, nominal, paymentType, "", "");
 
-                            if(result != true){
+                            if(!result){
                                 Toast.makeText(PaymentActivity.this, "Please Try Save Product Again", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(PaymentActivity.this, "Payment Complete", Toast.LENGTH_SHORT).show();
+
                                 startActivity(new Intent(PaymentActivity.this, ARActivity.class));
                             }
                         }
@@ -131,11 +131,11 @@ public class PaymentActivity extends AppCompatActivity {
                         } else {
                             result = databaseHelper.insertPayment(siteID, salesmanID, custID, invoiceID, nominal, paymentType, mNuGiro, mDate);
 
-                            if(result != true){
+                            if(!result){
                                 Toast.makeText(PaymentActivity.this, "Please Try Save Product Again", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(PaymentActivity.this, "Payment Complete", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(PaymentActivity.this, ARActivity.class));
+                                updateAR();
                             }
 
                         }
@@ -147,6 +147,19 @@ public class PaymentActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void updateAR() {
+        boolean update = databaseHelper.updateAR(custID);
+
+        if(!update){
+            Toast.makeText(this, "Update Database Failed", Toast.LENGTH_SHORT).show();
+        } else {
+
+            startActivity(new Intent(PaymentActivity.this, ARActivity.class));
+            finish();
+        }
 
     }
 

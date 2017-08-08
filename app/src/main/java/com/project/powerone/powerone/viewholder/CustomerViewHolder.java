@@ -88,10 +88,9 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
                 linearDone = mView.findViewById(R.id.linearDone);
                 linearAR = mView.findViewById(R.id.linearAR);
 
-                Toast.makeText(activity, ""+customer.getStatusCustomer(), Toast.LENGTH_SHORT).show();
-                if(customer.getStatusCustomer().equals("Active")){
+                /*if(customer.getStatusCustomer().equals("Active")){
                     linearDone.setVisibility(View.GONE);
-                }
+                }*/
 
                 linearDone.setOnClickListener(new View.OnClickListener() {
                     @Override
