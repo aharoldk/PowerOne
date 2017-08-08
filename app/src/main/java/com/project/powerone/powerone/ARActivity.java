@@ -124,8 +124,8 @@ public class ARActivity extends AppCompatActivity {
                     finish();
 
                 } else if(id == R.id.logout){
-                    startActivity(new Intent(ARActivity.this, LoginActivity.class));
                     finish();
+                    startActivity(new Intent(ARActivity.this, LoginActivity.class));
 
                 }
 
@@ -150,8 +150,9 @@ public class ARActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
 
-            startActivity(new Intent(ARActivity.this, MainActivity.class));
             finish();
+            startActivity(new Intent(ARActivity.this, MainActivity.class));
+
         }
     }
 }

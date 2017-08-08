@@ -2,6 +2,7 @@ package com.project.powerone.powerone;
 
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -9,7 +10,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private NavigationView navigationView;
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         mToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-        navigationView = (NavigationView) findViewById(R.id.navigation);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         drawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -77,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
                     finish();
 
                 } else if(id == R.id.logout){
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
                 }
 
@@ -90,11 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
+        return mToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -21,6 +21,14 @@
             android:layout_marginTop="20dp">
 
             <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/angelos"/>
+
+            <ImageView
                 android:layout_width="146dp"
                 android:layout_height="146dp"
                 android:layout_gravity="center_horizontal"

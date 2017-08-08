@@ -8,75 +8,90 @@
     android:orientation="vertical"
     android:theme="@style/reloTheme">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:gravity="center_vertical">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="146dp"
-            android:layout_height="146dp"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="centerInside"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_person"
-            android:id="@+id/imageView"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/takePhoto"
-            android:layout_marginTop="10dp"
-            android:text="@string/registerPhoto"
-            android:textColor="@color/buttonTextColor"
-            android:background="@color/buttonColor"
-            android:padding="10dp"/>
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/defaultId"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:gravity="center_vertical">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/userID"/>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/angelos"/>
 
-        <TextView
-            android:paddingTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/newPassword"/>
+            <ImageView
+                android:layout_width="146dp"
+                android:layout_height="146dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_person"
+                android:id="@+id/imageView"/>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/newPassword"
-            android:inputType="textPassword"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/takePhoto"
+                android:layout_marginTop="10dp"
+                android:text="@string/registerPhoto"
+                android:textColor="@color/buttonTextColor"
+                android:background="@color/buttonColor"
+                android:padding="10dp"/>
 
-        <TextView
-            android:paddingTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/renewPassword"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/defaultId"/>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/retypePassword"
-            android:inputType="textPassword"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/userID"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/submitButton"
-            android:background="@color/buttonColor"
-            android:textColor="@color/buttonTextColor"
-            android:text="@string/submit" />
-    </LinearLayout>
+            <TextView
+                android:paddingTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/newPassword"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/newPassword"
+                android:inputType="textPassword"/>
+
+            <TextView
+                android:paddingTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/renewPassword"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/retypePassword"
+                android:inputType="textPassword"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/submitButton"
+                android:background="@color/buttonColor"
+                android:textColor="@color/buttonTextColor"
+                android:text="@string/submit" />
+        </LinearLayout>
+
+    </ScrollView>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -55,11 +55,9 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
 
     private Calendar calendar = Calendar.getInstance();
 
-    private String custID, dateTimeNow, active = "Active", dDueDate;
-    private double longitude, latitude;
-    private boolean updateCustomer = false;
-
-    private Customer customer;
+    private String custID;
+    private String dateTimeNow;
+    private String dDueDate;
 
     public CustomerViewHolder(View itemView) {
         super(itemView);
@@ -143,7 +141,7 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
 
                             dateTimeFormat(cursor.getString(5));
 
-                            stringBuffer.append(cursor.getString(4)+"   " +dDueDate+ "   Rp. "+ NumberFormat.getNumberInstance(Locale.US).format(cursor.getLong(6))+"\n \n");
+                            stringBuffer.append(cursor.getString(4)).append("   ").append(dDueDate).append("   Rp. ").append(NumberFormat.getNumberInstance(Locale.US).format(cursor.getLong(6))).append("\n \n");
                         }
 
                         arList.setText(stringBuffer);
@@ -181,17 +179,18 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
 
         databaseHelper = new DatabaseHelper(activity);
 
-        longitude = location.getLongitude();
+        double longitude = location.getLongitude();
 
-        latitude = location.getLatitude();
+        double latitude = location.getLatitude();
 
-        Toast.makeText(activity, "Your Logitude : "+longitude+" and Latitude : "+latitude, Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, "Your Logitude : "+ longitude +" and Latitude : "+ latitude, Toast.LENGTH_SHORT).show();
 
         getDate();
 
-        updateCustomer = databaseHelper.updateCustomerVisit(custID, longitude, latitude, active, dateTimeNow);
+        String active = "Active";
+        boolean updateCustomer = databaseHelper.updateCustomerVisit(custID, longitude, latitude, active, dateTimeNow);
 
-        if(updateCustomer != true){
+        if(!updateCustomer){
             Toast.makeText(activity, "Please Press Done Again and Check Your Connection", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(activity, "Update Complete", Toast.LENGTH_SHORT).show();

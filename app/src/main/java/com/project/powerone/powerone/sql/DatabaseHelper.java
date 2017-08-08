@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.project.powerone.powerone.OrderProductActivity;
 import com.project.powerone.powerone.pojo.ARBalance;
 import com.project.powerone.powerone.pojo.Customer;
 import com.project.powerone.powerone.pojo.Order;
@@ -525,7 +524,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int deleteOrder(String urutID) {
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
-        return sqLiteDatabase.delete(TABLE_NAME5, ID+" = ?", new String[] {urutID});
+        int result = sqLiteDatabase.delete(TABLE_NAME5, ID+" = ?", new String[] {urutID});
+
+        return result;
     }
 
     public boolean updatePassword(String condition, String newPassword){

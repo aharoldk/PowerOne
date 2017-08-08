@@ -5,18 +5,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,10 +27,7 @@ import com.project.powerone.powerone.pojo.Status;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -176,14 +170,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                 result =databaseHelper.updateLogin(dbUserid, dateNow+" "+timeNow);
 
-                                if(result != true){
+                                if(!result){
                                     progressDialog.dismiss();
                                     Toast.makeText(LoginActivity.this, "Cannot Update Date Time", Toast.LENGTH_SHORT).show();
 
                                 }
 
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
 
                             } else {
                                 progressDialog.dismiss();

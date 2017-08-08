@@ -79,8 +79,8 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
                                 StringBuffer stringBuffer = new StringBuffer();
 
                                 while(cursor.moveToNext()){
-                                    stringBuffer.append("Product Type : "+ cursor.getString(3)+ "\n");
-                                    stringBuffer.append("Price : Rp. "+ NumberFormat.getNumberInstance(Locale.US).format(cursor.getInt(4)) + "\n\n");
+                                    stringBuffer.append("Product Type : ").append(cursor.getString(3)).append("\n");
+                                    stringBuffer.append("Price : Rp. ").append(NumberFormat.getNumberInstance(Locale.US).format(cursor.getInt(4))).append("\n\n");
                                 }
 
                                 priceList.setText(stringBuffer);

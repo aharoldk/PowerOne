@@ -1,27 +1,15 @@
 package com.project.powerone.powerone;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Looper;
-import android.preference.PreferenceManager;
-import android.provider.Settings;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -36,14 +24,9 @@ import android.widget.Toast;
 
 import com.project.powerone.powerone.adapter.OrderAdapter;
 import com.project.powerone.powerone.adapter.OrderProductAdapter;
-import com.project.powerone.powerone.adapter.ProductAdapter;
-import com.project.powerone.powerone.pojo.Customer;
 import com.project.powerone.powerone.pojo.OrderProduct;
-import com.project.powerone.powerone.pojo.Product;
 import com.project.powerone.powerone.sql.DatabaseHelper;
-import com.project.powerone.powerone.viewholder.OrderViewHolder;
 
-import java.nio.file.Files;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,23 +38,22 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
 
-    private String custName, custAddress, custPriceType, custID, productID;
+    private String custName;
+    private String custAddress;
+    private String custPriceType;
+    private String custID;
     private int countFail = 0;
-    private boolean productUpdate;
 
     private List<OrderProduct> list = new ArrayList<>();
 
-    private RecyclerView rvmain, rvmainProduct;
+    private RecyclerView rvmainProduct;
 
-    private TextView orderName, orderAddress, orderPriceType, orderTotal;
     private LinearLayout orderButtonAdd;
     private EditText searchEditText;
     private Button orderConfirm;
 
     private DatabaseHelper databaseHelper;
     private OrderProductAdapter orderProductAdapter;
-
-    private Cursor cursor, cursorUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,17 +70,17 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        orderName = (TextView) findViewById(R.id.orderName);
-        orderAddress = (TextView) findViewById(R.id.orderAddress);
-        orderPriceType = (TextView) findViewById(R.id.orderPriceType);
+        TextView orderName = (TextView) findViewById(R.id.orderName);
+        TextView orderAddress = (TextView) findViewById(R.id.orderAddress);
+        TextView orderPriceType = (TextView) findViewById(R.id.orderPriceType);
         orderButtonAdd = (LinearLayout) findViewById(R.id.orderButtonAdd);
-        orderTotal = (TextView) findViewById(R.id.orderTotal);
+        TextView orderTotal = (TextView) findViewById(R.id.orderTotal);
         orderConfirm = (Button) findViewById(R.id.orderConfirm);
 
         orderButtonAdd.setOnClickListener(this);
         orderConfirm.setOnClickListener(this);
 
-        cursor = databaseHelper.getCustomer();
+        Cursor cursor = databaseHelper.getCustomer();
 
         while (cursor.moveToNext()) {
             custID = cursor.getString(3);
@@ -116,10 +98,10 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Please Visit Customer First", Toast.LENGTH_SHORT).show();
         }
 
-        rvmain = (RecyclerView) findViewById(R.id.rvmain);
+        RecyclerView rvmain = (RecyclerView) findViewById(R.id.rvmain);
         rvmain.setLayoutManager(new LinearLayoutManager(this));
         rvmain.setHasFixedSize(true);
-        rvmain.setAdapter(new OrderAdapter(databaseHelper.getAllOrder(custID), OrderActivity.this, orderTotal));
+        rvmain.setAdapter(new OrderAdapter(databaseHelper.getAllOrder(custID), OrderActivity.this));
 
         navigation();
 
@@ -182,8 +164,8 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
                     finish();
 
                 } else if(id == R.id.logout){
-                    startActivity(new Intent(OrderActivity.this, LoginActivity.class));
                     finish();
+                    startActivity(new Intent(OrderActivity.this, LoginActivity.class));
 
                 }
 
@@ -198,14 +180,14 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
             productActivity();
         } else if (view == orderConfirm){
 
-            cursorUpdate = databaseHelper.getCustOrder(custID);
+            Cursor cursorUpdate = databaseHelper.getCustOrder(custID);
 
             while (cursorUpdate.moveToNext()) {
 
-                productID = cursorUpdate.getString(4);
-                productUpdate =  databaseHelper.updateOrderProduct(productID);
+                String productID = cursorUpdate.getString(4);
+                boolean productUpdate = databaseHelper.updateOrderProduct(productID);
 
-                if(productUpdate != true){
+                if(!productUpdate){
                     countFail++;
                 }
             }
@@ -242,11 +224,8 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
+        return mToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -256,8 +235,9 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
         } else {
             super.onBackPressed();
 
-            startActivity(new Intent(OrderActivity.this, MainActivity.class));
             finish();
+            startActivity(new Intent(OrderActivity.this, MainActivity.class));
+
         }
     }
 

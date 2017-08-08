@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -175,7 +175,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                                                                 boolean isInserted = databaseHelper.insertSalesman(defaultID, nameIDServer, siteIDServer, defaultnewPassword, dateNow+" "+timeNow);
 
-                                                                if(isInserted == true){
+                                                                if(isInserted){
                                                                     progressDialog.dismiss();
 
                                                                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));

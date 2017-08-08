@@ -2,6 +2,7 @@ package com.project.powerone.powerone;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,18 +10,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.StringBuilderPrinter;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.text.NumberFormat;
-import java.util.Formatter;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -48,7 +45,6 @@ public class ReportActivity extends AppCompatActivity {
     private int iCustActive = 0;
     private int iCustOrder = 0;
     private int iTagihanDone = 0;
-    private int iRpTagihan = 0;
     private int iTotalTagihan = 0;
     private int iTotalGiro = 0;
     private int iTotalTunai = 0;
@@ -117,7 +113,7 @@ public class ReportActivity extends AppCompatActivity {
 
         while (cProduct.moveToNext()) {
 
-            stringBuffer.append(cProduct.getString(0)+" : Rp. "+NumberFormat.getNumberInstance(Locale.US).format(cProduct.getInt(1))+"\n \n");
+            stringBuffer.append(cProduct.getString(0)).append(" : Rp. ").append(NumberFormat.getNumberInstance(Locale.US).format(cProduct.getInt(1))).append("\n \n");
 
 
             dTotalOmzet += cProduct.getInt(1);
@@ -163,7 +159,7 @@ public class ReportActivity extends AppCompatActivity {
         Cursor cRpTagihan = databaseHelper.getRpTagihan();
 
         while (cRpTagihan.moveToNext()){
-            iRpTagihan = cRpTagihan.getInt(5);
+            int iRpTagihan = cRpTagihan.getInt(5);
 
             if(cRpTagihan.getString(6).equals("G")) {
                 iTotalGiro += iRpTagihan;
@@ -226,8 +222,8 @@ public class ReportActivity extends AppCompatActivity {
                     finish();
 
                 } else if(id == R.id.logout){
-                    startActivity(new Intent(ReportActivity.this, LoginActivity.class));
                     finish();
+                    startActivity(new Intent(ReportActivity.this, LoginActivity.class));
 
                 }
 
@@ -238,11 +234,8 @@ public class ReportActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
+        return mToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -252,8 +245,9 @@ public class ReportActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
 
-            startActivity(new Intent(ReportActivity.this, MainActivity.class));
             finish();
+            startActivity(new Intent(ReportActivity.this, MainActivity.class));
+
         }
     }
 }

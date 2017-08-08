@@ -3,13 +3,13 @@ package com.project.powerone.powerone;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -36,11 +36,15 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
     private EditText passwordOld, passwordNew, passwordReNew;
     private Button passwordButton;
 
-    private String dbUserID, dbPassword, oldPassword, newPassword, renewPassword, dateNow, timeNow;
+    private String dbUserID;
+    private String oldPassword;
+    private String newPassword;
+    private String renewPassword;
+    private String dateNow;
+    private String timeNow;
     private boolean result;
 
     private DatabaseHelper databaseHelper;
-    private Cursor cursor;
     private Gson gson = new Gson();
 
     private Status[] statuses;
@@ -119,8 +123,8 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
                     finish();
 
                 } else if(id == R.id.logout){
-                    startActivity(new Intent(PasswordActivity.this, LoginActivity.class));
                     finish();
+                    startActivity(new Intent(PasswordActivity.this, LoginActivity.class));
 
                 }
 
@@ -161,11 +165,11 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void checkPassword() {
-        cursor = databaseHelper.loginSalesman();
+        Cursor cursor = databaseHelper.loginSalesman();
 
         cursor.moveToNext();
         dbUserID = cursor.getString(0);
-        dbPassword = cursor.getString(3);
+        String dbPassword = cursor.getString(3);
 
 
         if(oldPassword.equals(dbPassword)){
@@ -207,7 +211,7 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
                             if(xStatus == 1){
                                 result =databaseHelper.updatePassword(dbUserID, newPassword);
 
-                                if(result == true){
+                                if(result){
                                     progressDialog.dismiss();
                                     Toast.makeText(PasswordActivity.this, "Your Password Updated", Toast.LENGTH_SHORT).show();
                                     passwordOld.setText("");
@@ -255,11 +259,8 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
+        return mToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

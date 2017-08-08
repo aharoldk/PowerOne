@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.project.powerone.powerone.ProductActivity;
 import com.project.powerone.powerone.R;
 import com.project.powerone.powerone.pojo.Product;
 import com.project.powerone.powerone.viewholder.ProductViewHolder;

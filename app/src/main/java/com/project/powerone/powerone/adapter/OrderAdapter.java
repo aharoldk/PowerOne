@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.project.powerone.powerone.R;
 import com.project.powerone.powerone.pojo.Order;
@@ -20,12 +19,10 @@ import java.util.List;
 public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder> {
     private List<Order> list;
     private Activity activity;
-    private  TextView orderTotal;
 
-    public OrderAdapter(List<Order> list, Activity activity, TextView orderTotal) {
+    public OrderAdapter(List<Order> list, Activity activity) {
         this.list = list;
         this.activity = activity;
-        this.orderTotal = orderTotal;
     }
 
     @Override
@@ -38,7 +35,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder> {
 
     @Override
     public void onBindViewHolder(OrderViewHolder holder, int position) {
-        holder.bind(list.get(position), activity, orderTotal);
+        holder.bind(list.get(position), activity);
     }
 
     @Override

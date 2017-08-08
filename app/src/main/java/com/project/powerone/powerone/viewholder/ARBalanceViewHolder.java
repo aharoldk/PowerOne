@@ -31,13 +31,10 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
     private TextView arInvoice, arBalances, arDueDate, tvListPayment;
     private Button arButton;
 
-    private String s, paymentType;
-    private int totalPayment = 0, payment, costPayment;
+    private int totalPayment = 0;
+    private int costPayment;
 
     private LinearLayout linearGiro, linearTunai, linearEntry;
-
-    private DatabaseHelper databaseHelper;
-    private Cursor cursor;
 
     private StringBuffer stringBuffer;
 
@@ -60,34 +57,31 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
         try {
             Date date = simpleDateFormat.parse(arBalance.getdDueDate());
             DateFormat finalFormat = new SimpleDateFormat("dd-MM-yyyy");
-            s = finalFormat.format(date);
+            String s = finalFormat.format(date);
 
             arDueDate.setText("Due Date : "+ s);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        databaseHelper = new DatabaseHelper(activity);
+        DatabaseHelper databaseHelper = new DatabaseHelper(activity);
 
-        cursor = databaseHelper.getPayment(arBalance.getInvoiceID());
+        Cursor cursor = databaseHelper.getPayment(arBalance.getInvoiceID());
         stringBuffer = new StringBuffer();
 
         while(cursor.moveToNext()){
-            payment = cursor.getInt(5);
+            int payment = cursor.getInt(5);
 
+            String paymentType;
             if(cursor.getString(6).equals("G")){
                 paymentType = "Giro";
 
-                stringBuffer.append("Tipe Pembayaran : "+paymentType+"\n" +
-                        "No. Giro : "+cursor.getString(7)+"\n"+
-                        "Nominal Pembayaran : "+NumberFormat.getNumberInstance(Locale.US).format(payment)+"\n" +
-                        "Tgl Jatuh Tempo Giro : "+cursor.getString(8)+" \n \n");
+                stringBuffer.append("Tipe Pembayaran : ").append(paymentType).append("\n").append("No. Giro : ").append(cursor.getString(7)).append("\n").append("Nominal Pembayaran : ").append(NumberFormat.getNumberInstance(Locale.US).format(payment)).append("\n").append("Tgl Jatuh Tempo Giro : ").append(cursor.getString(8)).append(" \n \n");
 
             } else if(cursor.getString(6).equals("T")) {
                 paymentType = "Tunai";
 
-                stringBuffer.append("Tipe Pembayaran : "+paymentType+"\n" +
-                        "Nominal Pembayaran : "+NumberFormat.getNumberInstance(Locale.US).format(payment)+"\n \n");
+                stringBuffer.append("Tipe Pembayaran : ").append(paymentType).append("\n").append("Nominal Pembayaran : ").append(NumberFormat.getNumberInstance(Locale.US).format(payment)).append("\n \n");
             }
 
 

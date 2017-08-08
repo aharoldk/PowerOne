@@ -3,19 +3,17 @@ package com.project.powerone.powerone;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +28,6 @@ import com.project.powerone.powerone.pojo.ARBalance;
 import com.project.powerone.powerone.pojo.Customer;
 import com.project.powerone.powerone.pojo.Price;
 import com.project.powerone.powerone.pojo.Product;
-import com.project.powerone.powerone.pojo.Status;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 public class ImportActivity extends AppCompatActivity implements View.OnClickListener {
@@ -68,7 +65,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
     private int countProduct = 0, countFailProduct = 0, countPrice = 0, countFailPrice = 0, countCustomer = 0, countFailCustomer = 0, countAR = 0, countFailAR = 0;
 
-    private ProgressDialog progressDialog;
+    private ProgressDialog pDialogC, pDialogP, pDialogPc, pDialogAr;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -81,8 +78,17 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
         databaseHelper = new DatabaseHelper(ImportActivity.this);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(false);
+        pDialogC = new ProgressDialog(this);
+        pDialogC.setCancelable(false);
+
+        pDialogP = new ProgressDialog(this);
+        pDialogP.setCancelable(false);
+
+        pDialogPc = new ProgressDialog(this);
+        pDialogPc.setCancelable(false);
+
+        pDialogAr = new ProgressDialog(this);
+        pDialogAr.setCancelable(false);
 
         Cursor cursor = databaseHelper.loginSalesman();
         cursor.moveToNext();
@@ -184,7 +190,6 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
         } else if(view == buttonProduct){
             productData();
-
         } else if(view == buttonPrice) {
             productPrice();
 
@@ -192,18 +197,20 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
             arData();
 
         } else if(view == importButton){
-            productData();
             customerData();
+
             productPrice();
+
             arData();
 
+            productData();
 
         }
     }
 
     private void productPrice() {
-        progressDialog.setMessage("Wait Import Price Product . . . ");
-        progressDialog.show();
+        pDialogPc.setMessage("Wait Import Price Product . . . ");
+        pDialogPc.show();
 
         String URLPrice = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_productprice?arg_site="+dbSiteID;
 
@@ -231,21 +238,21 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                                 insertedPrice = databaseHelper.insertPrice(urutID, siteID, productID, productType, salesPrice);
 
-                                if(insertedPrice != true){
+                                if(!insertedPrice){
                                     countFailPrice++;
                                 }
 
                                 countPrice++;
                                 insertedPrice = false;
 
-                                progressDialog.setProgress((int)(i * 100/ responsePrice.length() ));
                             }
 
                         } catch (Exception e) {
                             e.printStackTrace();
+
                         }
 
-                        progressDialog.dismiss();
+                        pDialogPc.dismiss();
 
                         if(countFailPrice == 0){
                             totalPrice.setText(""+ countPrice);
@@ -263,7 +270,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
 
-                progressDialog.dismiss();
+                pDialogPc.dismiss();
                 Toast.makeText(ImportActivity.this, "Please Import Price Again", Toast.LENGTH_SHORT).show();
             }
         }
@@ -273,8 +280,8 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void arData() {
-        progressDialog.setMessage("Wait Import AR Balance . . . ");
-        progressDialog.show();
+        pDialogAr.setMessage("Wait Import AR Balance . . . ");
+        pDialogAr.show();
 
         String URLar = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_arbalance?arg_site="+dbSiteID+"&arg_salesman="+dbUserID;
 
@@ -306,7 +313,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                                 insertedAR = databaseHelper.insertAR(siteID, salesmanID, custID, invoiceID, dDueDate, balanceAR, urutID, 0);
 
-                                if(insertedAR != true){
+                                if(!insertedAR){
                                     countFailAR++;
                                 }
 
@@ -317,9 +324,10 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                         } catch (Exception e) {
                             e.printStackTrace();
+
                         }
 
-                        progressDialog.dismiss();
+                        pDialogAr.dismiss();
 
                         if(countFailAR == 0){
                             totalAr.setText(""+ countAR);
@@ -337,18 +345,19 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
 
-                progressDialog.dismiss();
+                pDialogAr.dismiss();
                 Toast.makeText(ImportActivity.this, "Please Import AR Balance Again", Toast.LENGTH_SHORT).show();
             }
         }
         );
 
         requestQueueAR.add(stringRequestAR);
+
     }
 
     private void productData() {
-        progressDialog.setMessage("Wait Import Product . . . ");
-        progressDialog.show();
+        pDialogP.setMessage("Wait Import Product . . . ");
+        pDialogP.show();
 
         String URLProduct = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_product?arg_site="+dbSiteID;
 
@@ -382,27 +391,28 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                                 insertedProduct = databaseHelper.insertProduct(urutID, siteID, productID, productName, bigPack, smallPack, prinsipalName, groupProductName, subGroupProductName, noOfPack, qtyOnHand);
 
-                                if(insertedProduct != true){
+                                if(!insertedProduct){
                                     countFailProduct++;
                                 }
 
                                 countProduct++;
                                 insertedProduct = false;
 
-
                             }
 
                         } catch (Exception e) {
                             e.printStackTrace();
+
                         }
 
-                        progressDialog.dismiss();
+                        pDialogP.dismiss();
 
                         if(countFailProduct == 0){
                             totalProduct.setText(""+ countProduct);
 
                         } else {
                             Toast.makeText(ImportActivity.this, "Please Import Product Again", Toast.LENGTH_SHORT).show();
+
                         }
 
                         countProduct = 0;
@@ -414,19 +424,18 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
 
-                progressDialog.dismiss();
+                pDialogP.dismiss();
                 Toast.makeText(ImportActivity.this, "Please Import Product Again", Toast.LENGTH_SHORT).show();
             }
         }
         );
 
         requestQueueProduct.add(stringRequestProduct);
-
     }
 
     private void customerData() {
-        progressDialog.setMessage("Wait Import Customer Data . . . ");
-        progressDialog.show();
+        pDialogC.setMessage("Wait Import Customer Data . . . ");
+        pDialogC.show();
 
         String URLCustomer = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_customer?arg_site="+dbSiteID+"&arg_salesman="+dbUserID;
 
@@ -461,7 +470,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                                 insertedCustomer = databaseHelper.insertCustomer(urutID, siteID, salesmanID, custID, custName, custAddress, priceType, geoMapLong, geoMapLat, gpsMapLong, gpsMapLat, statusVisit, dateTime);
 
-                                if(insertedCustomer != true){
+                                if(!insertedCustomer){
                                     countFailCustomer++;
                                 }
 
@@ -472,18 +481,18 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                             e.printStackTrace();
                         }
 
-                        progressDialog.dismiss();
+                        pDialogC.dismiss();
 
                         if(countFailCustomer == 0){
                             totalCustomer.setText(""+ countCustomer);
 
                         } else {
                             Toast.makeText(ImportActivity.this, "Please Import Customer Again", Toast.LENGTH_SHORT).show();
+
                         }
 
                         countCustomer = 0;
                         countFailCustomer = 0;
-
 
                     }
                 }, new Response.ErrorListener() {
@@ -491,8 +500,9 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
 
-                        progressDialog.dismiss();
+                        pDialogC.dismiss();
                         Toast.makeText(ImportActivity.this, "Please Import Customer Again", Toast.LENGTH_SHORT).show();
+
                     }
                 }
         );
@@ -503,11 +513,8 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
+        return mToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -517,8 +524,9 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             super.onBackPressed();
 
-            startActivity(new Intent(ImportActivity.this, MainActivity.class));
             finish();
+            startActivity(new Intent(ImportActivity.this, MainActivity.class));
+
         }
     }
 

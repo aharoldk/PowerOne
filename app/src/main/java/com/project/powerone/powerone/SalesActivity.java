@@ -1,40 +1,25 @@
 package com.project.powerone.powerone;
 
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.project.powerone.powerone.adapter.CustomerAdapter;
-import com.project.powerone.powerone.adapter.ProductAdapter;
-import com.project.powerone.powerone.pojo.Customer;
-import com.project.powerone.powerone.pojo.Product;
 import com.project.powerone.powerone.sql.DatabaseHelper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SalesActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
-
-    private RecyclerView rvmain;
-
-    private DatabaseHelper databaseHelper;
-
-    private double longitude, latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +34,9 @@ public class SalesActivity extends AppCompatActivity {
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        databaseHelper = new DatabaseHelper(this);
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
-        rvmain = (RecyclerView) findViewById(R.id.rvmain);
+        RecyclerView rvmain = (RecyclerView) findViewById(R.id.rvmain);
         rvmain.setLayoutManager(new LinearLayoutManager(this));
         rvmain.setHasFixedSize(true);
         rvmain.setAdapter(new CustomerAdapter(databaseHelper.getAllCustomer(), this));
@@ -102,8 +87,8 @@ public class SalesActivity extends AppCompatActivity {
                     finish();
 
                 } else if(id == R.id.logout){
-                    startActivity(new Intent(SalesActivity.this, LoginActivity.class));
                     finish();
+                    startActivity(new Intent(SalesActivity.this, LoginActivity.class));
 
                 }
 
@@ -114,11 +99,8 @@ public class SalesActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
+        return mToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -128,8 +110,9 @@ public class SalesActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
 
-            startActivity(new Intent(SalesActivity.this, MainActivity.class));
             finish();
+            startActivity(new Intent(SalesActivity.this, MainActivity.class));
+
         }
     }
 

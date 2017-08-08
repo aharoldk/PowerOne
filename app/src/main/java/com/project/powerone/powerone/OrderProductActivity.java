@@ -2,8 +2,8 @@ package com.project.powerone.powerone;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -11,27 +11,30 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.project.powerone.powerone.pojo.Product;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import static java.lang.Integer.parseInt;
-
 public class OrderProductActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String siteID, custID, productName, productID, bigpack, smallPack, sBig, sSmall, sDisc1, sDisc2, sDisc3, salesmanID;
-    private int salesPrice, bConfirm = 0, bTransfer = 0, iBig, iSmall;
+    private String siteID;
+    private String custID;
+    private String productID;
+    private String sBig;
+    private String sSmall;
+    private String sDisc1;
+    private String sDisc2;
+    private String sDisc3;
+    private int salesPrice;
+    private int iBig;
+    private int iSmall;
     private double iDisc1, iDisc2, iDisc3;
-    private boolean insertOrder = false;
 
     private EditText qtyBig, qtySmall, pctDisc1, pctDisc2, pctDisc3;
-    private TextView productNameT, productPrice, productBig, productSmall;
     private Button productButton;
 
     private DatabaseHelper databaseHelper;
-    private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +49,16 @@ public class OrderProductActivity extends AppCompatActivity implements View.OnCl
     private void initialize() {
         siteID = getIntent().getExtras().getString("siteID");
         custID = getIntent().getExtras().getString("custID");
-        productName = getIntent().getExtras().getString("productName");
+        String productName = getIntent().getExtras().getString("productName");
         productID = getIntent().getExtras().getString("productID");
-        smallPack = getIntent().getExtras().getString("smallPack");
-        bigpack = getIntent().getExtras().getString("bigPack");
+        String smallPack = getIntent().getExtras().getString("smallPack");
+        String bigpack = getIntent().getExtras().getString("bigPack");
         salesPrice = getIntent().getExtras().getInt("salesPrice");
 
-        productNameT = (TextView) findViewById(R.id.productName);
-        productPrice = (TextView) findViewById(R.id.productPrice);
-        productBig = (TextView) findViewById(R.id.productBig);
-        productSmall = (TextView) findViewById(R.id.productSmall);
+        TextView productNameT = (TextView) findViewById(R.id.productName);
+        TextView productPrice = (TextView) findViewById(R.id.productPrice);
+        TextView productBig = (TextView) findViewById(R.id.productBig);
+        TextView productSmall = (TextView) findViewById(R.id.productSmall);
         productButton = (Button) findViewById(R.id.productButton);
         pctDisc1 = (EditText) findViewById(R.id.pctDisc1);
         pctDisc2 = (EditText) findViewById(R.id.pctDisc2);
@@ -63,10 +66,10 @@ public class OrderProductActivity extends AppCompatActivity implements View.OnCl
         qtyBig = (EditText) findViewById(R.id.qtyBig);
         qtySmall = (EditText) findViewById(R.id.qtySmall);
 
-        productNameT.setText(productName+"/ "+bigpack+" = 12 "+smallPack);
+        productNameT.setText(productName +"/ "+ bigpack +" = 12 "+ smallPack);
         productPrice.setText("Rp. "+ NumberFormat.getNumberInstance(Locale.US).format(salesPrice));
-        productSmall.setText("*insert qty /"+smallPack);
-        productBig.setText("*insert qty /"+bigpack);
+        productSmall.setText("*insert qty /"+ smallPack);
+        productBig.setText("*insert qty /"+ bigpack);
 
         productButton.setOnClickListener(this);
 
@@ -85,12 +88,16 @@ public class OrderProductActivity extends AppCompatActivity implements View.OnCl
 
                 set0();
 
-                cursor = databaseHelper.loginSalesman();
+                Cursor cursor = databaseHelper.loginSalesman();
                 cursor.moveToFirst();
-                salesmanID = cursor.getString(0);
-                insertOrder = databaseHelper.insertSalesOrder(siteID, salesmanID, custID, productID,iBig, iSmall, salesPrice, iDisc1, iDisc2, iDisc3, bConfirm, bTransfer);
+                String salesmanID = cursor.getString(0);
 
-                if(insertOrder != true){
+                int bConfirm = 0;
+                int bTransfer = 0;
+
+                boolean insertOrder = databaseHelper.insertSalesOrder(siteID, salesmanID, custID, productID, iBig, iSmall, salesPrice, iDisc1, iDisc2, iDisc3, bConfirm, bTransfer);
+
+                if(!insertOrder){
                     Toast.makeText(this, "Please Check Your Field and Save again", Toast.LENGTH_SHORT).show();
                 } else {
                     startActivity(new Intent(OrderProductActivity.this, OrderActivity.class));

@@ -1,24 +1,19 @@
 package com.project.powerone.powerone;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.SearchView;
 
 import com.project.powerone.powerone.adapter.ProductAdapter;
 import com.project.powerone.powerone.pojo.Product;
@@ -146,8 +141,8 @@ public class ProductActivity extends AppCompatActivity {
                     finish();
 
                 } else if(id == R.id.logout){
-                    startActivity(new Intent(ProductActivity.this, LoginActivity.class));
                     finish();
+                    startActivity(new Intent(ProductActivity.this, LoginActivity.class));
 
                 }
 
@@ -159,11 +154,8 @@ public class ProductActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
+        return mToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
