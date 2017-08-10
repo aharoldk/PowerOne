@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.project.powerone.powerone.adapter.OrderAdapter;
 import com.project.powerone.powerone.adapter.OrderProductAdapter;
 import com.project.powerone.powerone.pojo.OrderProduct;
+import com.project.powerone.powerone.service.AngelosService;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.text.NumberFormat;
@@ -164,6 +165,9 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
                     finish();
 
                 } else if(id == R.id.logout){
+                    Intent intent = new Intent(getApplicationContext(), AngelosService.class);
+                    stopService(intent);
+
                     finish();
                     startActivity(new Intent(OrderActivity.this, LoginActivity.class));
 
@@ -176,9 +180,9 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        if(view == orderButtonAdd){
+        if(view.equals(orderButtonAdd)){
             productActivity();
-        } else if (view == orderConfirm){
+        } else if (view.equals(orderConfirm)){
 
             Cursor cursorUpdate = databaseHelper.getCustOrder(custID);
 

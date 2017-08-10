@@ -23,8 +23,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase sqLiteDatabase;
 
-    private String status = "Active";
-
     // Database Name
     private static final String DATABASE_NAME = "dbo.db";
 
@@ -40,6 +38,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME6 = "MobARPayment";
     private static final String TABLE_NAME7 = "MobSite";
     private static final String TABLE_NAME8 = "MobSalesman";
+
+    private static final String TABLE_NAME9 = "MobTrack";
 
 //    table1
     private static final String ID = "UrutID";
@@ -102,6 +102,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String PASSWORD = "Password";
     private static final String DLAST_LOGIN = "dLastLogin";
 
+    //table9
+    private static final String LATITUDE = "Latitude";
+    private static final String LONGITUDE = "Longtitude";
+    private static final String DATETIMETRACK = "DateTime";
+
+
     private static final String QUERY_TABLE1 = "CREATE TABLE "+TABLE_NAME1+"("+ID+" INTEGER PRIMARY KEY NOT NULL,"+SITE_ID+" CHARACTER(10) NULL,"+SALESMAN_ID+" CHARACTER(20) NULL,"+CUST_ID+" CHARACTER(10) NULL,"+CUST_NAME+" VARCHAR(100) NULL, "+CUST_ADDRESS+" VARCHAR(250) NULL, "+PRICE_TYPE+" CHARACTER(10) NULL, "+GEO_MAPLONG+" DOUBLE NULL, "+GEO_MAPLAT+" DOUBLE NULL, "+GPS_MAPLONG+" DOUBLE NULL, "+GPS_MAPLAT+" DOUBLE NULL, "+STATUS_CUSTOMER+" CHARACTER(12) NULL , "+DATE_TIME+" VARCHAR(20) NULL)";
 
     private static final String QUERY_TABLE2 = "CREATE TABLE "+TABLE_NAME2+"("+ID+" INTEGER PRIMARY KEY NOT NULL,"+SITE_ID+" CHARACTER(10) NULL,"+PRODUCT_ID+" CHARACTER(20) NULL, "+PRODUCT_NAME+" VARCHAR(100) NULL, "+BIG_PACK+" CHARACTER(10) NULL, "+SMALL_PACK+" CHARACTER(10) NULL, "+NO_OF_PACK+" INT  NULL, "+PRINSIPAL_NAME+" VARCHAR(50) NULL, "+GROUP_PRODUCT_NAME+" VARCHAR(50) NULL, "+SUB_GROUP_PRODUCT_NAME+" VARCHAR(50) NULL, "+QTY_ON_HAND+" INT NULL)";
@@ -118,6 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String QUERY_TABLE8 = "CREATE TABLE "+TABLE_NAME8+"("+SALESMAN_ID+" CHARACTER(20) NOT NULL, "+SALESMAN_NAME+" VARCHAR(50) NULL, "+SITE_ID+" CHARACTER(10) NOT NULL, "+PASSWORD+" VARCHAR(50) NULL, "+DLAST_LOGIN+" DATETIME NULL)";
 
+    private static final String QUERY_TABLE9 = "CREATE TABLE "+TABLE_NAME9+"("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+LATITUDE+" DOUBLE NULL, "+LONGITUDE+" DOUBLE NULL, "+DATETIMETRACK+" DATETIME NULL)";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -133,6 +140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(QUERY_TABLE6);
         sqLiteDatabase.execSQL(QUERY_TABLE7);
         sqLiteDatabase.execSQL(QUERY_TABLE8);
+        sqLiteDatabase.execSQL(QUERY_TABLE9);
     }
 
     @Override
@@ -145,6 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE6);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE7);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE8);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE9);
 
         onCreate(sqLiteDatabase);
     }
@@ -300,8 +309,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getCustomer(){
+        String status = "Active";
+
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+ TABLE_NAME1+" WHERE "+STATUS_CUSTOMER+" = ? ORDER BY datetime("+DATE_TIME+") DESC Limit 1", new String[] {status});
+
+        return cursor;
+    }
+
+    public Cursor getAlCustomer(){
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+ TABLE_NAME1, null);
 
         return cursor;
     }
@@ -683,5 +702,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_NAME6, null);
 
         return cursor;
+    }
+
+    public void insertLocationSales(double mLat, double mLong, String dateTimeNow) {
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(LATITUDE, mLat);
+        contentValues.put(LONGITUDE, mLong);
+        contentValues.put(DATETIMETRACK, dateTimeNow);
+
+        sqLiteDatabase.insert(TABLE_NAME9, null, contentValues);
     }
 }

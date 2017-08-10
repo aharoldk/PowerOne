@@ -35,7 +35,6 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
     private int costPayment;
 
     private LinearLayout linearGiro, linearTunai, linearEntry;
-
     private StringBuffer stringBuffer;
 
     public ARBalanceViewHolder(View itemView) {
@@ -62,6 +61,7 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
             arDueDate.setText("Due Date : "+ s);
         } catch (ParseException e) {
             e.printStackTrace();
+
         }
 
         DatabaseHelper databaseHelper = new DatabaseHelper(activity);

@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.project.powerone.powerone.service.AngelosService;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
 
     boolean doubleBackToExitPressedOnce = false;
+
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        intent = new Intent(getApplicationContext(), AngelosService.class);
+        startService(intent);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -77,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if(id == R.id.logout){
                     finish();
+                    stopService(intent);
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
                 }

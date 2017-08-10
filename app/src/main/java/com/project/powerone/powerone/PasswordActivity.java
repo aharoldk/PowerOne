@@ -26,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.project.powerone.powerone.pojo.Status;
+import com.project.powerone.powerone.service.AngelosService;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.text.SimpleDateFormat;
@@ -58,10 +59,14 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
 
+    private Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
+
+        intent = new Intent(getApplicationContext(), AngelosService.class);
 
         databaseHelper = new DatabaseHelper(this);
 
@@ -124,6 +129,7 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
 
                 } else if(id == R.id.logout){
                     finish();
+                    stopService(intent);
                     startActivity(new Intent(PasswordActivity.this, LoginActivity.class));
 
                 }
@@ -144,7 +150,7 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        if(view == passwordButton){
+        if(view.equals(passwordButton)){
             progressDialog.setMessage("Wait . . .");
             progressDialog.show();
 

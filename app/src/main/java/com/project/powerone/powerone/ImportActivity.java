@@ -28,6 +28,7 @@ import com.project.powerone.powerone.pojo.ARBalance;
 import com.project.powerone.powerone.pojo.Customer;
 import com.project.powerone.powerone.pojo.Price;
 import com.project.powerone.powerone.pojo.Product;
+import com.project.powerone.powerone.service.AngelosService;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 public class ImportActivity extends AppCompatActivity implements View.OnClickListener {
@@ -151,8 +152,11 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                     finish();
 
                 } else if(id == R.id.logout){
-                    startActivity(new Intent(ImportActivity.this, LoginActivity.class));
+                    Intent intent = new Intent(getApplicationContext(), AngelosService.class);
+                    stopService(intent);
+
                     finish();
+                    startActivity(new Intent(ImportActivity.this, LoginActivity.class));
 
                 }
 
@@ -185,18 +189,19 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        if(view == buttonCustomer){
+        if(view.equals(buttonCustomer)){
             customerData();
 
-        } else if(view == buttonProduct){
+        } else if(view.equals(buttonProduct)){
             productData();
-        } else if(view == buttonPrice) {
+
+        } else if(view.equals(buttonPrice)) {
             productPrice();
 
-        } else if(view == buttonAr){
+        } else if(view.equals(buttonAr)){
             arData();
 
-        } else if(view == importButton){
+        } else if(view.equals(importButton)){
             customerData();
 
             productPrice();

@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        if(view == loginLogin){
+        if(view.equals(loginLogin)){
             databaseHelper = new DatabaseHelper(LoginActivity.this);
 
             Cursor cursor = databaseHelper.loginSalesman();

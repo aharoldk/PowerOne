@@ -11,8 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.project.powerone.powerone.adapter.CustomerAdapter;
+import com.project.powerone.powerone.service.AngelosService;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 public class SalesActivity extends AppCompatActivity {
@@ -40,6 +43,14 @@ public class SalesActivity extends AppCompatActivity {
         rvmain.setLayoutManager(new LinearLayoutManager(this));
         rvmain.setHasFixedSize(true);
         rvmain.setAdapter(new CustomerAdapter(databaseHelper.getAllCustomer(), this));
+
+        Button btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
+        btnShowLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SalesActivity.this, MapsActivity.class));
+            }
+        });
 
         navigation();
     }
@@ -87,6 +98,9 @@ public class SalesActivity extends AppCompatActivity {
                     finish();
 
                 } else if(id == R.id.logout){
+                    Intent intent = new Intent(getApplicationContext(), AngelosService.class);
+                    stopService(intent);
+
                     finish();
                     startActivity(new Intent(SalesActivity.this, LoginActivity.class));
 

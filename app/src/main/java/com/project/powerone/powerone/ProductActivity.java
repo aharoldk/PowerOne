@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 import com.project.powerone.powerone.adapter.ProductAdapter;
 import com.project.powerone.powerone.pojo.Product;
+import com.project.powerone.powerone.service.AngelosService;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.util.ArrayList;
@@ -41,7 +42,6 @@ public class ProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         mToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -141,6 +141,9 @@ public class ProductActivity extends AppCompatActivity {
                     finish();
 
                 } else if(id == R.id.logout){
+                    Intent intent = new Intent(getApplicationContext(), AngelosService.class);
+                    stopService(intent);
+
                     finish();
                     startActivity(new Intent(ProductActivity.this, LoginActivity.class));
 

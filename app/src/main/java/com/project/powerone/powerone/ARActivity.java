@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.powerone.powerone.adapter.ARBalanceAdapter;
-import com.project.powerone.powerone.adapter.OrderAdapter;
+import com.project.powerone.powerone.service.AngelosService;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import butterknife.BindView;
@@ -25,22 +25,16 @@ import butterknife.ButterKnife;
 public class ARActivity extends AppCompatActivity {
 
     @BindView(R.id.arName) TextView arName;
-
     @BindView(R.id.arAddress) TextView arAddress;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
 
-    private RecyclerView rvmain;
-
-    private DatabaseHelper databaseHelper;
-    private Cursor cursor;
-
     private String custID, custName, custAddress;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ar);
 
@@ -54,9 +48,9 @@ public class ARActivity extends AppCompatActivity {
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        databaseHelper = new DatabaseHelper(ARActivity.this);
+        DatabaseHelper databaseHelper = new DatabaseHelper(ARActivity.this);
 
-        cursor = databaseHelper.getCustomer();
+        Cursor cursor = databaseHelper.getCustomer();
 
         while (cursor.moveToNext()) {
             custID = cursor.getString(3);
@@ -73,7 +67,7 @@ public class ARActivity extends AppCompatActivity {
         arName.setText(custName);
         arAddress.setText(custAddress);
 
-        rvmain = (RecyclerView) findViewById(R.id.rvmain);
+        RecyclerView rvmain = (RecyclerView) findViewById(R.id.rvmain);
         rvmain.setLayoutManager(new LinearLayoutManager(this));
         rvmain.setHasFixedSize(true);
         rvmain.setAdapter(new ARBalanceAdapter(databaseHelper.getAllArBalance(custID), ARActivity.this));
@@ -124,6 +118,9 @@ public class ARActivity extends AppCompatActivity {
                     finish();
 
                 } else if(id == R.id.logout){
+                    Intent intent = new Intent(getApplicationContext(), AngelosService.class);
+                    stopService(intent);
+
                     finish();
                     startActivity(new Intent(ARActivity.this, LoginActivity.class));
 
@@ -136,11 +133,8 @@ public class ARActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
+        return mToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

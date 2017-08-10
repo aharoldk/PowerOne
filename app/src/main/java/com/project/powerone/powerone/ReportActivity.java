@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.project.powerone.powerone.service.AngelosService;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.text.NumberFormat;
@@ -222,6 +223,9 @@ public class ReportActivity extends AppCompatActivity {
                     finish();
 
                 } else if(id == R.id.logout){
+                    Intent intent = new Intent(getApplicationContext(), AngelosService.class);
+                    stopService(intent);
+
                     finish();
                     startActivity(new Intent(ReportActivity.this, LoginActivity.class));
 

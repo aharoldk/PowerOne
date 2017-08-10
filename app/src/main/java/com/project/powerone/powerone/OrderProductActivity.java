@@ -77,7 +77,7 @@ public class OrderProductActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        if(view == productButton){
+        if(view.equals(productButton)){
             sBig = qtyBig.getText().toString();
             sSmall = qtySmall.getText().toString();
             sDisc1 = pctDisc1.getText().toString();

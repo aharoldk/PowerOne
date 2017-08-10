@@ -110,10 +110,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        if(view == takePhoto){
+        if(view.equals(takePhoto)){
             dispatchTakePictureIntent();
 
-        } else if (view == submitButton){
+        } else if (view.equals(submitButton)){
             checkEditText();
 
         }

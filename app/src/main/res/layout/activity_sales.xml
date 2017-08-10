@@ -8,27 +8,43 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/customer_list"
+                android:gravity="center_horizontal"
+                android:textSize="28dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvmain"
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnShowLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Customer List"
-            android:gravity="center_horizontal"
-            android:textSize="28dp"/>
+            android:background="@color/buttonColor"
+            android:textColor="@color/buttonTextColor"
+            android:text="@string/show_location"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvmain"
-            android:scrollbars="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
-
-    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"

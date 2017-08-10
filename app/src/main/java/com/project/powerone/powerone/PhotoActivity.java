@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.project.powerone.powerone.service.AngelosService;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -103,7 +105,7 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        if(view == takePhoto){
+        if(view.equals(takePhoto)){
             dispatchTakePictureIntent();
         }
     }
@@ -219,6 +221,9 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
                     finish();
 
                 } else if(id == R.id.logout){
+                    Intent intent = new Intent(getApplicationContext(), AngelosService.class);
+                    stopService(intent);
+
                     finish();
                     startActivity(new Intent(PhotoActivity.this, LoginActivity.class));
 
