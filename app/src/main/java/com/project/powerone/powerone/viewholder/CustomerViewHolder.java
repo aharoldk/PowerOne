@@ -150,7 +150,6 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
                         builderAR.setView(arView);
                         builderAR.show();
 
-
                     }
                 });
 

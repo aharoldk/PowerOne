@@ -19,9 +19,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -173,7 +176,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                             if(xStatus == 1){
                                                                 databaseHelper = new DatabaseHelper(RegisterActivity.this);
 
-                                                                boolean isInserted = databaseHelper.insertSalesman(defaultID, nameIDServer, siteIDServer, defaultnewPassword, dateNow+" "+timeNow);
+                                                                boolean isInserted = databaseHelper.insertSalesman(defaultID, nameIDServer, siteIDServer, defaultnewPassword, dateNow);
 
                                                                 if(isInserted){
                                                                     progressDialog.dismiss();
@@ -203,9 +206,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
                                                 progressDialog.dismiss();
+
+                                                if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                                                    Toast.makeText(RegisterActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                                                }
                                                 error.printStackTrace();
 
-                                                Toast.makeText(RegisterActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+
                                             }
                                         }
                                         );
@@ -220,6 +227,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
+                                    progressDialog.dismiss();
+
+                                    if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                                        Toast.makeText(RegisterActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                                    }
                                     error.printStackTrace();
                                 }
                             }
@@ -309,7 +321,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void getDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy:HH:mm");
 
         dateNow = dateFormat.format(calendar.getTime());

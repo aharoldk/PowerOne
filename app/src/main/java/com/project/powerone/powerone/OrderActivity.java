@@ -1,7 +1,9 @@
 package com.project.powerone.powerone;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -44,6 +46,7 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
     private String custPriceType;
     private String custID;
     private int countFail = 0;
+    private boolean result;
 
     private List<OrderProduct> list = new ArrayList<>();
 
@@ -128,54 +131,99 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
-                if(id == R.id.importScreen){
-                    startActivity(new Intent(OrderActivity.this, ImportActivity.class));
-                    finish();
+                if(checkDatabaseBeforeMove()){
+                    if(id == R.id.importScreen){
+                        startActivity(new Intent(OrderActivity.this, ImportActivity.class));
+                        finish();
 
-                } else if(id == R.id.exportScreen){
-                    startActivity(new Intent(OrderActivity.this, ExportActivity.class));
-                    finish();
+                    } else if(id == R.id.exportScreen){
+                        startActivity(new Intent(OrderActivity.this, ExportActivity.class));
+                        finish();
 
-                } else if(id == R.id.visitScreen){
-                    startActivity(new Intent(OrderActivity.this, SalesActivity.class));
-                    finish();
+                    } else if(id == R.id.visitScreen){
+                        startActivity(new Intent(OrderActivity.this, SalesActivity.class));
+                        finish();
 
-                } else if(id == R.id.produkScreen){
-                    startActivity(new Intent(OrderActivity.this, ProductActivity.class));
-                    finish();
+                    } else if(id == R.id.produkScreen){
+                        startActivity(new Intent(OrderActivity.this, ProductActivity.class));
+                        finish();
 
-                } else if(id == R.id.orderScreen){
-                    startActivity(new Intent(OrderActivity.this, OrderActivity.class));
-                    finish();
+                    } else if(id == R.id.orderScreen){
+                        startActivity(new Intent(OrderActivity.this, OrderActivity.class));
+                        finish();
 
-                } else if(id == R.id.ARScreen){
-                    startActivity(new Intent(OrderActivity.this, ARActivity.class));
-                    finish();
+                    } else if(id == R.id.ARScreen){
+                        startActivity(new Intent(OrderActivity.this, ARActivity.class));
+                        finish();
 
-                } else if(id == R.id.reportScreen){
-                    startActivity(new Intent(OrderActivity.this, ReportActivity.class));
-                    finish();
+                    } else if(id == R.id.reportScreen){
+                        startActivity(new Intent(OrderActivity.this, ReportActivity.class));
+                        finish();
 
-                } else if (id == R.id.photoScreen){
-                    startActivity(new Intent(OrderActivity.this, PhotoActivity.class));
-                    finish();
+                    } else if (id == R.id.photoScreen){
+                        startActivity(new Intent(OrderActivity.this, PhotoActivity.class));
+                        finish();
 
-                } else if(id == R.id.passwordScreen){
-                    startActivity(new Intent(OrderActivity.this, PasswordActivity.class));
-                    finish();
+                    } else if(id == R.id.passwordScreen){
+                        startActivity(new Intent(OrderActivity.this, PasswordActivity.class));
+                        finish();
 
-                } else if(id == R.id.logout){
-                    Intent intent = new Intent(getApplicationContext(), AngelosService.class);
-                    stopService(intent);
+                    } else if(id == R.id.logout){
+                        Intent intent = new Intent(getApplicationContext(), AngelosService.class);
+                        stopService(intent);
 
-                    finish();
-                    startActivity(new Intent(OrderActivity.this, LoginActivity.class));
+                        finish();
+                        startActivity(new Intent(OrderActivity.this, LoginActivity.class));
 
+                    }
                 }
+
+
 
                 return true;
             }
         });
+    }
+
+    private boolean checkDatabaseBeforeMove() {
+        Cursor cursor = databaseHelper.getCustOrder(custID);
+
+        int notyetSave = 0;
+
+        while (cursor.moveToNext()) {
+
+            if(cursor.getInt(11) == 0){
+                notyetSave++;
+            }
+        }
+
+        if(notyetSave > 0){
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new AlertDialog.Builder(OrderActivity.this, R.style.MyAlertDialogStyle);
+            } else {
+                builder = new AlertDialog.Builder(OrderActivity.this);
+            }
+            builder.setTitle("Not Yet Save Order")
+                    .setMessage("Are you sure you want to move this activity?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            result = true;
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            result = false;
+                            drawerLayout.closeDrawer(GravityCompat.START);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        } else {
+            result = true;
+        }
+
+        return result;
     }
 
     @Override
@@ -237,10 +285,12 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
         if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             this.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(checkDatabaseBeforeMove()){
+                super.onBackPressed();
 
-            finish();
-            startActivity(new Intent(OrderActivity.this, MainActivity.class));
+                finish();
+                startActivity(new Intent(OrderActivity.this, MainActivity.class));
+            }
 
         }
     }

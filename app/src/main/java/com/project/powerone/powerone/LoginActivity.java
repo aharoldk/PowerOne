@@ -16,9 +16,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -40,12 +43,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText loginPassword;
     private Button loginLogin;
 
-    private String dateNow, timeNow, dbUserid, dbPassword;
-    private boolean result;
+    private String dateNow, timeNow, dbUserid, dbPassword, dbDate;
 
     private Calendar calendar = Calendar.getInstance();
-
-    private DatabaseHelper databaseHelper;
 
     private Status[] statuses;
 
@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private static final int USERID = 0;
     private static final int PASSWORD = 3;
+    private static final int DATELOG = 4;
     private static final int POSITION = 0;
 
     private ProgressDialog progressDialog;
@@ -111,12 +112,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(view.equals(loginLogin)){
-            databaseHelper = new DatabaseHelper(LoginActivity.this);
+            DatabaseHelper databaseHelper = new DatabaseHelper(LoginActivity.this);
 
             Cursor cursor = databaseHelper.loginSalesman();
 
             if(cursor.getCount() == 0){
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 finish();
 
             } else {
@@ -126,10 +126,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     cursor.moveToFirst();
                     dbUserid = cursor.getString(USERID);
                     dbPassword = cursor.getString(PASSWORD);
+                    dbDate = cursor.getString(DATELOG);
+
                     if(lPassword.equals(dbPassword)){
 
                         parseDatabase();
-
                     } else {
                         Toast.makeText(LoginActivity.this, "Your Password Wrong", Toast.LENGTH_SHORT).show();
                     }
@@ -167,18 +168,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             int xStatus = statuses[POSITION].getxStatus();
 
                             if(xStatus == 1) {
-
-                                result =databaseHelper.updateLogin(dbUserid, dateNow+" "+timeNow);
-
-                                if(!result){
-                                    progressDialog.dismiss();
-                                    Toast.makeText(LoginActivity.this, "Cannot Update Date Time", Toast.LENGTH_SHORT).show();
-
-                                }
-
                                 finish();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
 
                             } else {
                                 progressDialog.dismiss();
@@ -196,11 +187,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-
                 progressDialog.dismiss();
 
-                Toast.makeText(LoginActivity.this, "Please Check Your Connection and Relogin", Toast.LENGTH_SHORT).show();
+                if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                    Toast.makeText(LoginActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                }
+
+                error.printStackTrace();
             }
         }
         );
@@ -210,7 +203,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void getDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy:HH:mm");
 
         dateNow = dateFormat.format(calendar.getTime());

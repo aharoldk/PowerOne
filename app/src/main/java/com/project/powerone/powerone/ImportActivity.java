@@ -17,9 +17,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -273,10 +276,13 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-
                 pDialogPc.dismiss();
-                Toast.makeText(ImportActivity.this, "Please Import Price Again", Toast.LENGTH_SHORT).show();
+
+                if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                    Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                }
+
+                error.printStackTrace();
             }
         }
         );
@@ -348,10 +354,13 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-
                 pDialogAr.dismiss();
-                Toast.makeText(ImportActivity.this, "Please Import AR Balance Again", Toast.LENGTH_SHORT).show();
+
+                if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                    Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                }
+
+                error.printStackTrace();
             }
         }
         );
@@ -427,10 +436,13 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-
                 pDialogP.dismiss();
-                Toast.makeText(ImportActivity.this, "Please Import Product Again", Toast.LENGTH_SHORT).show();
+
+                if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                    Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                }
+
+                error.printStackTrace();
             }
         }
         );
@@ -503,10 +515,13 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-
                         pDialogC.dismiss();
-                        Toast.makeText(ImportActivity.this, "Please Import Customer Again", Toast.LENGTH_SHORT).show();
+
+                        if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                            Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                        }
+
+                        error.printStackTrace();
 
                     }
                 }

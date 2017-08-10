@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
+import android.widget.Toast;
 
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
@@ -70,6 +71,7 @@ public class AngelosService extends Service {
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300000, 0, locationListener);
+
         }
 
     }
@@ -80,6 +82,8 @@ public class AngelosService extends Service {
 
         if(locationManager != null){
             locationManager.removeUpdates(locationListener);
+
+            Toast.makeText(this, mLat+" , "+mLong, Toast.LENGTH_SHORT).show();
         }
     }
 
