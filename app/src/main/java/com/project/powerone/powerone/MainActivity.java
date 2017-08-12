@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             while (mCursorArPayment.moveToNext()){
-                if(mCursorOrder.getInt(10) == 0){
+                if(mCursorArPayment.getInt(10) == 0){
                     bTransfer++;
                 }
 
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             startActivity(new Intent(MainActivity.this, ImportActivity.class));
-            finish();;
+            finish();
         }
 
         finish();
