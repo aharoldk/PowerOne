@@ -24,7 +24,7 @@ public class AngelosService extends Service {
     private LocationListener locationListener;
 
     private double mLat, mLong;
-    private String dateTimeNow;
+    private String dateNow, timeNow;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -70,7 +70,7 @@ public class AngelosService extends Service {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300000, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 180000, 0, locationListener);
 
         }
 
@@ -82,8 +82,6 @@ public class AngelosService extends Service {
 
         if(locationManager != null){
             locationManager.removeUpdates(locationListener);
-
-            Toast.makeText(this, mLat+" , "+mLong, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -92,13 +90,17 @@ public class AngelosService extends Service {
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
-        databaseHelper.insertLocationSales(mLat, mLong, dateTimeNow);
+        databaseHelper.insertLocationSales(mLat, mLong, dateNow, timeNow);
+
+        Toast.makeText(this, mLat+" , "+mLong, Toast.LENGTH_SHORT).show();
     }
 
     private void getDate() {
-        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-M-d HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
         Calendar calendar = Calendar.getInstance();
-        dateTimeNow = dateTimeFormat.format(calendar.getTime());
+        dateNow = dateFormat.format(calendar.getTime());
+        timeNow = timeFormat.format(calendar.getTime());
     }
 }

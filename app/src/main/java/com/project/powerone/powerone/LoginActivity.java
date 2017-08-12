@@ -43,7 +43,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText loginPassword;
     private Button loginLogin;
 
-    private String dateNow, timeNow, dbUserid, dbPassword, dbDate;
+    private String dateNow;
+    private String timeNow;
+    private String dbUserid;
+    private String dbPassword;
 
     private Calendar calendar = Calendar.getInstance();
 
@@ -53,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private static final int USERID = 0;
     private static final int PASSWORD = 3;
-    private static final int DATELOG = 4;
+
     private static final int POSITION = 0;
 
     private ProgressDialog progressDialog;
@@ -126,11 +129,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     cursor.moveToFirst();
                     dbUserid = cursor.getString(USERID);
                     dbPassword = cursor.getString(PASSWORD);
-                    dbDate = cursor.getString(DATELOG);
 
                     if(lPassword.equals(dbPassword)){
-
                         parseDatabase();
+
                     } else {
                         Toast.makeText(LoginActivity.this, "Your Password Wrong", Toast.LENGTH_SHORT).show();
                     }

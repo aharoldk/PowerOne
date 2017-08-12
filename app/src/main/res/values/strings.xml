@@ -55,4 +55,6 @@
     <string name="title_activity_maps">Map</string>
     <string name="show_location">Show Location</string>
     <string name="customer_list">Customer List</string>
+    <string name="exportButton">EXPORT</string>
+    <string name="exportAllButton">EXPORT ALL</string>
 </resources>

@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.project.powerone.powerone.R;
 import com.project.powerone.powerone.pojo.Customer;
+import com.project.powerone.powerone.service.AngelosService;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.text.DateFormat;
@@ -59,6 +60,9 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
     private String dateTimeNow;
     private String dDueDate;
 
+    private Intent intentService;
+    private AlertDialog.Builder builder;
+
     public CustomerViewHolder(View itemView) {
         super(itemView);
 
@@ -70,6 +74,8 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
     }
 
     public void bind(final Customer customer, final Activity activity) {
+        intentService = new Intent(activity, AngelosService.class);
+
         this.activity = activity;
 
         custName.setText(customer.getCustName());
@@ -80,19 +86,17 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
         custButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder = new AlertDialog.Builder(activity);
                 View mView = activity.getLayoutInflater().inflate(R.layout.detail_customer, null);
 
                 linearDone = mView.findViewById(R.id.linearDone);
                 linearAR = mView.findViewById(R.id.linearAR);
 
-                /*if(customer.getStatusCustomer().equals("Active")){
-                    linearDone.setVisibility(View.GONE);
-                }*/
-
                 linearDone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        activity.stopService(intentService);
+
                         lm = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
 
                         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -201,6 +205,10 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder implements Locat
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             activity.overridePendingTransition(0, 0);
             activity.startActivity(intent);
+
+
+
+            activity.startService(intentService);
         }
     }
 

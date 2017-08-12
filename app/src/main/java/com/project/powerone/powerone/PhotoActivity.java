@@ -247,8 +247,8 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         } else {
             super.onBackPressed();
 
-            startActivity(new Intent(PhotoActivity.this, MainActivity.class));
             finish();
+            startActivity(new Intent(PhotoActivity.this, MainActivity.class));
         }
     }
 }

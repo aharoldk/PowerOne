@@ -18,18 +18,28 @@
             android:textSize="24dp"
             android:gravity="center_horizontal"
             android:textColor="@color/colorPrimary"/>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
-            <TextView
-                android:id="@+id/tvListPayment"
-                android:layout_marginTop="20dp"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvmain"
+                android:scrollbars="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
 
         </ScrollView>
-
+        <Button
+            android:id="@+id/btnConfirmPayment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/buttonColor"
+            android:textColor="@color/buttonTextColor"
+            android:text="Confirm Payment"
+            android:layout_alignParentBottom="true"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

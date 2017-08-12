@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.project.powerone.powerone.ARActivity;
 import com.project.powerone.powerone.PaymentActivity;
 import com.project.powerone.powerone.R;
+import com.project.powerone.powerone.adapter.ARPaymentAdapter;
 import com.project.powerone.powerone.pojo.ARBalance;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
@@ -28,14 +32,15 @@ import java.util.Locale;
 
 public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
 
-    private TextView arInvoice, arBalances, arDueDate, tvListPayment;
+    private TextView arInvoice, arBalances, arDueDate;
     private Button arButton;
 
     private int totalPayment = 0;
-    private int costPayment;
+    private int costPayment, countConfirm = 0;
+
+    private DatabaseHelper databaseHelper;
 
     private LinearLayout linearGiro, linearTunai, linearEntry;
-    private StringBuffer stringBuffer;
 
     public ARBalanceViewHolder(View itemView) {
         super(itemView);
@@ -53,6 +58,7 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
         arBalances.setText("Balance : Rp. "+ NumberFormat.getNumberInstance(Locale.US).format(arBalance.getBalanceAR()));
 
         DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
         try {
             Date date = simpleDateFormat.parse(arBalance.getdDueDate());
             DateFormat finalFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -64,28 +70,17 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
 
         }
 
-        DatabaseHelper databaseHelper = new DatabaseHelper(activity);
+        databaseHelper = new DatabaseHelper(activity);
 
-        Cursor cursor = databaseHelper.getPayment(arBalance.getInvoiceID());
-        stringBuffer = new StringBuffer();
+        final Cursor cursor = databaseHelper.getPayment(arBalance.getInvoiceID());
 
-        while(cursor.moveToNext()){
-            int payment = cursor.getInt(5);
+        while(cursor.moveToNext()) {
+            totalPayment = totalPayment + cursor.getInt(5);
 
-            String paymentType;
-            if(cursor.getString(6).equals("G")){
-                paymentType = "Giro";
-
-                stringBuffer.append("Tipe Pembayaran : ").append(paymentType).append("\n").append("No. Giro : ").append(cursor.getString(7)).append("\n").append("Nominal Pembayaran : ").append(NumberFormat.getNumberInstance(Locale.US).format(payment)).append("\n").append("Tgl Jatuh Tempo Giro : ").append(cursor.getString(8)).append(" \n \n");
-
-            } else if(cursor.getString(6).equals("T")) {
-                paymentType = "Tunai";
-
-                stringBuffer.append("Tipe Pembayaran : ").append(paymentType).append("\n").append("Nominal Pembayaran : ").append(NumberFormat.getNumberInstance(Locale.US).format(payment)).append("\n \n");
+            if(cursor.getInt(9) == 0){
+                countConfirm++;
             }
 
-
-            totalPayment = totalPayment + payment;
         }
 
         arButton.setOnClickListener(new View.OnClickListener() {
@@ -133,13 +128,52 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
                         final AlertDialog.Builder entryBuilder = new AlertDialog.Builder(activity);
                         View entryView = activity.getLayoutInflater().inflate(R.layout.detail_invoice, null);
 
-                        tvListPayment = entryView.findViewById(R.id.tvListPayment);
+                        RecyclerView rvmainARPayment = entryView.findViewById(R.id.rvmain);
+                        Button btnConfirmPayment = entryView.findViewById(R.id.btnConfirmPayment);
 
-                        tvListPayment.setText(stringBuffer);
+                        rvmainARPayment.setLayoutManager(new LinearLayoutManager(activity));
+                        rvmainARPayment.setHasFixedSize(true);
+                        rvmainARPayment.setAdapter(new ARPaymentAdapter(databaseHelper.getAllPayment(arBalance.getInvoiceID()), activity));
 
                         entryBuilder.setCancelable(true);
                         entryBuilder.setView(entryView);
                         entryBuilder.show();
+
+                        if(cursor.getCount() == 0) {
+                            btnConfirmPayment.setVisibility(View.GONE);
+                        }
+
+                        if(countConfirm == 0) {
+                            btnConfirmPayment.setVisibility(View.GONE);
+                        }
+
+                        btnConfirmPayment.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                int countFail = 0;
+
+                                Cursor cursorGetpayment = databaseHelper.getPayment(arBalance.getInvoiceID());
+
+                                while(cursorGetpayment.moveToNext()) {
+
+                                    boolean paymentUpdate = databaseHelper.updateARPayment(arBalance.getInvoiceID());
+
+                                    if(!paymentUpdate){
+                                        countFail++;
+                                    }
+                                }
+
+                                if(countFail > 0){
+                                    Toast.makeText(activity, "Please Confirm Payment Again", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(activity, "All Payment Confirm", Toast.LENGTH_SHORT).show();
+                                    activity.finish();
+                                    activity.overridePendingTransition(0, 0);
+                                    activity.startActivity(new Intent(activity, ARActivity.class));
+
+                                }
+                            }
+                        });
                     }
                 });
 

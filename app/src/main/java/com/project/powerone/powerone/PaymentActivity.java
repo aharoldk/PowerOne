@@ -108,7 +108,7 @@ public class PaymentActivity extends AppCompatActivity {
                         if(costPayment < nominal){
                             Toast.makeText(PaymentActivity.this, "Please Check Your Nominal, Nominal more than Remaining Payment", Toast.LENGTH_SHORT).show();
                         } else {
-                            result = databaseHelper.insertPayment(siteID, salesmanID, custID, invoiceID, nominal, paymentType, "", "", BTRANSFER);
+                            result = databaseHelper.insertPayment(siteID, salesmanID, custID, invoiceID, nominal, paymentType, "", "", BTRANSFER, BTRANSFER);
 
                             if(!result){
                                 Toast.makeText(PaymentActivity.this, "Please Try Save Product Again", Toast.LENGTH_SHORT).show();
@@ -129,7 +129,7 @@ public class PaymentActivity extends AppCompatActivity {
                         if(costPayment < nominal){
                             Toast.makeText(PaymentActivity.this, "Please Check Your Nominal, Nominal more than Remaining Payment", Toast.LENGTH_SHORT).show();
                         } else {
-                            result = databaseHelper.insertPayment(siteID, salesmanID, custID, invoiceID, nominal, paymentType, mNuGiro, mDate, BTRANSFER);
+                            result = databaseHelper.insertPayment(siteID, salesmanID, custID, invoiceID, nominal, paymentType, mNuGiro, mDate, BTRANSFER, BTRANSFER);
 
                             if(!result){
                                 Toast.makeText(PaymentActivity.this, "Please Try Save Product Again", Toast.LENGTH_SHORT).show();
@@ -157,8 +157,9 @@ public class PaymentActivity extends AppCompatActivity {
             Toast.makeText(this, "Update Database Failed", Toast.LENGTH_SHORT).show();
         } else {
 
-            startActivity(new Intent(PaymentActivity.this, ARActivity.class));
             finish();
+            startActivity(new Intent(PaymentActivity.this, ARActivity.class));
+
         }
 
     }

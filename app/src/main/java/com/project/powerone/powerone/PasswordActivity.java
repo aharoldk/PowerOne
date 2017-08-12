@@ -276,8 +276,8 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
         } else {
             super.onBackPressed();
 
-            startActivity(new Intent(PasswordActivity.this, MainActivity.class));
             finish();
+            startActivity(new Intent(PasswordActivity.this, MainActivity.class));
         }
     }
 }

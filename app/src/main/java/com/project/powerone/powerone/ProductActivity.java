@@ -168,8 +168,8 @@ public class ProductActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
 
-            startActivity(new Intent(ProductActivity.this, MainActivity.class));
             finish();
+            startActivity(new Intent(ProductActivity.this, MainActivity.class));
         }
     }
 }

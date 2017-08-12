@@ -10,8 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
         <TextView
             android:layout_width="match_parent"
@@ -29,19 +28,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_marginBottom="10dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight="0.7">
+                    android:layout_weight="0.7"
+                    android:layout_gravity="center_vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -62,18 +63,22 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
+                    android:background="@color/buttonColor"
+                    android:textColor="@color/buttonTextColor"
                     android:text="@string/importButton"
                     android:id="@+id/buttonCustomer"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight="0.7">
+                    android:layout_weight="0.7"
+                    android:layout_gravity="center_vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -95,17 +100,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
                     android:text="@string/importButton"
+                    android:background="@color/buttonColor"
+                    android:textColor="@color/buttonTextColor"
                     android:id="@+id/buttonProduct"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight="0.7">
+                    android:layout_weight="0.7"
+                    android:layout_gravity="center_vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -127,17 +136,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
                     android:text="@string/importButton"
+                    android:background="@color/buttonColor"
+                    android:textColor="@color/buttonTextColor"
                     android:id="@+id/buttonPrice"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight="0.7">
+                    android:layout_weight="0.7"
+                    android:layout_gravity="center_vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -159,6 +172,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
                     android:text="@string/importButton"
+                    android:background="@color/buttonColor"
+                    android:textColor="@color/buttonTextColor"
                     android:id="@+id/buttonAr"/>
             </LinearLayout>
 
@@ -170,6 +185,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/importAllButton"
+            android:background="@color/buttonColor"
+            android:textColor="@color/buttonTextColor"
             android:id="@+id/importButton"/>
 
     </RelativeLayout>

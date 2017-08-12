@@ -147,12 +147,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkdatebase() {
+        int bTransfer = 0;
         Cursor mCursorOrder, mCursorArPayment;
 
         mCursorOrder = databaseHelper.getAllOrdeR();
         mCursorArPayment = databaseHelper.getAllArPaymenT();
 
-        int bTransfer = 0;
         if((mCursorOrder.getCount() > 0) || (mCursorArPayment.getCount() > 0)){
             while (mCursorOrder.moveToNext()){
                 if(mCursorOrder.getInt(12) == 0){
@@ -162,21 +162,24 @@ public class MainActivity extends AppCompatActivity {
             }
 
             while (mCursorArPayment.moveToNext()){
-                if(mCursorOrder.getInt(9) == 0){
+                if(mCursorOrder.getInt(10) == 0){
                     bTransfer++;
                 }
 
             }
-
-            if(bTransfer > 0){
-                Toast.makeText(this, "Please Export Data to the Server", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(MainActivity.this, ExportActivity.class));
-            } else {
-                startActivity(new Intent(MainActivity.this, ImportActivity.class));
-            }
-
-            finish();
         }
+
+        if(bTransfer > 0){
+            Toast.makeText(this, "Please Export Data to the Server", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(MainActivity.this, ExportActivity.class));
+            finish();
+
+        } else {
+            startActivity(new Intent(MainActivity.this, ImportActivity.class));
+            finish();;
+        }
+
+        finish();
     }
 
     private void getDate() {
@@ -198,8 +201,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
 
             if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
-                return;
+                stopService(intent);
+                finish();
             }
 
             this.doubleBackToExitPressedOnce = true;
