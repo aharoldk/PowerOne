@@ -267,8 +267,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<Order> orders = new ArrayList<>();
 
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
-
-        Cursor cursor = sqLiteDatabase.query(TABLE_NAME5, null, " "+CUST_ID+" =?", new String[] {condition}, null, null, null);
+        String selectQuery = "SELECT * FROM "+TABLE_NAME5+" WHERE "+CUST_ID+" = '"+condition+"' AND "+BTRANSFER+" = 0 ";
+        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
 
         while (cursor.moveToNext()) {
 
@@ -627,7 +627,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(BCONFIRM, 1);
 
-        long result = sqLiteDatabase.update(TABLE_NAME5, contentValues, PRODUCT_ID+" = ?", new String[] { condition});
+        long result = sqLiteDatabase.update(TABLE_NAME5, contentValues, ID+" = ?", new String[] { condition});
 
         if(result == -1){
             return false;
@@ -709,7 +709,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getCurrentOrder(String condition) {
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
 
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT a.CustID, a.QtyBig, a.QtySmall, a.SalesPrice, b.NoOfPack FROM MobSalesOrder as a, MobProduct as b WHERE a.SiteID = b.SiteID AND a.ProductID = b.ProductID AND a.CustId = ?", new String[]{condition});
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT a.CustID, a.QtyBig, a.QtySmall, a.SalesPrice, b.NoOfPack FROM MobSalesOrder as a, MobProduct as b WHERE a.SiteID = b.SiteID AND a.ProductID = b.ProductID AND a.bTransfer = 0 AND a.CustId = ?", new String[]{condition});
 
         return cursor;
     }
@@ -797,5 +797,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int result = sqLiteDatabase.delete(TABLE_NAME6, ID+" = ?", new String[] {urutID});
 
         return result;
+    }
+
+    public boolean updateCustOrder(String condition) {
+
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(BTRANSFER, 1);
+
+        long result = sqLiteDatabase.update(TABLE_NAME5, contentValues, ID+" = ?", new String[] { condition});
+
+        if(result == -1){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean updateTransferARPayment(String condition) {
+
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(BTRANSFER, 1);
+
+        long result = sqLiteDatabase.update(TABLE_NAME6, contentValues, ID+" = ?", new String[] { condition});
+
+        if(result == -1){
+            return false;
+        } else {
+            return true;
+        }
     }
 }

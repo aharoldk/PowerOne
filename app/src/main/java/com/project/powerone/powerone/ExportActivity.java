@@ -1,6 +1,5 @@
 package com.project.powerone.powerone;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -13,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkError;
@@ -29,7 +30,18 @@ import com.project.powerone.powerone.pojo.Status;
 import com.project.powerone.powerone.service.AngelosService;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ExportActivity extends AppCompatActivity implements View.OnClickListener {
+    @BindView(R.id.buttonAR) Button buttonAR;
+    @BindView(R.id.buttonCustomer) Button buttonCustomer;
+    @BindView(R.id.exportAllButton) Button exportAllButton;
+    @BindView(R.id.totalAR) TextView totalAR;
+    @BindView(R.id.totalCustomer) TextView totalCustomer;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -40,17 +52,21 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
 
     private DatabaseHelper databaseHelper;
 
-    private ProgressDialog pDialogC;
-
     private String dbUserID;
     private String dbSiteID;
-    private int exCustFail = 0, xStatusCustomer = 0, exTrackFail = 0, xStatusTrack = 0;;
+    private String dateConvert = "";
+    private int exTrackFail;
+    private int exCustOrder;
+    private int exCustOrderFail;
+    private int exARPayFail;
+    private int exARPay;
     private static final int POSITION = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
+
         declarate();
         navigation();
         getUserID();
@@ -67,14 +83,26 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        pDialogC = new ProgressDialog(this);
-        pDialogC.setCancelable(false);
-
         databaseHelper = new DatabaseHelper(this);
+
+        ButterKnife.bind(this);
+        
+        buttonAR.setOnClickListener(this);
+        buttonCustomer.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
+        if (view.equals(buttonAR)) {
+            exportAR();
+
+        } else if (view.equals(buttonCustomer)) {
+            exportCustOrder();
+
+        } else if (view.equals(exportAllButton)) {
+            exportAR();
+            exportCustOrder();
+        }
     }
 
     private void getUserID() {
@@ -89,8 +117,8 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
         Cursor mCurCust = databaseHelper.getAlCustomer();
 
         while(mCurCust.moveToNext()) {
-
-            if(mCurCust.getString(11).equals("Active")) {
+            String mStatusCost = mCurCust.getString(11);
+            if(mStatusCost.equals("Active")) {
 
                 String URLCustomer = "http://202.43.162.180:8082/PowerOneMobileWebService/ws_update_customer_position?arg_site="+dbSiteID+"&arg_salesman="+dbUserID+"&arg_customer="+mCurCust.getString(3)+"&arg_maplong="+mCurCust.getDouble(9)+"&arg_maplat="+mCurCust.getDouble(10);
 
@@ -104,32 +132,10 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
                             public void onResponse(String responseCustomer) {
                                 Log.i("responseCustomer", responseCustomer);
 
-                                try {
-                                    statuses = gson.fromJson(responseCustomer, Status[].class);
-
-                                    xStatusCustomer = statuses[POSITION].getxStatus();
-
-                                    if(xStatusCustomer != 1 || xStatusCustomer == 0){
-                                        exCustFail++;
-                                    }
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-
-                                    exCustFail++;
-                                }
-
-
                             }
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
-                                    exCustFail++;
-                                } else {
-                                    exCustFail++;
-                                }
-
                                 error.printStackTrace();
 
                             }
@@ -140,77 +146,288 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
 
-        mCurCust.close();
-
-        if(exCustFail > 0){
-            Toast.makeText(this, "good1", Toast.LENGTH_SHORT).show();
-            exportCustomer();
-
-        }
-
     }
 
     private void exportTracking() {
         Cursor mCurTracking = databaseHelper.getTracking();
 
-        while(mCurTracking.moveToNext()) {
+        if(mCurTracking.getCount() > 0) {
 
-            String URLTracking = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_update_salesmantracking?arg_Tanggal="+mCurTracking.getString(3)+"%"+mCurTracking.getString(4)+"&arg_Site="+dbSiteID+"&arg_Salesman="+dbUserID+"&arg_MapLong="+mCurTracking.getDouble(2)+"&arg_mapLat="+mCurTracking.getDouble(1)+"&arg_Line="+mCurTracking.getInt(0);
+            while(mCurTracking.moveToNext()) {
 
-            RequestQueue requestQueueTrack = Volley.newRequestQueue(ExportActivity.this);
+                String URLTracking = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_update_salesmantracking?arg_Tanggal="+mCurTracking.getString(3)+"%"+mCurTracking.getString(4)+"&arg_Site="+dbSiteID+"&arg_Salesman="+dbUserID+"&arg_MapLong="+mCurTracking.getDouble(2)+"&arg_mapLat="+mCurTracking.getDouble(1)+"&arg_Line="+mCurTracking.getInt(0);
 
-            StringRequest stringRequestTrack = new StringRequest(
-                    Request.Method.GET,
-                    URLTracking,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String responseTrack) {
-                            Log.i("responseTrack", responseTrack);
+                RequestQueue requestQueueTrack = Volley.newRequestQueue(ExportActivity.this);
 
-                            try {
-                                statuses = gson.fromJson(responseTrack, Status[].class);
+                StringRequest stringRequestTrack = new StringRequest(
+                        Request.Method.GET,
+                        URLTracking,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String responseTrack) {
+                                Log.i("responseTrack", responseTrack);
 
-                                xStatusTrack = statuses[POSITION].getxStatus();
+                                if(responseTrack.length() != 0){
+                                    try {
+                                        statuses = gson.fromJson(responseTrack, Status[].class);
 
-                                if(xStatusTrack != 1 || xStatusTrack == 0){
+                                        int xStatusTrack = statuses[POSITION].getxStatus();
+
+                                        if(xStatusTrack != 1){
+                                            exTrackFail++;
+                                        }
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+
+                                    }
+                                } else {
                                     exTrackFail++;
                                 }
 
-                            } catch (Exception e) {
-                                e.printStackTrace();
 
-                                exTrackFail++;
                             }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                                    exTrackFail++;
+                                }
 
+                                error.printStackTrace();
+
+                            }
                         }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
-                                exTrackFail++;
-                            } else {
-                                exTrackFail++;
+                );
+
+                requestQueueTrack.add(stringRequestTrack);
+            }
+
+            if(exTrackFail == 0) {
+                mCurTracking.close();
+                databaseHelper.emptyDatabase("MobTrack");
+
+            }
+
+            exTrackFail = 0;
+            mCurTracking.close();
+        }
+
+    }
+
+    private void exportCustOrder() {
+
+        Cursor mCustORder = databaseHelper.getAllOrdeR();
+
+        if (mCustORder.getCount() > 0) {
+            while (mCustORder.moveToNext()) {
+
+                int bConfirmOrder = mCustORder.getInt(11);
+                int bTransferOrder = mCustORder.getInt(12);
+
+                if(bConfirmOrder == 1 && bTransferOrder == 0) {
+
+                    final String urutIDCustOrder = Integer.toString(mCustORder.getInt(0));
+
+                    String URLCustOrder= "http://202.43.162.180:8082/PowerONEMobileWebService/ws_update_salesorder?arg_siteid="+mCustORder.getString(1)+"&arg_salesmanid="+mCustORder.getString(2)+"&arg_custid="+mCustORder.getString(3)+"&arg_productid="+mCustORder.getString(4)+"&arg_qtybig="+mCustORder.getInt(5)+"&arg_qtysmall="+mCustORder.getInt(6)+"&arg_salesprice="+mCustORder.getInt(7)+"&arg_pctdisc1="+mCustORder.getDouble(8)+"&arg_pctdisc2="+mCustORder.getDouble(9)+"&arg_pctdisc3="+mCustORder.getDouble(10)+"&arg_bconfirm=1&arg_btransfer=1";
+
+                    RequestQueue sQueueCustOrder = Volley.newRequestQueue(ExportActivity.this);
+
+                    StringRequest sRequestCustOrder = new StringRequest(
+                            Request.Method.GET,
+                            URLCustOrder,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String responseCustOrder) {
+                                    Log.i("responseCustOrder", responseCustOrder);
+
+                                    if(responseCustOrder.length() != 0) {
+
+                                        try {
+
+                                            statuses = gson.fromJson(responseCustOrder, Status[].class);
+
+                                            int xStatusCustOrder = statuses[POSITION].getxStatus();
+
+                                            if(xStatusCustOrder == 1) {
+
+                                                if(!databaseHelper.updateCustOrder(urutIDCustOrder)){
+                                                    exCustOrderFail++;
+
+                                                } else {
+                                                    exCustOrder++;
+                                                    totalCustomer.setText(""+exCustOrder);
+
+                                                }
+
+                                            } else {
+                                                exCustOrderFail++;
+
+                                            }
+
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+
+                                        }
+                                    } else {
+                                        exCustOrderFail++;
+
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    error.printStackTrace();
+
+                                    if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                                        exCustOrderFail++;
+                                    }
+                                }
                             }
+                    );
 
-                            error.printStackTrace();
+                    sQueueCustOrder.add(sRequestCustOrder);
 
+                }
+            }
+
+            if(exCustOrderFail != 0){
+                exCustOrderFail = 0;
+
+                Toast.makeText(this, "Please Export Customer Order Again", Toast.LENGTH_SHORT).show();
+            } else {
+                if(exCustOrder != 0){
+
+                    Toast.makeText(this, "Export Customer Order Complete", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    Toast.makeText(this, "Nothing To Export", Toast.LENGTH_SHORT).show();
+                }
+
+                exCustOrder = 0;
+
+            }
+
+        }
+
+        mCustORder.close();
+
+    }
+
+    private void exportAR() {
+
+        Cursor mCustARPayment= databaseHelper.getAllArPaymenT();
+
+        if(mCustARPayment.getCount() != 0) {
+            while (mCustARPayment.moveToNext()) {
+
+                int bConfirmARP = mCustARPayment.getInt(9);
+                int bTransferOrder = mCustARPayment.getInt(10);
+
+                if(bConfirmARP == 1 && bTransferOrder == 0) {
+
+                    final String urutIDPayment = Integer.toString(mCustARPayment.getInt(0));
+
+                    if(!mCustARPayment.getString(8).isEmpty()){
+
+                        SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
+                        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                        try {
+
+                            dateConvert = myFormat.format(fromUser.parse(mCustARPayment.getString(8)));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
                     }
-            );
 
-            requestQueueTrack.add(stringRequestTrack);
+
+                    String URLARPayment = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_update_ar_payment?arg_site="+mCustARPayment.getString(1)+"&arg_salesman="+mCustARPayment.getString(2)+"&arg_customer="+mCustARPayment.getString(3)+"&arg_invoice="+mCustARPayment.getString(4)+"&arg_nominal="+mCustARPayment.getInt(5)+"&arg_type="+mCustARPayment.getString(6)+"&arg_bilyet="+mCustARPayment.getString(7)+"&arg_bilyetdate="+dateConvert;
+
+                    RequestQueue sQueueARP = Volley.newRequestQueue(ExportActivity.this);
+
+                    StringRequest sRequestARP = new StringRequest(
+                            Request.Method.GET,
+                            URLARPayment,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String responseARP) {
+                                    Log.i("responseARP", responseARP);
+
+                                    if(responseARP.length() != 0){
+                                        try {
+                                            statuses = gson.fromJson(responseARP, Status[].class);
+
+                                            int xStatusARP = statuses[POSITION].getxStatus();
+
+                                            if(xStatusARP == 1) {
+
+                                                if(!databaseHelper.updateTransferARPayment(urutIDPayment)){
+                                                    exARPayFail++;
+
+                                                } else {
+                                                    exARPay++;
+                                                    totalAR.setText(""+exARPay);
+
+                                                }
+
+                                            } else {
+                                                exARPayFail++;
+                                            }
+
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        exARPayFail++;
+                                    }
+
+
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+
+                            if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                                exARPayFail++;
+                            }
+                        }
+                    }
+                    );
+
+                    sQueueARP.add(sRequestARP);
+
+                }
+
+            }
+
+            if(exARPayFail != 0){
+                exARPayFail = 0;
+
+                Toast.makeText(this, "Please Export Customer Order Again", Toast.LENGTH_SHORT).show();
+
+            } else {
+
+                if(exARPay != 0){
+
+                    Toast.makeText(this, "Export AR Payment Complete", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(this, "Nothing To Export", Toast.LENGTH_SHORT).show();
+
+                }
+
+                exARPay = 0;
+
+
+            }
         }
 
-        mCurTracking.close();
 
-        if(exTrackFail > 0){
-            Toast.makeText(this, "good2", Toast.LENGTH_SHORT).show();
-            exportTracking();
 
-        } else {
-            databaseHelper.emptyDatabase("MobTrack");
-
-        }
+        mCustARPayment.close();
 
     }
 

@@ -3,552 +3,246 @@
 
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/f4d55a1347dfd3f77ff2f6c4eb161b0b02905dfe/output/jars/classes.jar"
+        jar="/home/aharoldk/.android/build-cache/4433fa3c69f357a8ac3389cd97e66b37488af60a/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
-        sha1="3ac08c35419ab7cf9146969de471768dbe502f0f">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_53fdc16757223db854c4de82daf70453fa14287c.jar" />
+        sha1="c4f45092eee6cdf1a5dbd597b2b6819be652ce2e">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_ea4e7c867ab319200c8e99dae039e72ca03921a8.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/af20914795434263745d804fe5361e74dc6ca848/output/jars/classes.jar"
+        jar="/home/aharoldk/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife-annotations/8.8.0/b258209549457d03e912ec4641735fc88048df99/butterknife-annotations-8.8.0.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
-        sha1="dd282bdeaa904c59d77e57dedd7e0a241c9b679d">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_bd6065c29eebf24554303407172228cd2ca0ec5d.jar" />
+        sha1="b258209549457d03e912ec4641735fc88048df99">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/butterknife-annotations-8.8.0_db42209eb0de2b078ab4b7d2194f137e48650343.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/07348f8bfa1106cf27e74ff1e6b0ec18562aa2f4/output/jars/classes.jar"
+        jar="/home/aharoldk/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.1/2a8e0aa38a2e21cb39e2f5a7d6704cbdc941da0/gson-2.8.1.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
-        sha1="c6aa915c08cfd82780c10d4b957018bf819a48e2">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_61c4034e34bea1a31fb60dd05e9fb8aec39d1dc1.jar" />
+        sha1="02a8e0aa38a2e21cb39e2f5a7d6704cbdc941da0">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/gson-2.8.1_a7b9450f21c8201fcc41afb2424580e3ca53feba.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/e54dd179c8d33461d314da89d1a65f2ebe8d1c68/output/jars/classes.jar"
+        jar="/home/aharoldk/.android/build-cache/3f27f1ffb5b158082122113a6eb845cfdbe6b631/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
-        sha1="ed87ccdcb70c17d71ba4e6e4ac16afa62d3c49fb">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_66def3d8218350610ea841e3f2cd9e4107e98899.jar" />
+        sha1="47471eb19df288158b00b8d9cfa41bce7373f5cc">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_ef9c8f170b2a3b29f8421ea7a29e7575a0723e92.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/61a2c203f5198012a12b1a02af9afa26f1c05b54/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="2b12b18c5518021cc71577c83d1290f8ddaa3c98">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_e9e5f1379e28c2bd44f5ad105004f6e0d1e71fa0.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/67340e3197360acba9043a404d7648f214eb1c3d/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="2c2f1b3f82c027e98f56bb0154de0acbcce42e6d">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_3cc8e651285362dfabdcab795f2fd1ecfc110f97.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/f10c9d138c19ec3b3af9e336585773eb535343ab/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="f15e20dd7bcde7c688cfda44d0c8320a5c1c24b8">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_88c091b3b1d27ec246d899912a2bebbb00a50d3e.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/24044de3c22bb3ee652ecac932f7b4a420c91119/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="63b03eaa1aa9b9431c7638841175f9842dcbf274">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_6450f47ed1e422cf1bf07dbda842a5dc477908ef.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/25430679c9f0b1debc1e8464c72ca7a4f9f2363e/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="ffd0ddf5e57b4d60c4a3fbcd38fa20349a0cebd1">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_ccb626e73a5b258ae3d488f0d98d6c4753fff7e8.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/f5b5084d88bfa73f2dc9b7986520462df4d7c5ed/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="6b3430725095bd46b785e97bd34240826c27b4db">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_b335e95f3cc2e1cc4a3579a2da1377b020775df4.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/3a62805f612d8360600b67687a8112c3d9fdb6e0/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="43e9789bd3240271265ab30ce1be9f224843f5a8">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_d9eac4bf5b2a0966540b2bd9391b37aa1c7fb77e.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/ac943112d522c79c8c80f419b4661c3a46e7715f/output/jars/classes.jar"
+        jar="/home/aharoldk/.android/build-cache/2af26946d8b548602bfd48d8ad88f25fb9512e71/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
         sha1="70ffe00aaf049893f59d1dad57bd82992faa38ef">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_ad96b71ab8c87a9c9a94f1b67591725485b195eb.jar" />
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_d2dfb113226d81d75aba5f3704c629dd775f43d1.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/ba729f9438ed75c5465da33e3fd14b8fc26977e1/output/jars/classes.jar"
+        jar="/home/aharoldk/.android/build-cache/00f97a4b6146e716862eed76e02ac8aef337cdca/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
-        sha1="6a022bf00ccd0948a8180c505e8e458bbddd43a6">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_2af6e95e7af04fbd14050392de62edcfa899f831.jar" />
+        sha1="8df0e365e40beb151bc42dee20817721a6cab7b0">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_bb6cc928bb32aa168dfaba081b5300e0319bf440.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/e097b306dc8ef9e66b30556b03c96a935bda6bc3/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="576570f46ff6ccc69a984af9e55ddd58d9549270">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_3d5867e73ded815a3d532a395c4c182146f41e47.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/20f1874ca367f0896548fc0ac0d6bff7a15b4e81/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="e1625e48a836779b5fa141d22e5d05563aaccc9a">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_39e7c7ec20e4107e3faa33fee6d8afcf3ead88f4.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/6dadf451c2420b82029cf9718f73d96a5af281a1/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="4b685077cdb08cf7ae8b61afd1fe910e47d91b9a">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_ece7fda9834e4a9bdf460cbe38556df7e04e5b50.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/0cc6c3e0886ee315bc578b84423d2d7729cc70f8/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="c175c3009577fad8b433703f5d7ac2dc21d3871f">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_fd292e902235f7323f0db7185bbce0128b721a4e.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/19405561fa0a3bf6570882490f588fba5f4d569f/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="56d68d1174b9c1e368017a850b62b12429f39757">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_dc5d5bcf812f3384d803cdaadec1b728a21fcd12.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/61bd2afd0fe0db5f13dce8210cd4cdb75983f7f3/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="c72b1515efbd8ad652e2d63582c8234a979b1e53">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_895ec9b04edc79c3d2b1af5630dafd1b5c635293.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/3eb5f4e27978a8edd611a4db47c30b6b4427e9d9/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="34c23b5894b4f24d566bfc33e0e25462c6436b78">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_34f4b0655a82c57fa808b84f1649fa7060bdd5dd.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/5119e5de8fc6fe7c6659e4da984c80f81db423bd/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="eea424e61a0c85b93a0e477565314a58136abaea">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_2771f6b90e385f997049c676328fc8179e4c8ff4.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/d1ac81685e625cf4e4f6d4a47ae5771ff8899ed7/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="9be5e957849eb82ad9addf9bdb2896de8bf5654b">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_1aff7e8d7000be5fed88a550ce387305f1227161.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/5ef125fbb2b22f28545a673f1b7c99fe19366db6/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="bfba7cf662f7e3e2cfeb92226c6b84c08e590225">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_d98933efeeeaf64696338909d3b93570e425eeeb.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/dc0dc373f58397391e7e23b926e9be9613741e3e/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="fcae52a60bc07924d370b4d376116cd8f8581f54">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_b126cae69b147083f700fdb92a65b3baf763c9f9.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/881a34d1846750ce3edcc5e45441847423f1df34/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="c8bf878c09bf0df6ae76eb6c2df38c6a186b38b7">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_668ac977a1ed74f6f20a72ea419074dd63145df0.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/b7588b05ff6eb1d90fec360a39d7765ddbdb9bb1/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="1b12397bc9f342b29d9e9108978828f99a6da579">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_f14e148b4f43e3e2344fbaec585d814856292f0e.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/c99a84a54f7159a09a5ae8c98b3f50a5c22bfab5/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="2c379c235d7983201bb83edfc3c60bb0dafb5805">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_f72d2df52232625835111860c63cdae9bb68455c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/d7a002165f167399446e5bff9564226e0f77cd7e/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.0"
-        sha1="364364bf77b4a71afc5930fc3ae57b3f0eea637c">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_15d8d529eb62a8afbd94b9b8630854d70735de95.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/66e33ea31773e800497b0dde65d7ef17970be797/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="377c5f26ebf67f3fa6ef2f663a58cac7ce647dde">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_7e792b228192281144dfac7482e4ba267008659a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/b0d0dcec1541145edb2e0e6fc592592804e15edf/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="f47f4d5bdfd7d7bf330945b8a7ccce4ab437a710">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_0bdc7ab6b8ef8ae846d8a14276eef3373d0b8195.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/8f9c16e0dcdd3caca0baa2c1a2bbc19eff60b487/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="057fb316bed8467398333f30926c2d5506e275b2">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_93a004c21a2dc925be01977ec6614aa6820bcabb.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/80bf7caca80a0eb787f1b534c9362dde3356307e/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="47fd7baf51eb46757f03a59d06dac40e92eac318">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_cb308ea2015b4004d797440ed52f4ca233929c98.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/93c846b4a4715543316a4dced77b05a0aaadb78c/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="8544f739799dd15db63927073a21312864ab0bfd">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_0f42cf26fe7b1457707e91f422e561fd6ff1cdb4.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/304256f1a655b7578c1852e37256d82c3ebfd98e/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="f2cb88e7e28736d44e7e643deb80c9af1c3662c8">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_87d720c33841b1666f4d163be34b825ad5d183ad.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/83bb8346d2210761310351d1f172d38446d5482c/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="41f47bbcd281fdb1e42e220220ab3bfa1da591e0">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_54fc0fe57c36dacfee3885e4761650d0b2b43628.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/1bc1647c1eeb7fb6e33e389a09225cf281fba72f/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="76ea35b41786082af23db898ca9e0fc07cc71fb9">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_46cc6872be81291138a71013c4234d9fb9bb2bf9.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/39adb504d6629ac74ce6d2e0ecb2339d76d3947d/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="dae0d68af4c87df40eca67069861e53b7cefaaa0">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_fa33692584c1433f5c114a112171db8705000399.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/ca618607ad8b4f5394251b036eca8326b92c6651/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="e5b429c146094a612134910688d169ec08deeefb">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_c16f4acbace2a6f2ccd0dce81b38ce9f0137e94b.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/7ab0911e4830694d95100d7fd41f8184468bcc98/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="2430e711762a749feb00b3d64858ca4768251b9d">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_c2d6aa4aa87f14ea715ad50377d079f7a5f1e90d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/fd98ba088cc71fb00bc00b3de23587a3f141035d/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="af13a350b71b437ebf4be335d02a8f785c39b111">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_3d68405ed85b4a2fd3e39db408abcfddb1ac5212.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/4d1180380457e09bec0d69d1e74fd0a2cf0cb11b/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="f5ff5e3811e8c9485fd27f9052ae4d4d23a22d9d">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_cd6254edc7b6a85239a08cc7f327e9d504bf6a30.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/605f1a5e19e2c88f47202b3cdd54e52a11cd9e2f/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="a25b0b5aec89681b95d32780ad7904c1e1e4c679">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_f9bf794cf5d761bd05e07348e0034a3bab32e4be.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/227a5929806a030ff9af54b1b5af3f8aa2ce95c9/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="c6706cc7c8c3093560edd55d322218afe7798aa9">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_c2b7e3e73118cf4ce59ec67430e4b5a5df8c2703.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/9bc51a416ef05f13eb24a3265a9972623b0f5651/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="cddcd0fb93bc70e27325f2f715b2710332004ebb">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_893dfc68dbcd718c0d8add64fd453387469ba56d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/4c42149243c7e0062f0a69992e6f2310e03d7a0b/output/jars/classes.jar"
+        jar="/home/aharoldk/.android/build-cache/c4edf057dcb7a6dcf7c559d2aa96dae453ceae99/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
         sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_af4cf5640ccea1cb2c24b0923a5d3618ac3875c8.jar" />
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_5bc2352d24d0f35b2c042755699385c78c596b5f.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/76ba4525679cf31015c176fa889fb52547557b03/output/jars/classes.jar"
+        jar="/home/aharoldk/.android/build-cache/7ad9185cb95952b72c39d86008981e4699392c63/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
-        sha1="416fb9ee2fd6e7af0bba04b01d90cb475b1e2074">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_30c57c0edbf6563a54bda946e0e6826ad5b2ed5c.jar" />
+        sha1="6a2bcb61342d09fe9acf55c9daf63961c8866cc0">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_5c097c7cd9380e5411dc3ca7f7a00c92c787514c.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_dc39f8ac49699642608d0cec2217648cd49b3e26/classes.dex" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/0f0129845b2f4f2af25ce73cc7f3ae8f46525a79/output/jars/classes.jar"
+        jar="/home/aharoldk/.android/build-cache/10603d2675a71267eee2fa286c1bbecb35741f32/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
-        sha1="2c73e2a93e00abd240e495c1e62217e53904a3f3">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_c3b51aeec2fb64665e85169b7ffad1cfa07f2e24.jar" />
+        sha1="fcae52a60bc07924d370b4d376116cd8f8581f54">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_61b10e141e9aec1c40eeaae32b087aaf0b1d58e0.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/d7a002165f167399446e5bff9564226e0f77cd7e/output/jars/classes.jar"
+        jar="/home/aharoldk/.android/build-cache/3f5844c8b6baf9bbb314ce395721b6d2be56087d/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
         sha1="364364bf77b4a71afc5930fc3ae57b3f0eea637c">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_15d8d529eb62a8afbd94b9b8630854d70735de95.jar" />
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_71deb546e8d9790fbafe1cb4b1ea492f0c980ca1.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/b94b747a976a3a5c4421545a88825482a68c0814/output/jars/classes.jar"
+        jar="/home/aharoldk/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/26.0.0-alpha1/support-annotations-26.0.0-alpha1.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
-        sha1="d8942ee348aaa9341f08f7e2437063893fe27542">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_3a5cb7ebefbd41fc11370a3478977c8e16cb1f9f.jar" />
+        sha1="023ee503b631f69511e335a061ea008f8da60f40">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/support-annotations-26.0.0-alpha1_eac82b93d07c44ffc8ea347cb889593b533a90ed.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/767cc49df0b20229129b7c17a97055f3b0f8a35b/output/jars/classes.jar"
+        jar="/home/aharoldk/.android/build-cache/2b73d6c676b6d592526e6e9969b67f6f03e99202/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
-        sha1="c1b91bc7e480ab100d0397b16c93732e26fd10eb">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_4a5503d0c4ea72818390f7b16d8e6bf7c6cea560.jar" />
+        sha1="9935891f23923f39d002087085d9696568a9f657">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_0b2ec62f585c48a8efb1aea55b7effd235eb8657.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/144325f0b98bb5b100484bfe7be3bd2045093f2f/output/jars/classes.jar"
+        jar="/home/aharoldk/.android/build-cache/1d8851ac73dae4ca810193f6ed143a496f049973/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
-        sha1="0bffdc0bd4f7ca0e27c5bfeef39569f8da00aa26">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_c1774394b017d0b30903b3c73ce3ae48ce339cc8.jar" />
+        sha1="2e92aa0163544a804a0b34f169ca61801770839a">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_9f2b6713da4c2e81e0bf2ab81b63734ca362efe4.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/dc0dc373f58397391e7e23b926e9be9613741e3e/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.0"
-        sha1="fcae52a60bc07924d370b4d376116cd8f8581f54">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_b126cae69b147083f700fdb92a65b3baf763c9f9.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/7c2a84efce8185b5abaf01f6b2e70430ae8ba08e/output/jars/classes.jar"
+        jar="/home/aharoldk/.android/build-cache/109afa4a76d4b9933255f3a3f57b230ac2749231/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
-        sha1="a5d52089bf4d31537232bb6bcb70cee817d8a374">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_7e1aaed12ff1d5a7a52bf5c22c392bf5d3dc371b.jar" />
+        sha1="cddcd0fb93bc70e27325f2f715b2710332004ebb">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_05dc7d2119393d928ffac1e84760c02f622c2b19.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/2885e3313cf299b0a6def328b44d6e8b20645e5a/output/jars/classes.jar"
+        jar="/home/aharoldk/Android/Sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.1"
-        sha1="5594a368622908d89c47d9a391aa2724fe046c35">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_95cdb587f7c4749e418d94cd0287bf0b6dd20ef4.jar" />
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/constraint-layout-solver-1.0.2_62c0184695f7d9d78a83e51195b7aa2bb8b60fb4.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/7ab0911e4830694d95100d7fd41f8184468bcc98/output/jars/classes.jar"
+        jar="/home/aharoldk/.android/build-cache/c264b46c7f3ca5ab5de5a4ab0f6f6ed0f0dc0249/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
-        revision="26.0.0"
+        revision="26.0.1"
+        sha1="e176fd06c2ad5b50a2f5cb4de6000a83a7cb48f5">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_e74529166c6459e8653218491064b230696226ce.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/aharoldk/.android/build-cache/f59ba3a65dafd3d85cce49ef84c44abcf6a699cc/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="fcd01fd11233459f546c437ec927e9b61bf7caf1">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_55b2ff1c46c300e198c2462af2166ab8ff99ae82.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/aharoldk/.android/build-cache/7fe25827167a3ab38f5a158fd97b5ba2392fe1c4/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_feaa9b9aa64951a6047e4b71aef6233694b8f49f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/aharoldk/.android/build-cache/f8ffceab69b960ee58add6be1c5c20f91f06a62e/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="952944218ecedea1554a513dec0c14d570642843">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_d97f7240845aa89e48fcd171ee64c3d4271842c7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/aharoldk/.android/build-cache/fd331315070970e8b032cd1910816a730a6b71f5/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="18d31838aa4fcc768a8a0516e22cc13b94655d89">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_ba4829aa5e80c0f058b32c0fa81c2622fa575ff8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/aharoldk/.android/build-cache/c65b59367105150bdaa0874eb892eb8fc6eb445d/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="47fd7baf51eb46757f03a59d06dac40e92eac318">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_e1647902719adef70b9ab268bd6a4e80b18fced6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/aharoldk/.android/build-cache/5cf418966c795cd023cc3ee0c705774d3592b9a2/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="88246166d5afb106f532f6e6deae683c66b42c89">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_b20306e41b6a71928d9814c34dc2ad45877dab80.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/aharoldk/.android/build-cache/e1c9e7d1088f9b1bdd54dded6efc5fbafeebc8cb/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_2d974e1d970c710aa6c975d0e614f80c7d966bd6.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="9b4be361f917f89e00c624733e73bdb4939edeae">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_cf797ac9c54595ff1007c4fc43ded53957aa493d/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/aharoldk/.android/build-cache/a452050cc806bf67b9b21d8e3041c8f9ee49ea21/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="6a022bf00ccd0948a8180c505e8e458bbddd43a6">
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_42006a52dacf6f26aea765fff92da9e0c8c89b41.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/aharoldk/.android/build-cache/1d46aafc8cd629e326e4afd8439125685501b278/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
         sha1="2430e711762a749feb00b3d64858ca4768251b9d">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_c2d6aa4aa87f14ea715ad50377d079f7a5f1e90d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/0dfaef7eeb1511bcd594614f2a90358b1dd1b11d/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="fc3036436defd3070337b7191c50a136ebca7f8f">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_0e0884ecb74c8f5b371a14db78fa84908b5a540a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/383fd34a24d60c20677d6fd7bea235b12a59f4ae/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="02b91f8efa91dcdf5c555ee24b7f006f02cd0f8b">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_30e7a689bb22cff55852c4053b108fe53d03e2f0.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/5d32af1d4d17bb376ab3029b6dfec6ceac3a90a5/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="7c24e2e9773fb498e390ce973db382c3ddcf748e">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_3f0c30ea530dd7be4d5c5e17768d900033159a38.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/4b1cfccf14d38e4f3c021921e441b6e7cf5efb74/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="e7f890dd2539b7f2582f450f0721e2dea6ae510c">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_996ea722b8377b543c140c1e82e19790fc5995df.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/a513e0a47628ebd1fb1629eb5d41ead2aabbc7b0/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.1"
-        sha1="b5b6af36bacf1d812cd3dc45f9dcab9ea471ed91">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_dba21b5a232c09222d35101d442496ec1a5bc1bf.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/aharoldk/.android/build-cache/ac943112d522c79c8c80f419b4661c3a46e7715f/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.0"
-        sha1="70ffe00aaf049893f59d1dad57bd82992faa38ef">
-        <dex dex="/home/aharoldk/AndroidStudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_ad96b71ab8c87a9c9a94f1b67591725485b195eb.jar" />
+        <dex dex="/home/aharoldk/StudioProjects/PowerOne/app/build/intermediates/pre-dexed/debug/classes_f2b905b49526fa7872dbe9f511200714ba1fda3b.jar" />
     </item>
 
 </items>

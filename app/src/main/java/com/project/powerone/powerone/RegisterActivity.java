@@ -148,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 public void onResponse(String response) {
                                     Log.i("response", response);
 
-                                    try{
+                                    try {
                                         salesmen = gson.fromJson(response, Salesman[].class);
 
                                         final String nameIDServer = salesmen[POSITION].getSalesmanName();
@@ -156,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                                         getDate();
 
-                                        String URLlogin = "http://202.43.162.180:8082/poweronemobilewebservice/ws_update_salesman?arg_salesman="+defaultID+"&arg_password="+defaultnewPassword+"&arg_lastlogin="+dateNow+"%"+timeNow;
+                                        final String URLlogin = "http://202.43.162.180:8082/poweronemobilewebservice/ws_update_salesman?arg_salesman="+defaultID+"&arg_password="+defaultnewPassword+"&arg_lastlogin="+dateNow+" "+timeNow;
 
                                         RequestQueue sQueueLogin = Volley.newRequestQueue(RegisterActivity.this);
 
@@ -168,38 +168,46 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                     public void onResponse(String responseLogin) {
                                                         Log.i("responseLogin", responseLogin);
 
-                                                        try {
-                                                            statuses = gson.fromJson(responseLogin, Status[].class);
+                                                        if(responseLogin.length() != 0) {
+                                                            try {
+                                                                statuses = gson.fromJson(responseLogin, Status[].class);
 
-                                                            int xStatus = statuses[POSITION].getxStatus();
+                                                                int xStatus = statuses[POSITION].getxStatus();
 
-                                                            if(xStatus == 1){
-                                                                databaseHelper = new DatabaseHelper(RegisterActivity.this);
+                                                                if(xStatus == 1){
+                                                                    databaseHelper = new DatabaseHelper(RegisterActivity.this);
 
-                                                                boolean isInserted = databaseHelper.insertSalesman(defaultID, nameIDServer, siteIDServer, defaultnewPassword, dateNow);
+                                                                    boolean isInserted = databaseHelper.insertSalesman(defaultID, nameIDServer, siteIDServer, defaultnewPassword, dateNow);
 
-                                                                if(isInserted){
-                                                                    progressDialog.dismiss();
+                                                                    if(isInserted){
+                                                                        progressDialog.dismiss();
 
-                                                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                                                                    finish();
+                                                                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                                                        finish();
+
+                                                                    } else {
+                                                                        progressDialog.dismiss();
+
+                                                                        Toast.makeText(RegisterActivity.this, "Data Not Inserted", Toast.LENGTH_SHORT).show();
+                                                                    }
 
                                                                 } else {
                                                                     progressDialog.dismiss();
-
-                                                                    Toast.makeText(RegisterActivity.this, "Data Not Inserted", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(RegisterActivity.this, "Request xStatus Login Error, Please Call Admin", Toast.LENGTH_SHORT).show();
                                                                 }
-
-                                                            } else {
+                                                            } catch (Exception e) {
                                                                 progressDialog.dismiss();
-                                                                Toast.makeText(RegisterActivity.this, "Request xStatus Login Error, Please Call Admin", Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        } catch (Exception e) {
-                                                            progressDialog.dismiss();
-                                                            e.printStackTrace();
+                                                                e.printStackTrace();
 
-                                                            Toast.makeText(RegisterActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(RegisterActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                                                            }
+
+                                                        } else {
+                                                            progressDialog.dismiss();
+
+                                                            Toast.makeText(RegisterActivity.this, "Request xStatus Login Error, Please Call Admin", Toast.LENGTH_SHORT).show();
                                                         }
+
 
                                                     }
                                                 }, new Response.ErrorListener() {
@@ -219,9 +227,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                                         sQueueLogin.add(sRequestLogin);
 
-                                    } catch (Exception e){
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
+
                                 }
                             },
                             new Response.ErrorListener() {
@@ -322,7 +331,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void getDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy:HH:mm");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
         dateNow = dateFormat.format(calendar.getTime());
         timeNow = timeFormat.format(calendar.getTime());

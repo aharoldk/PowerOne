@@ -236,13 +236,13 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
 
             while (cursorUpdate.moveToNext()) {
 
-                String productID = cursorUpdate.getString(4);
-                boolean productUpdate = databaseHelper.updateOrderProduct(productID);
+                boolean productUpdate = databaseHelper.updateOrderProduct(cursorUpdate.getString(0));
 
                 if(!productUpdate){
                     countFail++;
                 }
             }
+
             if(countFail > 0){
                 Toast.makeText(this, "Please Order Confirm Again", Toast.LENGTH_SHORT).show();
             } else {

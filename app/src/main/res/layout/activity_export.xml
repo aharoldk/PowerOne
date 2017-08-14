@@ -29,6 +29,46 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="0.7"
+                    android:layout_gravity="center_vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:textSize="18sp"
+                        android:text="1. Customer Order"/>
+
+                    <TextView
+                        android:paddingLeft="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Total"
+                        android:id="@+id/totalCustomer"/>
+                </LinearLayout>
+
+
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="@color/buttonColor"
+                    android:textColor="@color/buttonTextColor"
+                    android:text="@string/exportButton"
+                    android:id="@+id/buttonCustomer"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +88,7 @@
                         android:layout_height="wrap_content"
 
                         android:textSize="18sp"
-                        android:text="1. Customer Visit"/>
+                        android:text="2. AR Payment"/>
 
                     <TextView
                         android:paddingLeft="20dp"
@@ -56,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:text="Total"
-                        android:id="@+id/totalCustomer"/>
+                        android:id="@+id/totalAR"/>
                 </LinearLayout>
 
                 <Button
@@ -66,116 +106,9 @@
                     android:background="@color/buttonColor"
                     android:textColor="@color/buttonTextColor"
                     android:text="@string/exportButton"
-                    android:id="@+id/buttonCustomer"/>
+                    android:id="@+id/buttonAR"/>
+
             </LinearLayout>
-
-            <!--<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="0.7"
-                    android:layout_gravity="center_vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:textSize="18sp"
-                        android:text="2. Product List"/>
-
-                    <TextView
-                        android:paddingLeft="20dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="Total"
-                        android:id="@+id/totalProduct"/>
-                </LinearLayout>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="@string/importButton"
-                    android:background="@color/buttonColor"
-                    android:textColor="@color/buttonTextColor"
-                    android:id="@+id/buttonProduct"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="0.7"
-                    android:layout_gravity="center_vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:textSize="18sp"
-                        android:text="3. Price List"/>
-
-                    <TextView
-                        android:paddingLeft="20dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="Total"
-                        android:id="@+id/totalPrice"/>
-                </LinearLayout>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="@string/importButton"
-                    android:background="@color/buttonColor"
-                    android:textColor="@color/buttonTextColor"
-                    android:id="@+id/buttonPrice"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="0.7"
-                    android:layout_gravity="center_vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:textSize="18sp"
-                        android:text="4. AR Balance"/>
-
-                    <TextView
-                        android:paddingLeft="20dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="Total"
-                        android:id="@+id/totalAr"/>
-                </LinearLayout>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="@string/importButton"
-                    android:background="@color/buttonColor"
-                    android:textColor="@color/buttonTextColor"
-                    android:id="@+id/buttonAr"/>
-            </LinearLayout>-->
 
         </LinearLayout>
 
@@ -187,7 +120,7 @@
             android:text="@string/exportAllButton"
             android:background="@color/buttonColor"
             android:textColor="@color/buttonTextColor"
-            android:id="@+id/importButton"/>
+            android:id="@+id/exportAllButton"/>
 
     </RelativeLayout>
 

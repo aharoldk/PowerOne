@@ -274,17 +274,17 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                pDialogPc.dismiss();
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pDialogPc.dismiss();
 
-                if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
-                    Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                        if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                            Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                        }
+
+                        error.printStackTrace();
+                    }
                 }
-
-                error.printStackTrace();
-            }
-        }
         );
 
         requestQueuePrice.add(stringRequestPrice);
@@ -352,17 +352,17 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                pDialogAr.dismiss();
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pDialogAr.dismiss();
 
-                if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
-                    Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                        if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                            Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                        }
+
+                        error.printStackTrace();
+                    }
                 }
-
-                error.printStackTrace();
-            }
-        }
         );
 
         requestQueueAR.add(stringRequestAR);
@@ -388,7 +388,6 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                         try {
                             products = gson.fromJson(responseProduct, Product[].class);
-
 
                             for(int i = 0; i < responseProduct.length(); i++) {
                                 urutID = products[i].getUrutID();

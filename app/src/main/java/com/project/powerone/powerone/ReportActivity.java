@@ -41,7 +41,6 @@ public class ReportActivity extends AppCompatActivity {
     private NavigationView navigationView;
 
     private DatabaseHelper databaseHelper;
-    private Cursor cExport;
 
     private int iCustActive = 0;
     private int iCustOrder = 0;
@@ -49,6 +48,8 @@ public class ReportActivity extends AppCompatActivity {
     private int iTotalTagihan = 0;
     private int iTotalGiro = 0;
     private int iTotalTunai = 0;
+    private int iARPdone = 0;
+    private int iOrderdone = 0;
     private double dTotalOmzet = 0;
 
     @Override
@@ -73,8 +74,37 @@ public class ReportActivity extends AppCompatActivity {
         corder();
         comzet();
         ctagihan();
+        cexport();
 
     }
+
+    private void cexport() {
+        Cursor cARPayment = databaseHelper.getAllArPaymenT();
+        int iARPayment = cARPayment.getCount();
+
+        while (cARPayment.moveToNext()){
+            if(cARPayment.getInt(10) == 1) {
+                iARPdone++;
+            }
+        }
+        mExTagihan.setText(iARPdone+" of "+iARPayment);
+        cARPayment.close();
+
+        Cursor cOrder = databaseHelper.getAllOrdeR();
+
+        int iOrder = cARPayment.getCount();
+
+        while (cOrder.moveToNext()){
+            if(cOrder.getInt(12) == 1) {
+                iOrderdone++;
+            }
+        }
+        mExSales.setText(iOrderdone+" of "+iOrder);
+        cOrder.close();
+    }
+
+
+
     private void ccustomer() {
         Cursor cCustomer = databaseHelper.getAllCustomerR();
 
@@ -114,7 +144,7 @@ public class ReportActivity extends AppCompatActivity {
 
         while (cProduct.moveToNext()) {
 
-            stringBuffer.append(cProduct.getString(0)).append(" : Rp. ").append(NumberFormat.getNumberInstance(Locale.US).format(cProduct.getInt(1))).append("\n \n");
+            stringBuffer.append(cProduct.getString(0)).append(" : \t\tRp. ").append(NumberFormat.getNumberInstance(Locale.US).format(cProduct.getInt(1))).append("\n \n");
 
 
             dTotalOmzet += cProduct.getInt(1);

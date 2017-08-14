@@ -129,7 +129,6 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
                         View entryView = activity.getLayoutInflater().inflate(R.layout.detail_invoice, null);
 
                         RecyclerView rvmainARPayment = entryView.findViewById(R.id.rvmain);
-                        Button btnConfirmPayment = entryView.findViewById(R.id.btnConfirmPayment);
 
                         rvmainARPayment.setLayoutManager(new LinearLayoutManager(activity));
                         rvmainARPayment.setHasFixedSize(true);
@@ -139,41 +138,6 @@ public class ARBalanceViewHolder extends RecyclerView.ViewHolder{
                         entryBuilder.setView(entryView);
                         entryBuilder.show();
 
-                        if(cursor.getCount() == 0) {
-                            btnConfirmPayment.setVisibility(View.GONE);
-                        }
-
-                        if(countConfirm == 0) {
-                            btnConfirmPayment.setVisibility(View.GONE);
-                        }
-
-                        btnConfirmPayment.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                int countFail = 0;
-
-                                Cursor cursorGetpayment = databaseHelper.getPayment(arBalance.getInvoiceID());
-
-                                while(cursorGetpayment.moveToNext()) {
-
-                                    boolean paymentUpdate = databaseHelper.updateARPayment(arBalance.getInvoiceID());
-
-                                    if(!paymentUpdate){
-                                        countFail++;
-                                    }
-                                }
-
-                                if(countFail > 0){
-                                    Toast.makeText(activity, "Please Confirm Payment Again", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(activity, "All Payment Confirm", Toast.LENGTH_SHORT).show();
-                                    activity.finish();
-                                    activity.overridePendingTransition(0, 0);
-                                    activity.startActivity(new Intent(activity, ARActivity.class));
-
-                                }
-                            }
-                        });
                     }
                 });
 

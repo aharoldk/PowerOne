@@ -70,7 +70,7 @@ public class AngelosService extends Service {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 180000, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300000, 0, locationListener);
 
         }
 
@@ -91,13 +91,11 @@ public class AngelosService extends Service {
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
         databaseHelper.insertLocationSales(mLat, mLong, dateNow, timeNow);
-
-        Toast.makeText(this, mLat+" , "+mLong, Toast.LENGTH_SHORT).show();
     }
 
     private void getDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy:HH:mm");
 
         Calendar calendar = Calendar.getInstance();
         dateNow = dateFormat.format(calendar.getTime());

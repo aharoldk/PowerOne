@@ -42,7 +42,7 @@ public class PaymentActivity extends AppCompatActivity {
     private int year_x, month_x, date_x;
     private boolean result;
 
-    private static final int DIALOG_ID = 0, BTRANSFER = 0;
+    private static final int DIALOG_ID = 0, BCONFIRM = 1, BTRANSFER = 0;
 
     private DatabaseHelper databaseHelper;
     private Cursor cursor;
@@ -108,7 +108,7 @@ public class PaymentActivity extends AppCompatActivity {
                         if(costPayment < nominal){
                             Toast.makeText(PaymentActivity.this, "Please Check Your Nominal, Nominal more than Remaining Payment", Toast.LENGTH_SHORT).show();
                         } else {
-                            result = databaseHelper.insertPayment(siteID, salesmanID, custID, invoiceID, nominal, paymentType, "", "", BTRANSFER, BTRANSFER);
+                            result = databaseHelper.insertPayment(siteID, salesmanID, custID, invoiceID, nominal, paymentType, "", "", BCONFIRM, BTRANSFER);
 
                             if(!result){
                                 Toast.makeText(PaymentActivity.this, "Please Try Save Product Again", Toast.LENGTH_SHORT).show();
@@ -129,12 +129,12 @@ public class PaymentActivity extends AppCompatActivity {
                         if(costPayment < nominal){
                             Toast.makeText(PaymentActivity.this, "Please Check Your Nominal, Nominal more than Remaining Payment", Toast.LENGTH_SHORT).show();
                         } else {
-                            result = databaseHelper.insertPayment(siteID, salesmanID, custID, invoiceID, nominal, paymentType, mNuGiro, mDate, BTRANSFER, BTRANSFER);
+                            result = databaseHelper.insertPayment(siteID, salesmanID, custID, invoiceID, nominal, paymentType, mNuGiro, mDate, BCONFIRM, BTRANSFER);
 
                             if(!result){
                                 Toast.makeText(PaymentActivity.this, "Please Try Save Product Again", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(PaymentActivity.this, "Payment Complete", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PaymentActivity.this, "Payment Updated", Toast.LENGTH_SHORT).show();
                                 updateAR();
                             }
 

@@ -12,9 +12,6 @@ import com.project.powerone.powerone.R;
 import com.project.powerone.powerone.pojo.ARPayment;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by aharoldk on 11/08/17.
  */
@@ -54,7 +51,7 @@ public class ARPaymentViewHolder extends RecyclerView.ViewHolder {
         arNoPayment.setText("Nominal Pembayaran : "+arPayment.getNominalPayment());
         arDateDue.setText("Jatuh Tempo Giro : "+arPayment.getBillyetDueDate());
 
-        if(arPayment.getbConfirm() == 1){
+        if(arPayment.getbTransfer() == 1){
             arDelete.setVisibility(View.GONE);
         }
 

@@ -51,6 +51,7 @@ public class OrderProductActivity extends AppCompatActivity implements View.OnCl
         custID = getIntent().getExtras().getString("custID");
         String productName = getIntent().getExtras().getString("productName");
         productID = getIntent().getExtras().getString("productID");
+        int noOfPack = getIntent().getExtras().getInt("noOfPack");
         String smallPack = getIntent().getExtras().getString("smallPack");
         String bigpack = getIntent().getExtras().getString("bigPack");
         salesPrice = getIntent().getExtras().getInt("salesPrice");
@@ -66,7 +67,7 @@ public class OrderProductActivity extends AppCompatActivity implements View.OnCl
         qtyBig = (EditText) findViewById(R.id.qtyBig);
         qtySmall = (EditText) findViewById(R.id.qtySmall);
 
-        productNameT.setText(productName +"/ "+ bigpack +" = 12 "+ smallPack);
+        productNameT.setText(productName +"\n /"+ bigpack +" = "+noOfPack+" /"+ smallPack);
         productPrice.setText("Rp. "+ NumberFormat.getNumberInstance(Locale.US).format(salesPrice));
         productSmall.setText("*insert qty /"+ smallPack);
         productBig.setText("*insert qty /"+ bigpack);

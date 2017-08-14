@@ -47,6 +47,7 @@ public class OrderProductViewHolder extends RecyclerView.ViewHolder {
                 intent.putExtra("siteID", orderProduct.getSiteID());
                 intent.putExtra("custID", custID);
                 intent.putExtra("productName", orderProduct.getProductName());
+                intent.putExtra("noOfPack", orderProduct.getNoOfPack());
                 intent.putExtra("productID", orderProduct.getProductID());
                 intent.putExtra("bigPack", orderProduct.getBigPack());
                 intent.putExtra("smallPack", orderProduct.getSmallPack());

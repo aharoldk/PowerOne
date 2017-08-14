@@ -114,6 +114,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+
         if(view.equals(loginLogin)){
             DatabaseHelper databaseHelper = new DatabaseHelper(LoginActivity.this);
 
@@ -131,6 +132,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     dbPassword = cursor.getString(PASSWORD);
 
                     if(lPassword.equals(dbPassword)){
+                        progressDialog.setMessage("Wait . . .");
+                        progressDialog.show();
+
                         parseDatabase();
 
                     } else {
@@ -149,9 +153,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void parseDatabase() {
         getDate();
 
-        progressDialog.setMessage("Wait . . .");
-        progressDialog.show();
-
         String URLlogin = "http://202.43.162.180:8082/poweronemobilewebservice/ws_update_salesman?arg_salesman="+dbUserid+"&arg_password="+dbPassword+"&arg_lastlogin="+dateNow+"%"+timeNow;
 
         RequestQueue sQueueLogin = Volley.newRequestQueue(LoginActivity.this);
@@ -164,26 +165,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onResponse(String responseLogin) {
                         Log.i("responseLogin", responseLogin);
 
-                        try {
-                            statuses = gson.fromJson(responseLogin, Status[].class);
+                        if(responseLogin.length() != 0){
+                            try {
+                                statuses = gson.fromJson(responseLogin, Status[].class);
 
-                            int xStatus = statuses[POSITION].getxStatus();
+                                int xStatus = statuses[POSITION].getxStatus();
 
-                            if(xStatus == 1) {
-                                finish();
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                if(xStatus == 1) {
+                                    finish();
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
-                            } else {
+                                } else {
+                                    progressDialog.dismiss();
+
+                                    Toast.makeText(LoginActivity.this, "Request xStatus Login Error, Please Call Admin", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                                 progressDialog.dismiss();
 
-                                Toast.makeText(LoginActivity.this, "Request xStatus Login Error", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Please Check Your Connection and Relogin", Toast.LENGTH_SHORT).show();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } else {
                             progressDialog.dismiss();
 
-                            Toast.makeText(LoginActivity.this, "Please Check Your Connection and Relogin", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Request xStatus Login Error, Please Call Admin", Toast.LENGTH_SHORT).show();
                         }
+
 
                     }
                 }, new Response.ErrorListener() {
