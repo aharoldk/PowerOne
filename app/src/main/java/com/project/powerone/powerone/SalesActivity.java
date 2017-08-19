@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.project.powerone.powerone.adapter.CustomerAdapter;
 import com.project.powerone.powerone.service.AngelosService;
@@ -24,6 +25,8 @@ public class SalesActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
+
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class SalesActivity extends AppCompatActivity {
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        databaseHelper = new DatabaseHelper(this);
 
         RecyclerView rvmain = (RecyclerView) findViewById(R.id.rvmain);
         rvmain.setLayoutManager(new LinearLayoutManager(this));
@@ -49,7 +52,16 @@ public class SalesActivity extends AppCompatActivity {
         btnShowLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SalesActivity.this, MapsActivity.class));
+                Cursor cursor = databaseHelper.loginSalesman();
+                cursor.moveToNext();
+                int count = cursor.getInt(5) + 1;
+                if(databaseHelper.updateCountMap(cursor.getString(0), count)){
+                    startActivity(new Intent(SalesActivity.this, MapsActivity.class));
+                } else {
+                    Toast.makeText(SalesActivity.this, "Press Again", Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
 
@@ -63,40 +75,40 @@ public class SalesActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if(id == R.id.importScreen){
-                    startActivity(new Intent(SalesActivity.this, ImportActivity.class));
                     finish();
+                    startActivity(new Intent(SalesActivity.this, ImportActivity.class));
 
                 } else if(id == R.id.exportScreen){
-                    startActivity(new Intent(SalesActivity.this, ExportActivity.class));
                     finish();
+                    startActivity(new Intent(SalesActivity.this, ExportActivity.class));
 
                 } else if(id == R.id.visitScreen){
-                    startActivity(new Intent(SalesActivity.this, SalesActivity.class));
                     finish();
+                    startActivity(new Intent(SalesActivity.this, SalesActivity.class));
 
                 } else if(id == R.id.produkScreen){
-                    startActivity(new Intent(SalesActivity.this, ProductActivity.class));
                     finish();
+                    startActivity(new Intent(SalesActivity.this, ProductActivity.class));
 
                 } else if(id == R.id.orderScreen){
-                    startActivity(new Intent(SalesActivity.this, OrderActivity.class));
                     finish();
+                    startActivity(new Intent(SalesActivity.this, OrderActivity.class));
 
                 } else if(id == R.id.ARScreen){
-                    startActivity(new Intent(SalesActivity.this, ARActivity.class));
                     finish();
+                    startActivity(new Intent(SalesActivity.this, ARActivity.class));
 
                 } else if(id == R.id.reportScreen){
-                    startActivity(new Intent(SalesActivity.this, ReportActivity.class));
                     finish();
+                    startActivity(new Intent(SalesActivity.this, ReportActivity.class));
 
                 } else if (id == R.id.photoScreen){
-                    startActivity(new Intent(SalesActivity.this, PhotoActivity.class));
                     finish();
+                    startActivity(new Intent(SalesActivity.this, PhotoActivity.class));
 
                 } else if(id == R.id.passwordScreen){
-                    startActivity(new Intent(SalesActivity.this, PasswordActivity.class));
                     finish();
+                    startActivity(new Intent(SalesActivity.this, PasswordActivity.class));
 
                 } else if(id == R.id.logout){
                     Intent intent = new Intent(getApplicationContext(), AngelosService.class);

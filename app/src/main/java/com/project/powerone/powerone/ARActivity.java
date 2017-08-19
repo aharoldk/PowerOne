@@ -82,40 +82,40 @@ public class ARActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if(id == R.id.importScreen){
-                    startActivity(new Intent(ARActivity.this, ImportActivity.class));
                     finish();
+                    startActivity(new Intent(ARActivity.this, ImportActivity.class));
 
                 } else if(id == R.id.exportScreen){
-                    startActivity(new Intent(ARActivity.this, ExportActivity.class));
                     finish();
+                    startActivity(new Intent(ARActivity.this, ExportActivity.class));
 
                 } else if(id == R.id.visitScreen){
-                    startActivity(new Intent(ARActivity.this, SalesActivity.class));
                     finish();
+                    startActivity(new Intent(ARActivity.this, SalesActivity.class));
 
                 } else if(id == R.id.produkScreen){
-                    startActivity(new Intent(ARActivity.this, ProductActivity.class));
                     finish();
+                    startActivity(new Intent(ARActivity.this, ProductActivity.class));
 
                 } else if(id == R.id.orderScreen){
-                    startActivity(new Intent(ARActivity.this, OrderActivity.class));
                     finish();
+                    startActivity(new Intent(ARActivity.this, OrderActivity.class));
 
                 } else if(id == R.id.ARScreen){
-                    startActivity(new Intent(ARActivity.this, ARActivity.class));
                     finish();
+                    startActivity(new Intent(ARActivity.this, ARActivity.class));
 
                 } else if(id == R.id.reportScreen){
-                    startActivity(new Intent(ARActivity.this, ReportActivity.class));
                     finish();
+                    startActivity(new Intent(ARActivity.this, ReportActivity.class));
 
                 } else if (id == R.id.photoScreen){
-                    startActivity(new Intent(ARActivity.this, PhotoActivity.class));
                     finish();
+                    startActivity(new Intent(ARActivity.this, PhotoActivity.class));
 
                 } else if(id == R.id.passwordScreen){
-                    startActivity(new Intent(ARActivity.this, PasswordActivity.class));
                     finish();
+                    startActivity(new Intent(ARActivity.this, PasswordActivity.class));
 
                 } else if(id == R.id.logout){
                     Intent intent = new Intent(getApplicationContext(), AngelosService.class);

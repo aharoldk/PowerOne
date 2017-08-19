@@ -177,7 +177,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                                 if(xStatus == 1){
                                                                     databaseHelper = new DatabaseHelper(RegisterActivity.this);
 
-                                                                    boolean isInserted = databaseHelper.insertSalesman(defaultID, nameIDServer, siteIDServer, defaultnewPassword, dateNow);
+                                                                    boolean isInserted = databaseHelper.insertSalesman(defaultID, nameIDServer, siteIDServer, defaultnewPassword, dateNow, 0);
 
                                                                     if(isInserted){
                                                                         progressDialog.dismiss();

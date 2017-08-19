@@ -32,6 +32,7 @@ import com.project.powerone.powerone.sql.DatabaseHelper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +40,6 @@ import butterknife.ButterKnife;
 public class ExportActivity extends AppCompatActivity implements View.OnClickListener {
     @BindView(R.id.buttonAR) Button buttonAR;
     @BindView(R.id.buttonCustomer) Button buttonCustomer;
-    @BindView(R.id.exportAllButton) Button exportAllButton;
     @BindView(R.id.totalAR) TextView totalAR;
     @BindView(R.id.totalCustomer) TextView totalCustomer;
 
@@ -50,11 +50,14 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
     private Status[] statuses;
     private Gson gson = new Gson();
 
+    private Calendar calendar = Calendar.getInstance();
     private DatabaseHelper databaseHelper;
 
     private String dbUserID;
     private String dbSiteID;
     private String dateConvert = "";
+    private String dateNow;
+    private String timeNow;
     private int exTrackFail;
     private int exCustOrder;
     private int exCustOrderFail;
@@ -67,6 +70,7 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
 
+        getDate();
         declarate();
         navigation();
         getUserID();
@@ -99,9 +103,6 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
         } else if (view.equals(buttonCustomer)) {
             exportCustOrder();
 
-        } else if (view.equals(exportAllButton)) {
-            exportAR();
-            exportCustOrder();
         }
     }
 
@@ -111,6 +112,41 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
         cursor.moveToFirst();
         dbUserID = cursor.getString(0);
         dbSiteID = cursor.getString(2);
+
+        String URLCustomer = "http://202.43.162.180:8082/poweronemobilewebservice/ws_update_salesmanmap?arg_site="+dbSiteID+"&arg_salesman="+dbUserID+"&arg_count="+cursor.getInt(5)+"&arg_tgl="+dateNow+"%"+timeNow;
+
+        RequestQueue requestCount = Volley.newRequestQueue(ExportActivity.this);
+
+        StringRequest stringRequestCount = new StringRequest(
+                Request.Method.GET,
+                URLCustomer,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String responseCount) {
+                        Log.i("responseCustomer", responseCount);
+
+                        statuses = gson.fromJson(responseCount, Status[].class);
+
+                        int xStatusCount = statuses[POSITION].getxStatus();
+
+                        if(xStatusCount == 1){
+                            if(databaseHelper.updateCountMap(dbUserID, 0)){
+                                Toast.makeText(ExportActivity.this, "Please Check Order and AR Payment before Export Data", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+
+                    }
+                }
+        );
+
+        requestCount.add(stringRequestCount);
+
     }
 
     private void exportCustomer() {
@@ -221,12 +257,10 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
 
         if (mCustORder.getCount() > 0) {
             while (mCustORder.moveToNext()) {
-
                 int bConfirmOrder = mCustORder.getInt(11);
                 int bTransferOrder = mCustORder.getInt(12);
 
                 if(bConfirmOrder == 1 && bTransferOrder == 0) {
-
                     final String urutIDCustOrder = Integer.toString(mCustORder.getInt(0));
 
                     String URLCustOrder= "http://202.43.162.180:8082/PowerONEMobileWebService/ws_update_salesorder?arg_siteid="+mCustORder.getString(1)+"&arg_salesmanid="+mCustORder.getString(2)+"&arg_custid="+mCustORder.getString(3)+"&arg_productid="+mCustORder.getString(4)+"&arg_qtybig="+mCustORder.getInt(5)+"&arg_qtysmall="+mCustORder.getInt(6)+"&arg_salesprice="+mCustORder.getInt(7)+"&arg_pctdisc1="+mCustORder.getDouble(8)+"&arg_pctdisc2="+mCustORder.getDouble(9)+"&arg_pctdisc3="+mCustORder.getDouble(10)+"&arg_bconfirm=1&arg_btransfer=1";
@@ -257,6 +291,8 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
                                                 } else {
                                                     exCustOrder++;
                                                     totalCustomer.setText(""+exCustOrder);
+
+                                                    Toast.makeText(ExportActivity.this, "Export Customer Order Complete", Toast.LENGTH_SHORT).show();
 
                                                 }
 
@@ -291,24 +327,22 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
 
-            if(exCustOrderFail != 0){
-                exCustOrderFail = 0;
-
+            if(exCustOrderFail > 0){
                 Toast.makeText(this, "Please Export Customer Order Again", Toast.LENGTH_SHORT).show();
+
             } else {
-                if(exCustOrder != 0){
-
-                    Toast.makeText(this, "Export Customer Order Complete", Toast.LENGTH_SHORT).show();
-
-                } else {
-
+                if(exCustOrder == 0) {
                     Toast.makeText(this, "Nothing To Export", Toast.LENGTH_SHORT).show();
+
                 }
 
+                exCustOrderFail = 0;
                 exCustOrder = 0;
 
             }
 
+        } else {
+            Toast.makeText(this, "Please Make a Order or AR Payment First", Toast.LENGTH_SHORT).show();
         }
 
         mCustORder.close();
@@ -388,13 +422,13 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
+                                error.printStackTrace();
 
-                            if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
-                                exARPayFail++;
+                                if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                                    exARPayFail++;
+                                }
                             }
                         }
-                    }
                     );
 
                     sQueueARP.add(sRequestARP);
@@ -403,26 +437,24 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
 
             }
 
-            if(exARPayFail != 0){
-                exARPayFail = 0;
-
+            if(exARPayFail > 0){
                 Toast.makeText(this, "Please Export Customer Order Again", Toast.LENGTH_SHORT).show();
 
             } else {
-
-                if(exARPay != 0){
-
+                if(exARPay > 0){
                     Toast.makeText(this, "Export AR Payment Complete", Toast.LENGTH_SHORT).show();
 
-                } else {
+                } else if(exARPay == 0){
                     Toast.makeText(this, "Nothing To Export", Toast.LENGTH_SHORT).show();
 
                 }
 
+                exARPayFail = 0;
                 exARPay = 0;
 
-
             }
+        } else {
+            Toast.makeText(this, "Please Make a Order or AR Payment First", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -438,40 +470,40 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
                 int id = item.getItemId();
 
                 if(id == R.id.importScreen){
-                    startActivity(new Intent(ExportActivity.this, ImportActivity.class));
                     finish();
+                    startActivity(new Intent(ExportActivity.this, ImportActivity.class));
 
                 } else if(id == R.id.exportScreen){
-                    startActivity(new Intent(ExportActivity.this, ExportActivity.class));
                     finish();
+                    startActivity(new Intent(ExportActivity.this, ExportActivity.class));
 
                 } else if(id == R.id.visitScreen){
-                    startActivity(new Intent(ExportActivity.this, SalesActivity.class));
                     finish();
+                    startActivity(new Intent(ExportActivity.this, SalesActivity.class));
 
                 } else if(id == R.id.produkScreen){
-                    startActivity(new Intent(ExportActivity.this, ProductActivity.class));
                     finish();
+                    startActivity(new Intent(ExportActivity.this, ProductActivity.class));
 
                 } else if(id == R.id.orderScreen){
-                    startActivity(new Intent(ExportActivity.this, OrderActivity.class));
                     finish();
+                    startActivity(new Intent(ExportActivity.this, OrderActivity.class));
 
                 } else if(id == R.id.ARScreen){
-                    startActivity(new Intent(ExportActivity.this, ARActivity.class));
                     finish();
+                    startActivity(new Intent(ExportActivity.this, ARActivity.class));
 
                 } else if(id == R.id.reportScreen){
-                    startActivity(new Intent(ExportActivity.this, ReportActivity.class));
                     finish();
+                    startActivity(new Intent(ExportActivity.this, ReportActivity.class));
 
                 } else if (id == R.id.photoScreen){
-                    startActivity(new Intent(ExportActivity.this, PhotoActivity.class));
                     finish();
+                    startActivity(new Intent(ExportActivity.this, PhotoActivity.class));
 
                 } else if(id == R.id.passwordScreen){
-                    startActivity(new Intent(ExportActivity.this, PasswordActivity.class));
                     finish();
+                    startActivity(new Intent(ExportActivity.this, PasswordActivity.class));
 
                 } else if(id == R.id.logout){
                     Intent intent = new Intent(getApplicationContext(), AngelosService.class);
@@ -486,6 +518,14 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
+    }
+
+    private void getDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy:HH:mm");
+
+        dateNow = dateFormat.format(calendar.getTime());
+        timeNow = timeFormat.format(calendar.getTime());
     }
 
     @Override

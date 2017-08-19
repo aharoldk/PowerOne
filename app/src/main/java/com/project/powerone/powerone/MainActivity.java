@@ -203,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
             if (doubleBackToExitPressedOnce) {
                 stopService(intent);
                 finish();
+                this.finish();
             }
 
             this.doubleBackToExitPressedOnce = true;
@@ -214,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     doubleBackToExitPressedOnce=false;
                 }
-            }, 2000);
+            }, 3000);
         }
 
     }

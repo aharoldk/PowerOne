@@ -112,16 +112,6 @@
 
         </LinearLayout>
 
-        <Button
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/exportAllButton"
-            android:background="@color/buttonColor"
-            android:textColor="@color/buttonTextColor"
-            android:id="@+id/exportAllButton"/>
-
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

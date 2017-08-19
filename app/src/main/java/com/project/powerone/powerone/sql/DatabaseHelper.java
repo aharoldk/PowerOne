@@ -102,6 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SALESMAN_NAME = "SalesmanName";
     private static final String PASSWORD = "Password";
     private static final String DLAST_LOGIN = "dLastLogin";
+    private static final String COUNT_MAP = "countMap";
 
     //table9
     private static final String LATITUDE = "Latitude";
@@ -124,7 +125,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String QUERY_TABLE7 = "CREATE TABLE "+TABLE_NAME7+"("+SITE_ID+" CHARACTER(10) NOT NULL, "+SITE_NAME+" VARCHAR(50) NULL)";
 
-    private static final String QUERY_TABLE8 = "CREATE TABLE "+TABLE_NAME8+"("+SALESMAN_ID+" CHARACTER(20) NOT NULL, "+SALESMAN_NAME+" VARCHAR(50) NULL, "+SITE_ID+" CHARACTER(10) NOT NULL, "+PASSWORD+" VARCHAR(50) NULL, "+DLAST_LOGIN+" DATE NULL)";
+    private static final String QUERY_TABLE8 = "CREATE TABLE "+TABLE_NAME8+"("+SALESMAN_ID+" CHARACTER(20) NOT NULL, "+SALESMAN_NAME+" VARCHAR(50) NULL, "+SITE_ID+" CHARACTER(10) NOT NULL, "+PASSWORD+" VARCHAR(50) NULL, "+DLAST_LOGIN+" DATE NULL, "+COUNT_MAP+" INTEGER NULL)";
 
     private static final String QUERY_TABLE9 = "CREATE TABLE "+TABLE_NAME9+"("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+LATITUDE+" DOUBLE NULL, "+LONGITUDE+" DOUBLE NULL, "+DATETRACK+" DATETIME NULL, "+TIMETRACK+" DATETIME NULL)";
 
@@ -166,7 +167,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.delete(table, null, null);
     }
 
-    public Boolean insertSalesman(String salesmanID, String salesmanName, String siteID, String password, String dlastlogin){
+    public Boolean insertSalesman(String salesmanID, String salesmanName, String siteID, String password, String dlastlogin, int i){
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -176,6 +177,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(SITE_ID, siteID);
         contentValues.put(PASSWORD, password);
         contentValues.put(DLAST_LOGIN, dlastlogin);
+        contentValues.put(COUNT_MAP, i);
 
         long result = sqLiteDatabase.insert(TABLE_NAME8, null, contentValues);
 
@@ -557,6 +559,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(DATE_TIME, dateTime);
 
         long result = sqLiteDatabase.update(TABLE_NAME1, contentValues, CUST_ID+" = ?", new String[] { custID});
+
+        if(result == -1){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean updateCountMap(String condition, int count){
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COUNT_MAP, count);
+
+
+        long result = sqLiteDatabase.update(TABLE_NAME8, contentValues, SALESMAN_ID+" = ?", new String[] {condition});
 
         if(result == -1){
             return false;

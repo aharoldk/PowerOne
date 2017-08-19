@@ -217,40 +217,40 @@ public class ReportActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if(id == R.id.importScreen){
-                    startActivity(new Intent(ReportActivity.this, ImportActivity.class));
                     finish();
+                    startActivity(new Intent(ReportActivity.this, ImportActivity.class));
 
                 } else if(id == R.id.exportScreen){
-                    startActivity(new Intent(ReportActivity.this, ExportActivity.class));
                     finish();
+                    startActivity(new Intent(ReportActivity.this, ExportActivity.class));
 
                 } else if(id == R.id.visitScreen){
-                    startActivity(new Intent(ReportActivity.this, SalesActivity.class));
                     finish();
+                    startActivity(new Intent(ReportActivity.this, SalesActivity.class));
 
                 } else if(id == R.id.produkScreen){
-                    startActivity(new Intent(ReportActivity.this, ProductActivity.class));
                     finish();
+                    startActivity(new Intent(ReportActivity.this, ProductActivity.class));
 
                 } else if(id == R.id.orderScreen){
-                    startActivity(new Intent(ReportActivity.this, OrderActivity.class));
                     finish();
+                    startActivity(new Intent(ReportActivity.this, OrderActivity.class));
 
                 } else if(id == R.id.ARScreen){
-                    startActivity(new Intent(ReportActivity.this, ARActivity.class));
                     finish();
+                    startActivity(new Intent(ReportActivity.this, ARActivity.class));
 
                 } else if(id == R.id.reportScreen){
-                    startActivity(new Intent(ReportActivity.this, ReportActivity.class));
                     finish();
+                    startActivity(new Intent(ReportActivity.this, ReportActivity.class));
 
                 } else if (id == R.id.photoScreen){
-                    startActivity(new Intent(ReportActivity.this, PhotoActivity.class));
                     finish();
+                    startActivity(new Intent(ReportActivity.this, PhotoActivity.class));
 
                 } else if(id == R.id.passwordScreen){
-                    startActivity(new Intent(ReportActivity.this, PasswordActivity.class));
                     finish();
+                    startActivity(new Intent(ReportActivity.this, PasswordActivity.class));
 
                 } else if(id == R.id.logout){
                     Intent intent = new Intent(getApplicationContext(), AngelosService.class);

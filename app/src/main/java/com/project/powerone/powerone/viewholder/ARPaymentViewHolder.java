@@ -12,6 +12,9 @@ import com.project.powerone.powerone.R;
 import com.project.powerone.powerone.pojo.ARPayment;
 import com.project.powerone.powerone.sql.DatabaseHelper;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * Created by aharoldk on 11/08/17.
  */
@@ -48,7 +51,7 @@ public class ARPaymentViewHolder extends RecyclerView.ViewHolder {
         
         arTypePayment.setText("Tipe Pembayaran : "+payment);
         arNoGiro.setText("No. Giro : "+arPayment.getBillyetNo());
-        arNoPayment.setText("Nominal Pembayaran : "+arPayment.getNominalPayment());
+        arNoPayment.setText("Nominal Pembayaran : Rp."+ NumberFormat.getNumberInstance(Locale.US).format(arPayment.getNominalPayment()));
         arDateDue.setText("Jatuh Tempo Giro : "+arPayment.getBillyetDueDate());
 
         if(arPayment.getbTransfer() == 1){

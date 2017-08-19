@@ -119,40 +119,40 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                 int id = item.getItemId();
 
                 if(id == R.id.importScreen){
-                    startActivity(new Intent(ImportActivity.this, ImportActivity.class));
                     finish();
+                    startActivity(new Intent(ImportActivity.this, ImportActivity.class));
 
                 } else if(id == R.id.exportScreen){
-                    startActivity(new Intent(ImportActivity.this, ExportActivity.class));
                     finish();
+                    startActivity(new Intent(ImportActivity.this, ExportActivity.class));
 
                 } else if(id == R.id.visitScreen){
-                    startActivity(new Intent(ImportActivity.this, SalesActivity.class));
                     finish();
+                    startActivity(new Intent(ImportActivity.this, SalesActivity.class));
 
                 } else if(id == R.id.produkScreen){
-                    startActivity(new Intent(ImportActivity.this, ProductActivity.class));
                     finish();
+                    startActivity(new Intent(ImportActivity.this, ProductActivity.class));
 
                 } else if(id == R.id.orderScreen){
-                    startActivity(new Intent(ImportActivity.this, OrderActivity.class));
                     finish();
+                    startActivity(new Intent(ImportActivity.this, OrderActivity.class));
 
                 } else if(id == R.id.ARScreen){
-                    startActivity(new Intent(ImportActivity.this, ARActivity.class));
                     finish();
+                    startActivity(new Intent(ImportActivity.this, ARActivity.class));
 
                 } else if(id == R.id.reportScreen){
-                    startActivity(new Intent(ImportActivity.this, ReportActivity.class));
                     finish();
+                    startActivity(new Intent(ImportActivity.this, ReportActivity.class));
 
                 } else if (id == R.id.photoScreen){
-                    startActivity(new Intent(ImportActivity.this, PhotoActivity.class));
                     finish();
+                    startActivity(new Intent(ImportActivity.this, PhotoActivity.class));
 
                 } else if(id == R.id.passwordScreen){
-                    startActivity(new Intent(ImportActivity.this, PasswordActivity.class));
                     finish();
+                    startActivity(new Intent(ImportActivity.this, PasswordActivity.class));
 
                 } else if(id == R.id.logout){
                     Intent intent = new Intent(getApplicationContext(), AngelosService.class);

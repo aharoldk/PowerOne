@@ -133,40 +133,40 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
 
                 if(checkDatabaseBeforeMove()){
                     if(id == R.id.importScreen){
-                        startActivity(new Intent(OrderActivity.this, ImportActivity.class));
                         finish();
+                        startActivity(new Intent(OrderActivity.this, ImportActivity.class));
 
                     } else if(id == R.id.exportScreen){
-                        startActivity(new Intent(OrderActivity.this, ExportActivity.class));
                         finish();
+                        startActivity(new Intent(OrderActivity.this, ExportActivity.class));
 
                     } else if(id == R.id.visitScreen){
-                        startActivity(new Intent(OrderActivity.this, SalesActivity.class));
                         finish();
+                        startActivity(new Intent(OrderActivity.this, SalesActivity.class));
 
                     } else if(id == R.id.produkScreen){
-                        startActivity(new Intent(OrderActivity.this, ProductActivity.class));
                         finish();
+                        startActivity(new Intent(OrderActivity.this, ProductActivity.class));
 
                     } else if(id == R.id.orderScreen){
-                        startActivity(new Intent(OrderActivity.this, OrderActivity.class));
                         finish();
+                        startActivity(new Intent(OrderActivity.this, OrderActivity.class));
 
                     } else if(id == R.id.ARScreen){
-                        startActivity(new Intent(OrderActivity.this, ARActivity.class));
                         finish();
+                        startActivity(new Intent(OrderActivity.this, ARActivity.class));
 
                     } else if(id == R.id.reportScreen){
-                        startActivity(new Intent(OrderActivity.this, ReportActivity.class));
                         finish();
+                        startActivity(new Intent(OrderActivity.this, ReportActivity.class));
 
                     } else if (id == R.id.photoScreen){
-                        startActivity(new Intent(OrderActivity.this, PhotoActivity.class));
                         finish();
+                        startActivity(new Intent(OrderActivity.this, PhotoActivity.class));
 
                     } else if(id == R.id.passwordScreen){
-                        startActivity(new Intent(OrderActivity.this, PasswordActivity.class));
                         finish();
+                        startActivity(new Intent(OrderActivity.this, PasswordActivity.class));
 
                     } else if(id == R.id.logout){
                         Intent intent = new Intent(getApplicationContext(), AngelosService.class);
