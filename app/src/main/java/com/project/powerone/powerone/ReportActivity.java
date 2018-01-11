@@ -12,7 +12,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.project.powerone.powerone.service.AngelosService;
@@ -23,18 +22,27 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ReportActivity extends AppCompatActivity {
-    @BindView(R.id.tvCustomer) TextView mCustomer;
-    @BindView(R.id.tvOrder) TextView mOrder;
-    @BindView(R.id.tvOmzet) TextView mOmzet;
-    @BindView(R.id.tvTotalTagihan) TextView mTTagihan;
-    @BindView(R.id.tvTotalRpTagihan) TextView mRpTagihan;
-    @BindView(R.id.tvTotalRpKas) TextView mRpKas;
-    @BindView(R.id.tvTotalRpGiro) TextView mRpGiro;
-    @BindView(R.id.tvTotalExportSales) TextView mExSales;
-    @BindView(R.id.tvTotalExportTagihan) TextView mExTagihan;
-    @BindView(R.id.btnPrinsipal) Button btnPrinsipal;
+    @BindView(R.id.tvCustomer)
+    TextView mCustomer;
+    @BindView(R.id.tvOrder)
+    TextView mOrder;
+    @BindView(R.id.tvOmzet)
+    TextView mOmzet;
+    @BindView(R.id.tvTotalTagihan)
+    TextView mTTagihan;
+    @BindView(R.id.tvTotalRpTagihan)
+    TextView mRpTagihan;
+    @BindView(R.id.tvTotalRpKas)
+    TextView mRpKas;
+    @BindView(R.id.tvTotalRpGiro)
+    TextView mRpGiro;
+    @BindView(R.id.tvTotalExportSales)
+    TextView mExSales;
+    @BindView(R.id.tvTotalExportTagihan)
+    TextView mExTagihan;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -51,6 +59,9 @@ public class ReportActivity extends AppCompatActivity {
     private int iARPdone = 0;
     private int iOrderdone = 0;
     private double dTotalOmzet = 0;
+
+    final StringBuffer stringBuffer = new StringBuffer();
+    final StringBuffer stringBuffer1 = new StringBuffer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,77 +93,98 @@ public class ReportActivity extends AppCompatActivity {
         Cursor cARPayment = databaseHelper.getAllArPaymenT();
         int iARPayment = cARPayment.getCount();
 
-        while (cARPayment.moveToNext()){
-            if(cARPayment.getInt(10) == 1) {
+        while (cARPayment.moveToNext()) {
+            if (cARPayment.getInt(10) == 1) {
                 iARPdone++;
             }
         }
-        mExTagihan.setText(iARPdone+" of "+iARPayment);
+        mExTagihan.setText(iARPdone + " of " + iARPayment);
         cARPayment.close();
 
         Cursor cOrder = databaseHelper.getAllOrdeR();
 
         int iOrder = cARPayment.getCount();
 
-        while (cOrder.moveToNext()){
-            if(cOrder.getInt(12) == 1) {
+        while (cOrder.moveToNext()) {
+            if (cOrder.getInt(12) == 1) {
                 iOrderdone++;
             }
         }
-        mExSales.setText(iOrderdone+" of "+iOrder);
+        mExSales.setText(iOrderdone + " of " + iOrder);
         cOrder.close();
     }
-
-
 
     private void ccustomer() {
         Cursor cCustomer = databaseHelper.getAllCustomerR();
 
         int iCustTotal = cCustomer.getCount();
 
-        while(cCustomer.moveToNext()){
-            if(cCustomer.getString(11).equals("Active")){
+        while (cCustomer.moveToNext()) {
+            if (cCustomer.getString(11).equals("Active")) {
                 iCustActive++;
             }
 
+            Cursor cOrder = databaseHelper.getTotalOrder(cCustomer.getString(3));
+
+            if(cOrder.getCount() > 0) {
+                iCustOrder++;
+            }
+
+            int totalOrder = 0;
+
+            while (cOrder.moveToNext()) {
+                totalOrder += ((cOrder.getInt(1) * cOrder.getInt(3))+(cOrder.getInt(2) * cOrder.getInt(3) / cOrder.getInt(4)));
+            }
+
+            stringBuffer1.append(cCustomer.getString(4)+" :\n  Rp. "+NumberFormat.getNumberInstance(Locale.US).format(totalOrder)).append("\n\n");
+            cOrder.close();
+
         }
 
-        mCustomer.setText(iCustActive+" of "+ iCustTotal);
+        mCustomer.setText(iCustActive + " of " + iCustTotal);
+
+        mOrder.setText(iCustOrder + " of " + iCustActive);
 
         cCustomer.close();
     }
 
     private void corder() {
-        Cursor cOrder = databaseHelper.getOrder();
 
-        while (cOrder.moveToNext()){
-            if(cOrder.getInt(cOrder.getColumnIndex("total")) > 0) {
-                iCustOrder++;
-            }
-
-        }
-
-        mOrder.setText(iCustOrder+" of "+iCustActive);
-
-        cOrder.close();
     }
 
     private void comzet() {
         Cursor cProduct = databaseHelper.getOmzet();
 
-        final StringBuffer stringBuffer = new StringBuffer();
-
         while (cProduct.moveToNext()) {
 
             stringBuffer.append(cProduct.getString(0)).append(" : \t\tRp. ").append(NumberFormat.getNumberInstance(Locale.US).format(cProduct.getInt(1))).append("\n \n");
 
-
             dTotalOmzet += cProduct.getInt(1);
         }
 
-        btnPrinsipal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        mOmzet.setText("Rp. " + NumberFormat.getNumberInstance(Locale.US).format(dTotalOmzet));
+
+        cProduct.close();
+
+    }
+
+    @OnClick({R.id.btnCustomer, R.id.btnPrinsipal})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnCustomer:
+                AlertDialog.Builder builderCustomer = new AlertDialog.Builder(ReportActivity.this);
+                View arView1 = getLayoutInflater().inflate(R.layout.detail_customer_report, null);
+
+                TextView tvCustomerList = arView1.findViewById(R.id.tvCustomerList);
+
+                tvCustomerList.setText(stringBuffer1);
+
+                builderCustomer.setCancelable(true);
+                builderCustomer.setView(arView1);
+                builderCustomer.show();
+                break;
+
+            case R.id.btnPrinsipal:
                 AlertDialog.Builder builderAR = new AlertDialog.Builder(ReportActivity.this);
                 View arView = getLayoutInflater().inflate(R.layout.detail_prinsipal, null);
 
@@ -163,48 +195,42 @@ public class ReportActivity extends AppCompatActivity {
                 builderAR.setCancelable(true);
                 builderAR.setView(arView);
                 builderAR.show();
-            }
-        });
-
-
-        mOmzet.setText("Rp. "+NumberFormat.getNumberInstance(Locale.US).format(dTotalOmzet));
-
-        cProduct.close();
-
+                break;
+        }
     }
 
     private void ctagihan() {
         Cursor cTagihan = databaseHelper.getTagihan();
         int iTagihan = cTagihan.getCount();
 
-        while (cTagihan.moveToNext()){
-            if(cTagihan.getInt(7) == 1){
+        while (cTagihan.moveToNext()) {
+            if (cTagihan.getInt(7) == 1) {
                 iTagihanDone++;
             }
         }
 
-        mTTagihan.setText(iTagihanDone+" of "+iTagihan);
+        mTTagihan.setText(iTagihanDone + " of " + iTagihan);
 
         cTagihan.close();
 
         Cursor cRpTagihan = databaseHelper.getRpTagihan();
 
-        while (cRpTagihan.moveToNext()){
+        while (cRpTagihan.moveToNext()) {
             int iRpTagihan = cRpTagihan.getInt(5);
 
-            if(cRpTagihan.getString(6).equals("G")) {
+            if (cRpTagihan.getString(6).equals("G")) {
                 iTotalGiro += iRpTagihan;
 
-            } else if(cRpTagihan.getString(6).equals("T")) {
+            } else if (cRpTagihan.getString(6).equals("T")) {
                 iTotalTunai += iRpTagihan;
 
             }
             iTotalTagihan += iRpTagihan;
         }
 
-        mRpTagihan.setText("Rp. "+ NumberFormat.getNumberInstance(Locale.US).format(iTotalTagihan));
-        mRpKas.setText("Rp. "+NumberFormat.getNumberInstance(Locale.US).format(iTotalTunai));
-        mRpGiro.setText("Rp. "+NumberFormat.getNumberInstance(Locale.US).format(+iTotalGiro));
+        mRpTagihan.setText("Rp. " + NumberFormat.getNumberInstance(Locale.US).format(iTotalTagihan));
+        mRpKas.setText("Rp. " + NumberFormat.getNumberInstance(Locale.US).format(iTotalTunai));
+        mRpGiro.setText("Rp. " + NumberFormat.getNumberInstance(Locale.US).format(+iTotalGiro));
 
         cRpTagihan.close();
     }
@@ -216,43 +242,43 @@ public class ReportActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
-                if(id == R.id.importScreen){
+                if (id == R.id.importScreen) {
                     finish();
                     startActivity(new Intent(ReportActivity.this, ImportActivity.class));
 
-                } else if(id == R.id.exportScreen){
+                } else if (id == R.id.exportScreen) {
                     finish();
                     startActivity(new Intent(ReportActivity.this, ExportActivity.class));
 
-                } else if(id == R.id.visitScreen){
+                } else if (id == R.id.visitScreen) {
                     finish();
                     startActivity(new Intent(ReportActivity.this, SalesActivity.class));
 
-                } else if(id == R.id.produkScreen){
+                } else if (id == R.id.produkScreen) {
                     finish();
                     startActivity(new Intent(ReportActivity.this, ProductActivity.class));
 
-                } else if(id == R.id.orderScreen){
+                } else if (id == R.id.orderScreen) {
                     finish();
                     startActivity(new Intent(ReportActivity.this, OrderActivity.class));
 
-                } else if(id == R.id.ARScreen){
+                } else if (id == R.id.ARScreen) {
                     finish();
                     startActivity(new Intent(ReportActivity.this, ARActivity.class));
 
-                } else if(id == R.id.reportScreen){
+                } else if (id == R.id.reportScreen) {
                     finish();
                     startActivity(new Intent(ReportActivity.this, ReportActivity.class));
 
-                } else if (id == R.id.photoScreen){
+                } else if (id == R.id.photoScreen) {
                     finish();
                     startActivity(new Intent(ReportActivity.this, PhotoActivity.class));
 
-                } else if(id == R.id.passwordScreen){
+                } else if (id == R.id.passwordScreen) {
                     finish();
                     startActivity(new Intent(ReportActivity.this, PasswordActivity.class));
 
-                } else if(id == R.id.logout){
+                } else if (id == R.id.logout) {
                     Intent intent = new Intent(getApplicationContext(), AngelosService.class);
                     stopService(intent);
 

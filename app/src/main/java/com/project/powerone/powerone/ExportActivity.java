@@ -443,6 +443,7 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
             } else {
                 if(exARPay > 0){
                     Toast.makeText(this, "Export AR Payment Complete", Toast.LENGTH_SHORT).show();
+                    databaseHelper.emptyDatabase("MobARPayment");
 
                 } else if(exARPay == 0){
                     Toast.makeText(this, "Nothing To Export", Toast.LENGTH_SHORT).show();
