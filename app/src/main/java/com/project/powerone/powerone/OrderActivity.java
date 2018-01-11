@@ -126,62 +126,59 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void navigation() {
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
 
-                if(checkDatabaseBeforeMove()){
-                    if(id == R.id.importScreen){
-                        finish();
-                        startActivity(new Intent(OrderActivity.this, ImportActivity.class));
+            if(checkDatabaseBeforeMove()){
+                if(id == R.id.importScreen){
+                    finish();
+                    startActivity(new Intent(OrderActivity.this, ImportActivity.class));
 
-                    } else if(id == R.id.exportScreen){
-                        finish();
-                        startActivity(new Intent(OrderActivity.this, ExportActivity.class));
+                } else if(id == R.id.exportScreen){
+                    finish();
+                    startActivity(new Intent(OrderActivity.this, ExportActivity.class));
 
-                    } else if(id == R.id.visitScreen){
-                        finish();
-                        startActivity(new Intent(OrderActivity.this, SalesActivity.class));
+                } else if(id == R.id.visitScreen){
+                    finish();
+                    startActivity(new Intent(OrderActivity.this, SalesActivity.class));
 
-                    } else if(id == R.id.produkScreen){
-                        finish();
-                        startActivity(new Intent(OrderActivity.this, ProductActivity.class));
+                } else if(id == R.id.produkScreen){
+                    finish();
+                    startActivity(new Intent(OrderActivity.this, ProductActivity.class));
 
-                    } else if(id == R.id.orderScreen){
-                        finish();
-                        startActivity(new Intent(OrderActivity.this, OrderActivity.class));
+                } else if(id == R.id.orderScreen){
+                    finish();
+                    startActivity(new Intent(OrderActivity.this, OrderActivity.class));
 
-                    } else if(id == R.id.ARScreen){
-                        finish();
-                        startActivity(new Intent(OrderActivity.this, ARActivity.class));
+                } else if(id == R.id.ARScreen){
+                    finish();
+                    startActivity(new Intent(OrderActivity.this, ARActivity.class));
 
-                    } else if(id == R.id.reportScreen){
-                        finish();
-                        startActivity(new Intent(OrderActivity.this, ReportActivity.class));
+                } else if(id == R.id.reportScreen){
+                    finish();
+                    startActivity(new Intent(OrderActivity.this, ReportActivity.class));
 
-                    } else if (id == R.id.photoScreen){
-                        finish();
-                        startActivity(new Intent(OrderActivity.this, PhotoActivity.class));
+                } else if (id == R.id.photoScreen){
+                    finish();
+                    startActivity(new Intent(OrderActivity.this, PhotoActivity.class));
 
-                    } else if(id == R.id.passwordScreen){
-                        finish();
-                        startActivity(new Intent(OrderActivity.this, PasswordActivity.class));
+                } else if(id == R.id.passwordScreen){
+                    finish();
+                    startActivity(new Intent(OrderActivity.this, PasswordActivity.class));
 
-                    } else if(id == R.id.logout){
-                        Intent intent = new Intent(getApplicationContext(), AngelosService.class);
-                        stopService(intent);
+                } else if(id == R.id.logout){
+                    Intent intent = new Intent(getApplicationContext(), AngelosService.class);
+                    stopService(intent);
 
-                        finish();
-                        startActivity(new Intent(OrderActivity.this, LoginActivity.class));
+                    finish();
+                    startActivity(new Intent(OrderActivity.this, LoginActivity.class));
 
-                    }
                 }
-
-
-
-                return true;
             }
+
+
+
+            return true;
         });
     }
 

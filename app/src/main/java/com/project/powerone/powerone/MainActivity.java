@@ -178,8 +178,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, ImportActivity.class));
             finish();
         }
-
-        finish();
     }
 
     private void getDate() {

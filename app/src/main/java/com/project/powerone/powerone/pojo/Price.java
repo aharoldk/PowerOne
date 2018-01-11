@@ -6,7 +6,8 @@ package com.project.powerone.powerone.pojo;
 
 public class Price {
 
-    private int UrutID, SalesPrice;
+    private int UrutID;
+    private double SalesPrice;
     private String SiteID, ProductID, ProductType;
 
     public Price() {
@@ -28,11 +29,11 @@ public class Price {
         UrutID = urutID;
     }
 
-    public int getSalesPrice() {
+    public double getSalesPrice() {
         return SalesPrice;
     }
 
-    public void setSalesPrice(int salesPrice) {
+    public void setSalesPrice(double salesPrice) {
         SalesPrice = salesPrice;
     }
 

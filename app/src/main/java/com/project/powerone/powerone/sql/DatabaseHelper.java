@@ -115,7 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String QUERY_TABLE2 = "CREATE TABLE "+TABLE_NAME2+"("+ID+" INTEGER PRIMARY KEY NOT NULL,"+SITE_ID+" CHARACTER(10) NULL,"+PRODUCT_ID+" CHARACTER(20) NULL, "+PRODUCT_NAME+" VARCHAR(100) NULL, "+BIG_PACK+" CHARACTER(10) NULL, "+SMALL_PACK+" CHARACTER(10) NULL, "+NO_OF_PACK+" INT  NULL, "+PRINSIPAL_NAME+" VARCHAR(50) NULL, "+GROUP_PRODUCT_NAME+" VARCHAR(50) NULL, "+SUB_GROUP_PRODUCT_NAME+" VARCHAR(50) NULL, "+QTY_ON_HAND+" INT NULL)";
 
-    private static final String QUERY_TABLE3 = "CREATE TABLE "+TABLE_NAME3+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20) NULL, "+PRODUCT_TYPE+" CHARACTER(10) NULL, "+SALES_PRICE+" INT NULL)";
+    private static final String QUERY_TABLE3 = "CREATE TABLE "+TABLE_NAME3+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+PRODUCT_ID+" CHARACTER(20) NULL, "+PRODUCT_TYPE+" CHARACTER(10) NULL, "+SALES_PRICE+" DOUBLE NULL)";
 
     private static final String QUERY_TABLE4 = "CREATE TABLE "+TABLE_NAME4+"("+ID+" INTEGER PRIMARY KEY NOT NULL, "+SITE_ID+" CHARACTER(10) NULL, "+SALESMAN_ID+" CHARACTER(20) NULL, "+CUST_ID+" CHARACTER(10) NULL, "+INVOICE_ID+" VARCHAR(20) NULL, "+DDUE_DATE+" DATETIME NULL, "+BALANCE_AR+" INTEGER NOT NULL, "+STATUS_AR+" INTEGER NOT NULL)";
 
@@ -148,15 +148,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE1);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE2);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE3);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE4);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE5);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE6);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE7);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE8);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QUERY_TABLE9);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME1);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME2);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME3);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME4);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME5);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME6);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME7);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME8);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME9);
 
         onCreate(sqLiteDatabase);
     }
@@ -490,7 +490,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertPrice(int urutID, String siteID, String productID, String productType, int salesPrice) {
+    public boolean insertPrice(int urutID, String siteID, String productID, String productType, double salesPrice) {
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -721,6 +721,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
 
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT "+CUST_ID+" , COUNT( * ) AS total FROM "+TABLE_NAME5+" GROUP BY "+CUST_ID, null);
+
+        return cursor;
+    }
+
+    public Cursor getTotalOrder(String condition){
+        sqLiteDatabase = DatabaseHelper.this.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT a.CustID, a.QtyBig, a.QtySmall, a.SalesPrice, b.NoOfPack FROM MobSalesOrder as a, MobProduct as b WHERE a.SiteID = b.SiteID AND a.ProductID = b.ProductID AND a.bTransfer = 0 AND a.CustId = ?", new String[]{condition});
 
         return cursor;
     }

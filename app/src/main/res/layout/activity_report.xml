@@ -49,9 +49,18 @@
                         android:id="@+id/tvCustomer"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
+                        android:layout_weight="0.3"
                         android:textSize="16sp"
                         android:text="15 of 20"/>
+
+                    <Button
+                        android:id="@+id/btnCustomer"
+                        android:text="Check"
+                        android:background="@color/buttonColor"
+                        android:textColor="@color/buttonTextColor"
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="0.2"/>
                 </LinearLayout>
 
                 <LinearLayout

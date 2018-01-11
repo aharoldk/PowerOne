@@ -36,6 +36,8 @@ import com.project.powerone.powerone.sql.DatabaseHelper;
 
 public class ImportActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = ImportActivity.class.getSimpleName();
+
     private TextView totalCustomer, totalProduct, totalPrice, totalAr;
 
     private Button buttonCustomer, buttonProduct, buttonPrice, buttonAr, importButton;
@@ -47,7 +49,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
     private Gson gson = new Gson();
 
-    private String  siteID, productID, productName, bigPack, smallPack, prinsipalName, groupProductName, subGroupProductName;
+    private String siteID, productID, productName, bigPack, smallPack, prinsipalName, groupProductName, subGroupProductName;
     private int noOfPack, urutID, qtyOnHand;
 
     private String invoiceID, dDueDate;
@@ -56,7 +58,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
     private String salesmanID, custID, custName, custAddress, priceType;
     private double geoMapLong, geoMapLat, gpsMapLong, gpsMapLat;
 
-    private int salesPrice;
+    private double salesPrice;
     private String productType;
 
     private DatabaseHelper databaseHelper;
@@ -118,43 +120,43 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
-                if(id == R.id.importScreen){
+                if (id == R.id.importScreen) {
                     finish();
                     startActivity(new Intent(ImportActivity.this, ImportActivity.class));
 
-                } else if(id == R.id.exportScreen){
+                } else if (id == R.id.exportScreen) {
                     finish();
                     startActivity(new Intent(ImportActivity.this, ExportActivity.class));
 
-                } else if(id == R.id.visitScreen){
+                } else if (id == R.id.visitScreen) {
                     finish();
                     startActivity(new Intent(ImportActivity.this, SalesActivity.class));
 
-                } else if(id == R.id.produkScreen){
+                } else if (id == R.id.produkScreen) {
                     finish();
                     startActivity(new Intent(ImportActivity.this, ProductActivity.class));
 
-                } else if(id == R.id.orderScreen){
+                } else if (id == R.id.orderScreen) {
                     finish();
                     startActivity(new Intent(ImportActivity.this, OrderActivity.class));
 
-                } else if(id == R.id.ARScreen){
+                } else if (id == R.id.ARScreen) {
                     finish();
                     startActivity(new Intent(ImportActivity.this, ARActivity.class));
 
-                } else if(id == R.id.reportScreen){
+                } else if (id == R.id.reportScreen) {
                     finish();
                     startActivity(new Intent(ImportActivity.this, ReportActivity.class));
 
-                } else if (id == R.id.photoScreen){
+                } else if (id == R.id.photoScreen) {
                     finish();
                     startActivity(new Intent(ImportActivity.this, PhotoActivity.class));
 
-                } else if(id == R.id.passwordScreen){
+                } else if (id == R.id.passwordScreen) {
                     finish();
                     startActivity(new Intent(ImportActivity.this, PasswordActivity.class));
 
-                } else if(id == R.id.logout){
+                } else if (id == R.id.logout) {
                     Intent intent = new Intent(getApplicationContext(), AngelosService.class);
                     stopService(intent);
 
@@ -192,19 +194,19 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        if(view.equals(buttonCustomer)){
+        if (view.equals(buttonCustomer)) {
             customerData();
 
-        } else if(view.equals(buttonProduct)){
+        } else if (view.equals(buttonProduct)) {
             productData();
 
-        } else if(view.equals(buttonPrice)) {
+        } else if (view.equals(buttonPrice)) {
             productPrice();
 
-        } else if(view.equals(buttonAr)){
+        } else if (view.equals(buttonAr)) {
             arData();
 
-        } else if(view.equals(importButton)){
+        } else if (view.equals(importButton)) {
             customerData();
 
             productPrice();
@@ -220,70 +222,70 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
         pDialogPc.setMessage("Wait Import Price Product . . . ");
         pDialogPc.show();
 
-        String URLPrice = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_productprice?arg_site="+dbSiteID;
+        databaseHelper.emptyDatabase("MobProductPrice");
+
+        String URLPrice = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_productprice?arg_salesman=" + dbUserID;
 
         RequestQueue requestQueuePrice = Volley.newRequestQueue(ImportActivity.this);
 
         StringRequest stringRequestPrice = new StringRequest(
                 Request.Method.GET,
                 URLPrice,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String responsePrice) {
-                        Log.i("responsePrice", responsePrice);
-                        databaseHelper.emptyDatabase("MobProductPrice");
+                responsePrice -> {
+                    Log.i("responsePrice", responsePrice);
+                    databaseHelper.emptyDatabase("MobProductPrice");
 
-                        try {
-                            prices = gson.fromJson(responsePrice, Price[].class);
+                    try {
+                        prices = gson.fromJson(responsePrice, Price[].class);
 
-                            for(int i = 0; i < responsePrice.length(); i++) {
+                        for (int i = 0; i < responsePrice.length(); i++) {
 
-                                urutID = prices[i].getUrutID();
-                                siteID = prices[i].getSiteID();
-                                productID = prices[i].getProductID();
-                                productType = prices[i].getProductType();
-                                salesPrice = prices[i].getSalesPrice();
+                            urutID = prices[i].getUrutID();
+                            siteID = prices[i].getSiteID();
+                            productID = prices[i].getProductID();
+                            productType = prices[i].getProductType();
+                            salesPrice = prices[i].getSalesPrice();
 
-                                insertedPrice = databaseHelper.insertPrice(urutID, siteID, productID, productType, salesPrice);
+                            Log.d(TAG, "onResponse: "+urutID+", "+siteID+", "+productID+", "+productType+", "+salesPrice);
 
-                                if(!insertedPrice){
-                                    countFailPrice++;
-                                }
+                            insertedPrice = databaseHelper.insertPrice(urutID, siteID, productID, productType, salesPrice);
 
-                                countPrice++;
-                                insertedPrice = false;
-
+                            if (!insertedPrice) {
+                                countFailPrice++;
                             }
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            countPrice++;
+                            insertedPrice = false;
 
                         }
 
-                        pDialogPc.dismiss();
-
-                        if(countFailPrice == 0){
-                            totalPrice.setText(""+ countPrice);
-
-                        } else {
-                            Toast.makeText(ImportActivity.this, "Please Import Price Again", Toast.LENGTH_SHORT).show();
-                        }
-
-                        countPrice = 0;
-                        countFailPrice = 0;
+                    } catch (Exception e) {
+                        e.printStackTrace();
 
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        pDialogPc.dismiss();
 
-                        if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
-                            Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
-                        }
+                    pDialogPc.dismiss();
 
-                        error.printStackTrace();
+                    if (countFailPrice == 0) {
+                        totalPrice.setText("" + countPrice);
+
+                    } else {
+                        Toast.makeText(ImportActivity.this, "Please Import Price Again", Toast.LENGTH_SHORT).show();
                     }
+
+                    countPrice = 0;
+                    countFailPrice = 0;
+
+                    databaseHelper.close();
+                }, error -> {
+                    pDialogPc.dismiss();
+
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                        Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
+                    }
+
+                    error.printStackTrace();
+                    databaseHelper.close();
                 }
         );
 
@@ -294,7 +296,9 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
         pDialogAr.setMessage("Wait Import AR Balance . . . ");
         pDialogAr.show();
 
-        String URLar = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_arbalance?arg_site="+dbSiteID+"&arg_salesman="+dbUserID;
+        databaseHelper.emptyDatabase("MobARBalance");
+
+        String URLar = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_arbalance?arg_site=" + dbSiteID + "&arg_salesman=" + dbUserID;
 
         RequestQueue requestQueueAR = Volley.newRequestQueue(ImportActivity.this);
 
@@ -312,7 +316,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                             arBalances = gson.fromJson(responseAR, ARBalance[].class);
 
 
-                            for(int i = 0; i < responseAR.length(); i++) {
+                            for (int i = 0; i < responseAR.length(); i++) {
 
                                 siteID = arBalances[i].getSiteID();
                                 custID = arBalances[i].getCustID();
@@ -324,7 +328,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                                 insertedAR = databaseHelper.insertAR(siteID, salesmanID, custID, invoiceID, dDueDate, balanceAR, urutID, 0);
 
-                                if(!insertedAR){
+                                if (!insertedAR) {
                                     countFailAR++;
                                 }
 
@@ -340,8 +344,8 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                         pDialogAr.dismiss();
 
-                        if(countFailAR == 0){
-                            totalAr.setText(""+ countAR);
+                        if (countFailAR == 0) {
+                            totalAr.setText("" + countAR);
 
                         } else {
                             Toast.makeText(ImportActivity.this, "Please Import AR Balance Again", Toast.LENGTH_SHORT).show();
@@ -349,20 +353,21 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                         countAR = 0;
                         countFailAR = 0;
-
+                        databaseHelper.close();
                     }
                 }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        pDialogAr.dismiss();
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pDialogAr.dismiss();
 
-                        if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
-                            Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
-                        }
-
-                        error.printStackTrace();
-                    }
+                if (error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                    Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
                 }
+
+                error.printStackTrace();
+                databaseHelper.close();
+            }
+        }
         );
 
         requestQueueAR.add(stringRequestAR);
@@ -373,7 +378,9 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
         pDialogP.setMessage("Wait Import Product . . . ");
         pDialogP.show();
 
-        String URLProduct = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_product?arg_site="+dbSiteID;
+        databaseHelper.emptyDatabase("MobProduct");
+
+        String URLProduct = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_product?arg_salesman=" + dbUserID;
 
         RequestQueue requestQueueProduct = Volley.newRequestQueue(ImportActivity.this);
 
@@ -389,7 +396,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                         try {
                             products = gson.fromJson(responseProduct, Product[].class);
 
-                            for(int i = 0; i < responseProduct.length(); i++) {
+                            for (int i = 0; i < responseProduct.length(); i++) {
                                 urutID = products[i].getUrutID();
                                 siteID = products[i].getSiteID();
                                 productID = products[i].getProductID();
@@ -404,7 +411,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                                 insertedProduct = databaseHelper.insertProduct(urutID, siteID, productID, productName, bigPack, smallPack, prinsipalName, groupProductName, subGroupProductName, noOfPack, qtyOnHand);
 
-                                if(!insertedProduct){
+                                if (!insertedProduct) {
                                     countFailProduct++;
                                 }
 
@@ -420,8 +427,8 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                         pDialogP.dismiss();
 
-                        if(countFailProduct == 0){
-                            totalProduct.setText(""+ countProduct);
+                        if (countFailProduct == 0) {
+                            totalProduct.setText("" + countProduct);
 
                         } else {
                             Toast.makeText(ImportActivity.this, "Please Import Product Again", Toast.LENGTH_SHORT).show();
@@ -430,18 +437,19 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                         countProduct = 0;
                         countFailProduct = 0;
-
+                        databaseHelper.close();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 pDialogP.dismiss();
 
-                if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                if (error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
                     Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
                 }
 
                 error.printStackTrace();
+                databaseHelper.close();
             }
         }
         );
@@ -453,7 +461,9 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
         pDialogC.setMessage("Wait Import Customer Data . . . ");
         pDialogC.show();
 
-        String URLCustomer = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_customer?arg_site="+dbSiteID+"&arg_salesman="+dbUserID;
+        databaseHelper.emptyDatabase("MobCustomer");
+
+        String URLCustomer = "http://202.43.162.180:8082/PowerONEMobileWebService/ws_retrieve_customer?arg_site=" + dbSiteID + "&arg_salesman=" + dbUserID;
 
         RequestQueue requestQueueCustomer = Volley.newRequestQueue(ImportActivity.this);
 
@@ -471,7 +481,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                             customers = gson.fromJson(responseCustomer, Customer[].class);
 
 
-                            for(int i = 0; i < responseCustomer.length(); i++) {
+                            for (int i = 0; i < responseCustomer.length(); i++) {
                                 urutID = customers[i].getUrutID();
                                 siteID = customers[i].getSiteID();
                                 salesmanID = customers[i].getSalesmanID();
@@ -486,7 +496,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                                 insertedCustomer = databaseHelper.insertCustomer(urutID, siteID, salesmanID, custID, custName, custAddress, priceType, geoMapLong, geoMapLat, gpsMapLong, gpsMapLat, statusVisit, dateTime);
 
-                                if(!insertedCustomer){
+                                if (!insertedCustomer) {
                                     countFailCustomer++;
                                 }
 
@@ -499,8 +509,8 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
                         pDialogC.dismiss();
 
-                        if(countFailCustomer == 0){
-                            totalCustomer.setText(""+ countCustomer);
+                        if (countFailCustomer == 0) {
+                            totalCustomer.setText("" + countCustomer);
 
                         } else {
                             Toast.makeText(ImportActivity.this, "Please Import Customer Again", Toast.LENGTH_SHORT).show();
@@ -510,20 +520,21 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
                         countCustomer = 0;
                         countFailCustomer = 0;
 
+                        databaseHelper.close();
                     }
                 }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        pDialogC.dismiss();
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pDialogC.dismiss();
 
-                        if(error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
-                            Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
-                        }
-
-                        error.printStackTrace();
-
-                    }
+                if (error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+                    Toast.makeText(ImportActivity.this, "Please Try Again and Check Your Connection", Toast.LENGTH_SHORT).show();
                 }
+
+                error.printStackTrace();
+                databaseHelper.close();
+            }
+        }
         );
 
         requestQueueCustomer.add(stringRequestCustomer);
